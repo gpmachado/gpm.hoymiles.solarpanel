@@ -1,21 +1,19 @@
 {
   "id": "gpm.hoymiles.solarpanel",
   "version": "1.0.0",
-  "compatibility": ">=12.4.0",
+  "compatibility": ">=12.6.0",
   "sdk": 3,
-  "platforms": [
-    "local"
-  ],
+  "platforms": ["local"],
   "name": {
     "en": "Hoymiles Wi-Fi Solar Panel"
   },
   "description": {
-    "en": "Hoymiles Inverter locally via TCP - no cloud, no account required"
+    "en": "Local integration for Hoymiles microinverters via DTU over TCP. Provides real-time solar production data without requiring cloud connectivity."
   },
-  "category": [
-    "energy"
-  ],
-  "permissions": [],
+  "category": ["energy"],
+  "tags": {
+    "en": ["solar", "hoymiles", "inverter", "energy", "dtu"]
+  },
   "brandColor": "#00B140",
   "images": {
     "small": "/assets/images/small.png",
@@ -23,6 +21,20 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "G. Machado"
-  }
+    "name": "Gabriel P Machado",
+    "email": "[email protected]"
+  },
+  "source": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
+  "homepage": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
+  "bugs": {
+    "url": "https://github.com/gpmachado/gpm.hoymiles.solarpanel/issues"
+  },
+  "contributing": {
+    "donate": {
+      "githubSponsors": {
+        "username": "gpmachado"
+      }
+    }
+  },
+  "license": "MIT"
 }
