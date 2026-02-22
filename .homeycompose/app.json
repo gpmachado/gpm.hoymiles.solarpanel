@@ -1,0 +1,29 @@
+{
+  "id": "gpm.hoymiles.solarpanel",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Hoymiles Wi-Fi Solar Panel"
+  },
+  "description": {
+    "en": "Hoymiles Inverter locally via TCP - no cloud, no account required"
+  },
+  "category": [
+    "energy"
+  ],
+  "permissions": [],
+  "brandColor": "#00B140",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "G. Machado",
+    "email": "g.machado@me.com"
+  }
+}
