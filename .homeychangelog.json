@@ -10,5 +10,8 @@
   },
   "1.0.5": {
     "en": "Inproved App Store page description. Fixed: Device no longer incorrectly shows as Unavailable at night or during network outages. Added diagnostic info (Wi-Fi signal, SSID, firmware version) to device settings. Smart night mode now uses your Homey's location to calculate sunrise/sunset automatically."
+  },
+  "1.0.6": {
+    "en": "Replacing build 1.0.5. This build (1.0.6) includes all previous fixes plus a correction to the energy configuration — now using meterPowerExportedCapability as specified in the official Homey SDK documentation for the solarpanel device class"
   }
 }
