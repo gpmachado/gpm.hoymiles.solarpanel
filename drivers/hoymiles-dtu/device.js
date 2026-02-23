@@ -14,6 +14,7 @@ module.exports = class HoymilesDevice extends Homey.Device {
     this.log('v1.8.0 onInit data:', JSON.stringify(this.getData()));
     this.log('v1.8.0 onInit settings:', JSON.stringify(this.getSettings()));
 
+
     this._startPolling();
 
     // Fetch diagnostic info once at startup (signal%, version, SSID)
@@ -77,7 +78,18 @@ module.exports = class HoymilesDevice extends Homey.Device {
     }
   }
 
-  _stopPolling() {
+  // Called once when the device is first paired.
+  // Sets the energy configuration so Homey's Energy zone picks up solar production.
+  async onAdded() {
+    // Set energy config on first pair — matches official Homey SDK docs for solarpanel class.
+    // meterPowerExportedCapability = meter_power (total generated kWh, always positive).
+    await this.setEnergy({
+      meterPowerExportedCapability: 'meter_power',
+    }).catch(err => this.log('setEnergy failed:', err.message));
+    this.log('onAdded: energy config set');
+  }
+
+    _stopPolling() {
     if (this._pollTimer) {
       this.homey.clearInterval(this._pollTimer);
       this._pollTimer = null;
@@ -162,7 +174,7 @@ module.exports = class HoymilesDevice extends Homey.Device {
       const prevKwh   = await this.getCapabilityValue('meter_power') ?? 0;
 
       await Promise.all([
-        this.setCapabilityValue('measure_power',       data.powerTotal  ?? 0),
+        this.setCapabilityValue('measure_power',       Math.max(0, data.powerTotal ?? 0)),
         this.setCapabilityValue('measure_voltage',     data.voltage     ?? 0),
         this.setCapabilityValue('measure_current',     data.current     ?? 0),
         this.setCapabilityValue('measure_frequency',   data.frequency   ?? 0),
