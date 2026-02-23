@@ -1,0 +1,7 @@
+# Files excluded from the Homey app package
+# The proto/ folder is source only — lib/hoymiles.js is the compiled output
+
+proto/
+test-dtu-*.js
+*.hex
+.DS_Store

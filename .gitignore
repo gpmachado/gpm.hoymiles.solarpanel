@@ -1,0 +1,8 @@
+/env.json
+/node_modules/
+/.homeybuild/
+.DS_Store
+**/.DS_Store
+*.hex
+drivers/hoymiles-dtu/device-1.js
+drivers/hoymiles-dtu/device-bak.js

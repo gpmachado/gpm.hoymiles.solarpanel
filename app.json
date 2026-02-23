@@ -1,8 +1,8 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
-  "id": "com.gpm.hoymiles.solarpanel",
-  "version": "1.0.0",
-  "compatibility": ">=12.4.0",
+  "id": "gpm.hoymiles.solarpanel",
+  "version": "1.0.5",
+  "compatibility": ">=12.6.0",
   "sdk": 3,
   "platforms": [
     "local"
@@ -11,12 +11,20 @@
     "en": "Hoymiles Wi-Fi Solar Panel"
   },
   "description": {
-    "en": "Hoymiles Inverter locally via TCP - no cloud, no account required"
+    "en": "Local monitoring for Hoymiles HMS microinverter systems — no cloud required."
   },
   "category": [
     "energy"
   ],
-  "permissions": [],
+  "tags": {
+    "en": [
+      "solar",
+      "hoymiles",
+      "inverter",
+      "energy",
+      "dtu"
+    ]
+  },
   "brandColor": "#00B140",
   "images": {
     "small": "/assets/images/small.png",
@@ -24,9 +32,15 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "Gabriel Pedrosa Machado",
+    "name": "G Machado",
     "email": "g.machado@me.com"
   },
+  "source": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
+  "homepage": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
+  "bugs": {
+    "url": "https://github.com/gpmachado/gpm.hoymiles.solarpanel/issues"
+  },
+  "license": "MIT",
   "drivers": [
     {
       "name": {
@@ -35,7 +49,6 @@
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
-        "meter_power",
         "measure_voltage",
         "measure_current",
         "measure_frequency",
@@ -52,7 +65,8 @@
         "measure_current.pv1",
         "measure_current.pv2",
         "measure_current.pv3",
-        "measure_current.pv4"
+        "measure_current.pv4",
+        "meter_power"
       ],
       "capabilitiesOptions": {
         "measure_power": {
@@ -141,6 +155,29 @@
             "en": "Panel 4 Current"
           },
           "units": "A"
+        },
+        "meter_power": {
+          "title": {
+            "en": "Lifetime Energy"
+          },
+          "units": {
+            "en": "kWh"
+          }
+        },
+        "alarm_generic": {
+          "title": {
+            "en": "Inverter Alarm"
+          }
+        },
+        "measure_temperature": {
+          "title": {
+            "en": "Inverter Temperature"
+          }
+        },
+        "measure_frequency": {
+          "title": {
+            "en": "Grid Frequency"
+          }
         }
       },
       "energy": {
@@ -177,6 +214,61 @@
           "value": 60,
           "min": 35,
           "max": 3600
+        },
+        {
+          "id": "signal_strength",
+          "type": "label",
+          "label": {
+            "en": "Wi-Fi Signal Strength"
+          },
+          "value": "—",
+          "hint": {
+            "en": "Updated automatically at startup"
+          }
+        },
+        {
+          "id": "wifi_ssid",
+          "type": "label",
+          "label": {
+            "en": "Wi-Fi SSID"
+          },
+          "value": "—",
+          "hint": {
+            "en": "Updated automatically at startup"
+          }
+        },
+        {
+          "id": "dtu_ap_ssid",
+          "type": "label",
+          "label": {
+            "en": "DTU AP SSID"
+          },
+          "value": "—",
+          "hint": {
+            "en": "Updated automatically at startup"
+          }
+        },
+        {
+          "id": "sw_version",
+          "type": "label",
+          "label": {
+            "en": "SW Version"
+          },
+          "value": "—",
+          "hint": {
+            "en": "Updated automatically at startup"
+          }
+        },
+        {
+          "id": "hw_version",
+          "type": "label",
+          "label": {
+            "en": "HW Version"
+          },
+          "value": "—",
+          "hint": {
+            "en": "Updated automatically at startup"
+          }
         }
       ],
       "pair": [
