@@ -1,3 +1,9 @@
+v1.1.0
+
+Added: Two driver variants — Hoymiles HMS (2-panel) for HMS-800/600 and Hoymiles HMS (4-panel) for HMS-2000/1600
+Added: Daily Energy (meter_power.today) capability — resets at midnight
+Added: Crash reporting via Sentry (homey-log) for production builds
+
 v1.0.5
 
 Improved: App Store page description updated to a single concise sentence as requested in review feedback

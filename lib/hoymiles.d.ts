@@ -1,1354 +1,5 @@
 import * as $protobuf from "protobufjs";
 import Long = require("long");
-/** Properties of a CommandResDTO. */
-export interface ICommandResDTO {
-
-    /** CommandResDTO time */
-    time?: (number|null);
-
-    /** CommandResDTO action */
-    action?: (number|null);
-
-    /** CommandResDTO devKind */
-    devKind?: (number|null);
-
-    /** CommandResDTO packageNub */
-    packageNub?: (number|null);
-
-    /** CommandResDTO packageNow */
-    packageNow?: (number|null);
-
-    /** CommandResDTO tid */
-    tid?: (number|Long|null);
-
-    /** CommandResDTO data */
-    data?: (string|null);
-
-    /** CommandResDTO esToSn */
-    esToSn?: (string[]|null);
-
-    /** CommandResDTO miToSn */
-    miToSn?: ((number|Long)[]|null);
-
-    /** CommandResDTO systemTotalA */
-    systemTotalA?: (number|null);
-
-    /** CommandResDTO systemTotalB */
-    systemTotalB?: (number|null);
-
-    /** CommandResDTO systemTotalC */
-    systemTotalC?: (number|null);
-
-    /** CommandResDTO miSnItemA */
-    miSnItemA?: ((number|Long)[]|null);
-
-    /** CommandResDTO miSnItemB */
-    miSnItemB?: ((number|Long)[]|null);
-
-    /** CommandResDTO miSnItemC */
-    miSnItemC?: ((number|Long)[]|null);
-}
-
-/** Represents a CommandResDTO. */
-export class CommandResDTO implements ICommandResDTO {
-
-    /**
-     * Constructs a new CommandResDTO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: ICommandResDTO);
-
-    /** CommandResDTO time. */
-    public time: number;
-
-    /** CommandResDTO action. */
-    public action: number;
-
-    /** CommandResDTO devKind. */
-    public devKind: number;
-
-    /** CommandResDTO packageNub. */
-    public packageNub: number;
-
-    /** CommandResDTO packageNow. */
-    public packageNow: number;
-
-    /** CommandResDTO tid. */
-    public tid: (number|Long);
-
-    /** CommandResDTO data. */
-    public data: string;
-
-    /** CommandResDTO esToSn. */
-    public esToSn: string[];
-
-    /** CommandResDTO miToSn. */
-    public miToSn: (number|Long)[];
-
-    /** CommandResDTO systemTotalA. */
-    public systemTotalA: number;
-
-    /** CommandResDTO systemTotalB. */
-    public systemTotalB: number;
-
-    /** CommandResDTO systemTotalC. */
-    public systemTotalC: number;
-
-    /** CommandResDTO miSnItemA. */
-    public miSnItemA: (number|Long)[];
-
-    /** CommandResDTO miSnItemB. */
-    public miSnItemB: (number|Long)[];
-
-    /** CommandResDTO miSnItemC. */
-    public miSnItemC: (number|Long)[];
-
-    /**
-     * Creates a new CommandResDTO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns CommandResDTO instance
-     */
-    public static create(properties?: ICommandResDTO): CommandResDTO;
-
-    /**
-     * Encodes the specified CommandResDTO message. Does not implicitly {@link CommandResDTO.verify|verify} messages.
-     * @param message CommandResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: ICommandResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified CommandResDTO message, length delimited. Does not implicitly {@link CommandResDTO.verify|verify} messages.
-     * @param message CommandResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ICommandResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a CommandResDTO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns CommandResDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommandResDTO;
-
-    /**
-     * Decodes a CommandResDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns CommandResDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommandResDTO;
-
-    /**
-     * Verifies a CommandResDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a CommandResDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns CommandResDTO
-     */
-    public static fromObject(object: { [k: string]: any }): CommandResDTO;
-
-    /**
-     * Creates a plain object from a CommandResDTO message. Also converts values to other types if specified.
-     * @param message CommandResDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: CommandResDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this CommandResDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for CommandResDTO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a CommandReqDTO. */
-export interface ICommandReqDTO {
-
-    /** CommandReqDTO dtuSn */
-    dtuSn?: (string|null);
-
-    /** CommandReqDTO time */
-    time?: (number|null);
-
-    /** CommandReqDTO action */
-    action?: (number|null);
-
-    /** CommandReqDTO packageNow */
-    packageNow?: (number|null);
-
-    /** CommandReqDTO errCode */
-    errCode?: (number|null);
-
-    /** CommandReqDTO tid */
-    tid?: (number|Long|null);
-}
-
-/** Represents a CommandReqDTO. */
-export class CommandReqDTO implements ICommandReqDTO {
-
-    /**
-     * Constructs a new CommandReqDTO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: ICommandReqDTO);
-
-    /** CommandReqDTO dtuSn. */
-    public dtuSn: string;
-
-    /** CommandReqDTO time. */
-    public time: number;
-
-    /** CommandReqDTO action. */
-    public action: number;
-
-    /** CommandReqDTO packageNow. */
-    public packageNow: number;
-
-    /** CommandReqDTO errCode. */
-    public errCode: number;
-
-    /** CommandReqDTO tid. */
-    public tid: (number|Long);
-
-    /**
-     * Creates a new CommandReqDTO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns CommandReqDTO instance
-     */
-    public static create(properties?: ICommandReqDTO): CommandReqDTO;
-
-    /**
-     * Encodes the specified CommandReqDTO message. Does not implicitly {@link CommandReqDTO.verify|verify} messages.
-     * @param message CommandReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: ICommandReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified CommandReqDTO message, length delimited. Does not implicitly {@link CommandReqDTO.verify|verify} messages.
-     * @param message CommandReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ICommandReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a CommandReqDTO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns CommandReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommandReqDTO;
-
-    /**
-     * Decodes a CommandReqDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns CommandReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommandReqDTO;
-
-    /**
-     * Verifies a CommandReqDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a CommandReqDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns CommandReqDTO
-     */
-    public static fromObject(object: { [k: string]: any }): CommandReqDTO;
-
-    /**
-     * Creates a plain object from a CommandReqDTO message. Also converts values to other types if specified.
-     * @param message CommandReqDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: CommandReqDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this CommandReqDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for CommandReqDTO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a ESOperatingStatusMO. */
-export interface IESOperatingStatusMO {
-
-    /** ESOperatingStatusMO esSn */
-    esSn?: (string|null);
-
-    /** ESOperatingStatusMO progressRate */
-    progressRate?: (number|null);
-}
-
-/** Represents a ESOperatingStatusMO. */
-export class ESOperatingStatusMO implements IESOperatingStatusMO {
-
-    /**
-     * Constructs a new ESOperatingStatusMO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IESOperatingStatusMO);
-
-    /** ESOperatingStatusMO esSn. */
-    public esSn: string;
-
-    /** ESOperatingStatusMO progressRate. */
-    public progressRate: number;
-
-    /**
-     * Creates a new ESOperatingStatusMO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns ESOperatingStatusMO instance
-     */
-    public static create(properties?: IESOperatingStatusMO): ESOperatingStatusMO;
-
-    /**
-     * Encodes the specified ESOperatingStatusMO message. Does not implicitly {@link ESOperatingStatusMO.verify|verify} messages.
-     * @param message ESOperatingStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IESOperatingStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified ESOperatingStatusMO message, length delimited. Does not implicitly {@link ESOperatingStatusMO.verify|verify} messages.
-     * @param message ESOperatingStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IESOperatingStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a ESOperatingStatusMO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns ESOperatingStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ESOperatingStatusMO;
-
-    /**
-     * Decodes a ESOperatingStatusMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns ESOperatingStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ESOperatingStatusMO;
-
-    /**
-     * Verifies a ESOperatingStatusMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a ESOperatingStatusMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns ESOperatingStatusMO
-     */
-    public static fromObject(object: { [k: string]: any }): ESOperatingStatusMO;
-
-    /**
-     * Creates a plain object from a ESOperatingStatusMO message. Also converts values to other types if specified.
-     * @param message ESOperatingStatusMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: ESOperatingStatusMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this ESOperatingStatusMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for ESOperatingStatusMO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a MIOperatingStatusMO. */
-export interface IMIOperatingStatusMO {
-
-    /** MIOperatingStatusMO miSn */
-    miSn?: (number|Long|null);
-
-    /** MIOperatingStatusMO progressRate */
-    progressRate?: (number|null);
-}
-
-/** Represents a MIOperatingStatusMO. */
-export class MIOperatingStatusMO implements IMIOperatingStatusMO {
-
-    /**
-     * Constructs a new MIOperatingStatusMO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IMIOperatingStatusMO);
-
-    /** MIOperatingStatusMO miSn. */
-    public miSn: (number|Long);
-
-    /** MIOperatingStatusMO progressRate. */
-    public progressRate: number;
-
-    /**
-     * Creates a new MIOperatingStatusMO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns MIOperatingStatusMO instance
-     */
-    public static create(properties?: IMIOperatingStatusMO): MIOperatingStatusMO;
-
-    /**
-     * Encodes the specified MIOperatingStatusMO message. Does not implicitly {@link MIOperatingStatusMO.verify|verify} messages.
-     * @param message MIOperatingStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IMIOperatingStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified MIOperatingStatusMO message, length delimited. Does not implicitly {@link MIOperatingStatusMO.verify|verify} messages.
-     * @param message MIOperatingStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IMIOperatingStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a MIOperatingStatusMO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns MIOperatingStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MIOperatingStatusMO;
-
-    /**
-     * Decodes a MIOperatingStatusMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns MIOperatingStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MIOperatingStatusMO;
-
-    /**
-     * Verifies a MIOperatingStatusMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a MIOperatingStatusMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns MIOperatingStatusMO
-     */
-    public static fromObject(object: { [k: string]: any }): MIOperatingStatusMO;
-
-    /**
-     * Creates a plain object from a MIOperatingStatusMO message. Also converts values to other types if specified.
-     * @param message MIOperatingStatusMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: MIOperatingStatusMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this MIOperatingStatusMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for MIOperatingStatusMO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a MIErrorStatusMO. */
-export interface IMIErrorStatusMO {
-
-    /** MIErrorStatusMO miSn */
-    miSn?: (number|Long|null);
-
-    /** MIErrorStatusMO errorCode */
-    errorCode?: (number|Long|null);
-}
-
-/** Represents a MIErrorStatusMO. */
-export class MIErrorStatusMO implements IMIErrorStatusMO {
-
-    /**
-     * Constructs a new MIErrorStatusMO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IMIErrorStatusMO);
-
-    /** MIErrorStatusMO miSn. */
-    public miSn: (number|Long);
-
-    /** MIErrorStatusMO errorCode. */
-    public errorCode: (number|Long);
-
-    /**
-     * Creates a new MIErrorStatusMO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns MIErrorStatusMO instance
-     */
-    public static create(properties?: IMIErrorStatusMO): MIErrorStatusMO;
-
-    /**
-     * Encodes the specified MIErrorStatusMO message. Does not implicitly {@link MIErrorStatusMO.verify|verify} messages.
-     * @param message MIErrorStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IMIErrorStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified MIErrorStatusMO message, length delimited. Does not implicitly {@link MIErrorStatusMO.verify|verify} messages.
-     * @param message MIErrorStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IMIErrorStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a MIErrorStatusMO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns MIErrorStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MIErrorStatusMO;
-
-    /**
-     * Decodes a MIErrorStatusMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns MIErrorStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MIErrorStatusMO;
-
-    /**
-     * Verifies a MIErrorStatusMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a MIErrorStatusMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns MIErrorStatusMO
-     */
-    public static fromObject(object: { [k: string]: any }): MIErrorStatusMO;
-
-    /**
-     * Creates a plain object from a MIErrorStatusMO message. Also converts values to other types if specified.
-     * @param message MIErrorStatusMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: MIErrorStatusMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this MIErrorStatusMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for MIErrorStatusMO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a ESSucStatusMO. */
-export interface IESSucStatusMO {
-
-    /** ESSucStatusMO esSn */
-    esSn?: (string|null);
-}
-
-/** Represents a ESSucStatusMO. */
-export class ESSucStatusMO implements IESSucStatusMO {
-
-    /**
-     * Constructs a new ESSucStatusMO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IESSucStatusMO);
-
-    /** ESSucStatusMO esSn. */
-    public esSn: string;
-
-    /**
-     * Creates a new ESSucStatusMO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns ESSucStatusMO instance
-     */
-    public static create(properties?: IESSucStatusMO): ESSucStatusMO;
-
-    /**
-     * Encodes the specified ESSucStatusMO message. Does not implicitly {@link ESSucStatusMO.verify|verify} messages.
-     * @param message ESSucStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IESSucStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified ESSucStatusMO message, length delimited. Does not implicitly {@link ESSucStatusMO.verify|verify} messages.
-     * @param message ESSucStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IESSucStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a ESSucStatusMO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns ESSucStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ESSucStatusMO;
-
-    /**
-     * Decodes a ESSucStatusMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns ESSucStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ESSucStatusMO;
-
-    /**
-     * Verifies a ESSucStatusMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a ESSucStatusMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns ESSucStatusMO
-     */
-    public static fromObject(object: { [k: string]: any }): ESSucStatusMO;
-
-    /**
-     * Creates a plain object from a ESSucStatusMO message. Also converts values to other types if specified.
-     * @param message ESSucStatusMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: ESSucStatusMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this ESSucStatusMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for ESSucStatusMO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a ESErrorStatusMO. */
-export interface IESErrorStatusMO {
-
-    /** ESErrorStatusMO esSn */
-    esSn?: (string|null);
-
-    /** ESErrorStatusMO errorCode */
-    errorCode?: (number|Long|null);
-}
-
-/** Represents a ESErrorStatusMO. */
-export class ESErrorStatusMO implements IESErrorStatusMO {
-
-    /**
-     * Constructs a new ESErrorStatusMO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IESErrorStatusMO);
-
-    /** ESErrorStatusMO esSn. */
-    public esSn: string;
-
-    /** ESErrorStatusMO errorCode. */
-    public errorCode: (number|Long);
-
-    /**
-     * Creates a new ESErrorStatusMO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns ESErrorStatusMO instance
-     */
-    public static create(properties?: IESErrorStatusMO): ESErrorStatusMO;
-
-    /**
-     * Encodes the specified ESErrorStatusMO message. Does not implicitly {@link ESErrorStatusMO.verify|verify} messages.
-     * @param message ESErrorStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IESErrorStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified ESErrorStatusMO message, length delimited. Does not implicitly {@link ESErrorStatusMO.verify|verify} messages.
-     * @param message ESErrorStatusMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IESErrorStatusMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a ESErrorStatusMO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns ESErrorStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ESErrorStatusMO;
-
-    /**
-     * Decodes a ESErrorStatusMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns ESErrorStatusMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ESErrorStatusMO;
-
-    /**
-     * Verifies a ESErrorStatusMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a ESErrorStatusMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns ESErrorStatusMO
-     */
-    public static fromObject(object: { [k: string]: any }): ESErrorStatusMO;
-
-    /**
-     * Creates a plain object from a ESErrorStatusMO message. Also converts values to other types if specified.
-     * @param message ESErrorStatusMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: ESErrorStatusMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this ESErrorStatusMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for ESErrorStatusMO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a CommandStatusReqDTO. */
-export interface ICommandStatusReqDTO {
-
-    /** CommandStatusReqDTO dtuSn */
-    dtuSn?: (string|null);
-
-    /** CommandStatusReqDTO time */
-    time?: (number|null);
-
-    /** CommandStatusReqDTO action */
-    action?: (number|null);
-
-    /** CommandStatusReqDTO packageNub */
-    packageNub?: (number|null);
-
-    /** CommandStatusReqDTO packageNow */
-    packageNow?: (number|null);
-
-    /** CommandStatusReqDTO tid */
-    tid?: (number|Long|null);
-
-    /** CommandStatusReqDTO esSnsSucs */
-    esSnsSucs?: (string[]|null);
-
-    /** CommandStatusReqDTO miSnsSucs */
-    miSnsSucs?: ((number|Long)[]|null);
-
-    /** CommandStatusReqDTO esSnsFailds */
-    esSnsFailds?: (string[]|null);
-
-    /** CommandStatusReqDTO miSnsFailds */
-    miSnsFailds?: ((number|Long)[]|null);
-
-    /** CommandStatusReqDTO esMOperatingStatus */
-    esMOperatingStatus?: (IESOperatingStatusMO[]|null);
-
-    /** CommandStatusReqDTO miMOperatingStatus */
-    miMOperatingStatus?: (IMIOperatingStatusMO[]|null);
-
-    /** CommandStatusReqDTO miMErrorStatus */
-    miMErrorStatus?: (IMIErrorStatusMO[]|null);
-
-    /** CommandStatusReqDTO esMSucStatus */
-    esMSucStatus?: (IESSucStatusMO[]|null);
-
-    /** CommandStatusReqDTO esMErrorStatus */
-    esMErrorStatus?: (IESErrorStatusMO[]|null);
-}
-
-/** Represents a CommandStatusReqDTO. */
-export class CommandStatusReqDTO implements ICommandStatusReqDTO {
-
-    /**
-     * Constructs a new CommandStatusReqDTO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: ICommandStatusReqDTO);
-
-    /** CommandStatusReqDTO dtuSn. */
-    public dtuSn: string;
-
-    /** CommandStatusReqDTO time. */
-    public time: number;
-
-    /** CommandStatusReqDTO action. */
-    public action: number;
-
-    /** CommandStatusReqDTO packageNub. */
-    public packageNub: number;
-
-    /** CommandStatusReqDTO packageNow. */
-    public packageNow: number;
-
-    /** CommandStatusReqDTO tid. */
-    public tid: (number|Long);
-
-    /** CommandStatusReqDTO esSnsSucs. */
-    public esSnsSucs: string[];
-
-    /** CommandStatusReqDTO miSnsSucs. */
-    public miSnsSucs: (number|Long)[];
-
-    /** CommandStatusReqDTO esSnsFailds. */
-    public esSnsFailds: string[];
-
-    /** CommandStatusReqDTO miSnsFailds. */
-    public miSnsFailds: (number|Long)[];
-
-    /** CommandStatusReqDTO esMOperatingStatus. */
-    public esMOperatingStatus: IESOperatingStatusMO[];
-
-    /** CommandStatusReqDTO miMOperatingStatus. */
-    public miMOperatingStatus: IMIOperatingStatusMO[];
-
-    /** CommandStatusReqDTO miMErrorStatus. */
-    public miMErrorStatus: IMIErrorStatusMO[];
-
-    /** CommandStatusReqDTO esMSucStatus. */
-    public esMSucStatus: IESSucStatusMO[];
-
-    /** CommandStatusReqDTO esMErrorStatus. */
-    public esMErrorStatus: IESErrorStatusMO[];
-
-    /**
-     * Creates a new CommandStatusReqDTO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns CommandStatusReqDTO instance
-     */
-    public static create(properties?: ICommandStatusReqDTO): CommandStatusReqDTO;
-
-    /**
-     * Encodes the specified CommandStatusReqDTO message. Does not implicitly {@link CommandStatusReqDTO.verify|verify} messages.
-     * @param message CommandStatusReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: ICommandStatusReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified CommandStatusReqDTO message, length delimited. Does not implicitly {@link CommandStatusReqDTO.verify|verify} messages.
-     * @param message CommandStatusReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ICommandStatusReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a CommandStatusReqDTO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns CommandStatusReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommandStatusReqDTO;
-
-    /**
-     * Decodes a CommandStatusReqDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns CommandStatusReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommandStatusReqDTO;
-
-    /**
-     * Verifies a CommandStatusReqDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a CommandStatusReqDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns CommandStatusReqDTO
-     */
-    public static fromObject(object: { [k: string]: any }): CommandStatusReqDTO;
-
-    /**
-     * Creates a plain object from a CommandStatusReqDTO message. Also converts values to other types if specified.
-     * @param message CommandStatusReqDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: CommandStatusReqDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this CommandStatusReqDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for CommandStatusReqDTO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a CommandStatusResDTO. */
-export interface ICommandStatusResDTO {
-
-    /** CommandStatusResDTO time */
-    time?: (number|null);
-
-    /** CommandStatusResDTO action */
-    action?: (number|null);
-
-    /** CommandStatusResDTO packageNow */
-    packageNow?: (number|null);
-
-    /** CommandStatusResDTO tid */
-    tid?: (number|Long|null);
-
-    /** CommandStatusResDTO errCode */
-    errCode?: (number|null);
-}
-
-/** Represents a CommandStatusResDTO. */
-export class CommandStatusResDTO implements ICommandStatusResDTO {
-
-    /**
-     * Constructs a new CommandStatusResDTO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: ICommandStatusResDTO);
-
-    /** CommandStatusResDTO time. */
-    public time: number;
-
-    /** CommandStatusResDTO action. */
-    public action: number;
-
-    /** CommandStatusResDTO packageNow. */
-    public packageNow: number;
-
-    /** CommandStatusResDTO tid. */
-    public tid: (number|Long);
-
-    /** CommandStatusResDTO errCode. */
-    public errCode: number;
-
-    /**
-     * Creates a new CommandStatusResDTO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns CommandStatusResDTO instance
-     */
-    public static create(properties?: ICommandStatusResDTO): CommandStatusResDTO;
-
-    /**
-     * Encodes the specified CommandStatusResDTO message. Does not implicitly {@link CommandStatusResDTO.verify|verify} messages.
-     * @param message CommandStatusResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: ICommandStatusResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified CommandStatusResDTO message, length delimited. Does not implicitly {@link CommandStatusResDTO.verify|verify} messages.
-     * @param message CommandStatusResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ICommandStatusResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a CommandStatusResDTO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns CommandStatusResDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): CommandStatusResDTO;
-
-    /**
-     * Decodes a CommandStatusResDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns CommandStatusResDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): CommandStatusResDTO;
-
-    /**
-     * Verifies a CommandStatusResDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a CommandStatusResDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns CommandStatusResDTO
-     */
-    public static fromObject(object: { [k: string]: any }): CommandStatusResDTO;
-
-    /**
-     * Creates a plain object from a CommandStatusResDTO message. Also converts values to other types if specified.
-     * @param message CommandStatusResDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: CommandStatusResDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this CommandStatusResDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for CommandStatusResDTO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a HBReqDTO. */
-export interface IHBReqDTO {
-
-    /** HBReqDTO offset */
-    offset?: (number|null);
-
-    /** HBReqDTO time */
-    time?: (number|null);
-
-    /** HBReqDTO csq */
-    csq?: (number|null);
-
-    /** HBReqDTO dtuSerialNumber */
-    dtuSerialNumber?: (string|null);
-
-    /** HBReqDTO deviceSerialNumber */
-    deviceSerialNumber?: (string|null);
-}
-
-/** Represents a HBReqDTO. */
-export class HBReqDTO implements IHBReqDTO {
-
-    /**
-     * Constructs a new HBReqDTO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IHBReqDTO);
-
-    /** HBReqDTO offset. */
-    public offset: number;
-
-    /** HBReqDTO time. */
-    public time: number;
-
-    /** HBReqDTO csq. */
-    public csq: number;
-
-    /** HBReqDTO dtuSerialNumber. */
-    public dtuSerialNumber: string;
-
-    /** HBReqDTO deviceSerialNumber. */
-    public deviceSerialNumber: string;
-
-    /**
-     * Creates a new HBReqDTO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns HBReqDTO instance
-     */
-    public static create(properties?: IHBReqDTO): HBReqDTO;
-
-    /**
-     * Encodes the specified HBReqDTO message. Does not implicitly {@link HBReqDTO.verify|verify} messages.
-     * @param message HBReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IHBReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified HBReqDTO message, length delimited. Does not implicitly {@link HBReqDTO.verify|verify} messages.
-     * @param message HBReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IHBReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a HBReqDTO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns HBReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): HBReqDTO;
-
-    /**
-     * Decodes a HBReqDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns HBReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): HBReqDTO;
-
-    /**
-     * Verifies a HBReqDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a HBReqDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns HBReqDTO
-     */
-    public static fromObject(object: { [k: string]: any }): HBReqDTO;
-
-    /**
-     * Creates a plain object from a HBReqDTO message. Also converts values to other types if specified.
-     * @param message HBReqDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: HBReqDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this HBReqDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for HBReqDTO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a HBResDTO. */
-export interface IHBResDTO {
-
-    /** HBResDTO offset */
-    offset?: (number|null);
-
-    /** HBResDTO time */
-    time?: (number|null);
-
-    /** HBResDTO timeYmdHms */
-    timeYmdHms?: (Uint8Array|null);
-}
-
-/** Represents a HBResDTO. */
-export class HBResDTO implements IHBResDTO {
-
-    /**
-     * Constructs a new HBResDTO.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: IHBResDTO);
-
-    /** HBResDTO offset. */
-    public offset: number;
-
-    /** HBResDTO time. */
-    public time: number;
-
-    /** HBResDTO timeYmdHms. */
-    public timeYmdHms: Uint8Array;
-
-    /**
-     * Creates a new HBResDTO instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns HBResDTO instance
-     */
-    public static create(properties?: IHBResDTO): HBResDTO;
-
-    /**
-     * Encodes the specified HBResDTO message. Does not implicitly {@link HBResDTO.verify|verify} messages.
-     * @param message HBResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: IHBResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified HBResDTO message, length delimited. Does not implicitly {@link HBResDTO.verify|verify} messages.
-     * @param message HBResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IHBResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a HBResDTO message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns HBResDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): HBResDTO;
-
-    /**
-     * Decodes a HBResDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns HBResDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): HBResDTO;
-
-    /**
-     * Verifies a HBResDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a HBResDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns HBResDTO
-     */
-    public static fromObject(object: { [k: string]: any }): HBResDTO;
-
-    /**
-     * Creates a plain object from a HBResDTO message. Also converts values to other types if specified.
-     * @param message HBResDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: HBResDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this HBResDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for HBResDTO
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
 /** Properties of a MeterMO. */
 export interface IMeterMO {
 
@@ -1356,7 +7,7 @@ export interface IMeterMO {
     deviceType?: (number|null);
 
     /** MeterMO serialNumber */
-    serialNumber?: (number|Long|null);
+    serialNumber?: (number|null);
 
     /** MeterMO phaseTotalPower */
     phaseTotalPower?: (number|null);
@@ -1441,7 +92,7 @@ export class MeterMO implements IMeterMO {
     public deviceType: number;
 
     /** MeterMO serialNumber. */
-    public serialNumber: (number|Long);
+    public serialNumber: number;
 
     /** MeterMO phaseTotalPower. */
     public phaseTotalPower: number;
@@ -1528,14 +179,6 @@ export class MeterMO implements IMeterMO {
     public static encode(message: IMeterMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified MeterMO message, length delimited. Does not implicitly {@link MeterMO.verify|verify} messages.
-     * @param message MeterMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IMeterMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a MeterMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -1544,43 +187,6 @@ export class MeterMO implements IMeterMO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MeterMO;
-
-    /**
-     * Decodes a MeterMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns MeterMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MeterMO;
-
-    /**
-     * Verifies a MeterMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a MeterMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns MeterMO
-     */
-    public static fromObject(object: { [k: string]: any }): MeterMO;
-
-    /**
-     * Creates a plain object from a MeterMO message. Also converts values to other types if specified.
-     * @param message MeterMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: MeterMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this MeterMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for MeterMO
@@ -1594,7 +200,7 @@ export class MeterMO implements IMeterMO {
 export interface IRpMO {
 
     /** RpMO serialNumber */
-    serialNumber?: (number|Long|null);
+    serialNumber?: (number|null);
 
     /** RpMO signature */
     signature?: (number|null);
@@ -1619,7 +225,7 @@ export class RpMO implements IRpMO {
     constructor(properties?: IRpMO);
 
     /** RpMO serialNumber. */
-    public serialNumber: (number|Long);
+    public serialNumber: number;
 
     /** RpMO signature. */
     public signature: number;
@@ -1649,14 +255,6 @@ export class RpMO implements IRpMO {
     public static encode(message: IRpMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified RpMO message, length delimited. Does not implicitly {@link RpMO.verify|verify} messages.
-     * @param message RpMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IRpMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a RpMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -1665,43 +263,6 @@ export class RpMO implements IRpMO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): RpMO;
-
-    /**
-     * Decodes a RpMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns RpMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): RpMO;
-
-    /**
-     * Verifies a RpMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a RpMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns RpMO
-     */
-    public static fromObject(object: { [k: string]: any }): RpMO;
-
-    /**
-     * Creates a plain object from a RpMO message. Also converts values to other types if specified.
-     * @param message RpMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: RpMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this RpMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for RpMO
@@ -1715,7 +276,7 @@ export class RpMO implements IRpMO {
 export interface IRSDMO {
 
     /** RSDMO serialNumber */
-    serialNumber?: (number|Long|null);
+    serialNumber?: (number|null);
 
     /** RSDMO firmwareVersion */
     firmwareVersion?: (number|null);
@@ -1749,7 +310,7 @@ export class RSDMO implements IRSDMO {
     constructor(properties?: IRSDMO);
 
     /** RSDMO serialNumber. */
-    public serialNumber: (number|Long);
+    public serialNumber: number;
 
     /** RSDMO firmwareVersion. */
     public firmwareVersion: number;
@@ -1788,14 +349,6 @@ export class RSDMO implements IRSDMO {
     public static encode(message: IRSDMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified RSDMO message, length delimited. Does not implicitly {@link RSDMO.verify|verify} messages.
-     * @param message RSDMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IRSDMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a RSDMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -1804,43 +357,6 @@ export class RSDMO implements IRSDMO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): RSDMO;
-
-    /**
-     * Decodes a RSDMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns RSDMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): RSDMO;
-
-    /**
-     * Verifies a RSDMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a RSDMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns RSDMO
-     */
-    public static fromObject(object: { [k: string]: any }): RSDMO;
-
-    /**
-     * Creates a plain object from a RSDMO message. Also converts values to other types if specified.
-     * @param message RSDMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: RSDMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this RSDMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for RSDMO
@@ -1854,7 +370,7 @@ export class RSDMO implements IRSDMO {
 export interface ISGSMO {
 
     /** SGSMO serialNumber */
-    serialNumber?: (number|Long|null);
+    serialNumber?: (number|null);
 
     /** SGSMO firmwareVersion */
     firmwareVersion?: (number|null);
@@ -1906,7 +422,7 @@ export class SGSMO implements ISGSMO {
     constructor(properties?: ISGSMO);
 
     /** SGSMO serialNumber. */
-    public serialNumber: (number|Long);
+    public serialNumber: number;
 
     /** SGSMO firmwareVersion. */
     public firmwareVersion: number;
@@ -1963,14 +479,6 @@ export class SGSMO implements ISGSMO {
     public static encode(message: ISGSMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified SGSMO message, length delimited. Does not implicitly {@link SGSMO.verify|verify} messages.
-     * @param message SGSMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ISGSMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a SGSMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -1979,43 +487,6 @@ export class SGSMO implements ISGSMO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): SGSMO;
-
-    /**
-     * Decodes a SGSMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns SGSMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): SGSMO;
-
-    /**
-     * Verifies a SGSMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a SGSMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns SGSMO
-     */
-    public static fromObject(object: { [k: string]: any }): SGSMO;
-
-    /**
-     * Creates a plain object from a SGSMO message. Also converts values to other types if specified.
-     * @param message SGSMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: SGSMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this SGSMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for SGSMO
@@ -2029,7 +500,7 @@ export class SGSMO implements ISGSMO {
 export interface ITGSMO {
 
     /** TGSMO serialNumber */
-    serialNumber?: (number|Long|null);
+    serialNumber?: (number|null);
 
     /** TGSMO firmwareVersion */
     firmwareVersion?: (number|null);
@@ -2099,7 +570,7 @@ export class TGSMO implements ITGSMO {
     constructor(properties?: ITGSMO);
 
     /** TGSMO serialNumber. */
-    public serialNumber: (number|Long);
+    public serialNumber: number;
 
     /** TGSMO firmwareVersion. */
     public firmwareVersion: number;
@@ -2174,14 +645,6 @@ export class TGSMO implements ITGSMO {
     public static encode(message: ITGSMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified TGSMO message, length delimited. Does not implicitly {@link TGSMO.verify|verify} messages.
-     * @param message TGSMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ITGSMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a TGSMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -2190,43 +653,6 @@ export class TGSMO implements ITGSMO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): TGSMO;
-
-    /**
-     * Decodes a TGSMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns TGSMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): TGSMO;
-
-    /**
-     * Verifies a TGSMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a TGSMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns TGSMO
-     */
-    public static fromObject(object: { [k: string]: any }): TGSMO;
-
-    /**
-     * Creates a plain object from a TGSMO message. Also converts values to other types if specified.
-     * @param message TGSMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: TGSMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this TGSMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for TGSMO
@@ -2240,7 +666,7 @@ export class TGSMO implements ITGSMO {
 export interface IPvMO {
 
     /** PvMO serialNumber */
-    serialNumber?: (number|Long|null);
+    serialNumber?: (number|null);
 
     /** PvMO portNumber */
     portNumber?: (number|null);
@@ -2274,7 +700,7 @@ export class PvMO implements IPvMO {
     constructor(properties?: IPvMO);
 
     /** PvMO serialNumber. */
-    public serialNumber: (number|Long);
+    public serialNumber: number;
 
     /** PvMO portNumber. */
     public portNumber: number;
@@ -2313,14 +739,6 @@ export class PvMO implements IPvMO {
     public static encode(message: IPvMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified PvMO message, length delimited. Does not implicitly {@link PvMO.verify|verify} messages.
-     * @param message PvMO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IPvMO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a PvMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -2329,43 +747,6 @@ export class PvMO implements IPvMO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): PvMO;
-
-    /**
-     * Decodes a PvMO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns PvMO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): PvMO;
-
-    /**
-     * Verifies a PvMO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a PvMO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns PvMO
-     */
-    public static fromObject(object: { [k: string]: any }): PvMO;
-
-    /**
-     * Creates a plain object from a PvMO message. Also converts values to other types if specified.
-     * @param message PvMO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: PvMO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this PvMO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for PvMO
@@ -2412,10 +793,10 @@ export interface IRealDataNewReqDTO {
     pvData?: (IPvMO[]|null);
 
     /** RealDataNewReqDTO dtuPower */
-    dtuPower?: (number|Long|null);
+    dtuPower?: (number|null);
 
     /** RealDataNewReqDTO dtuDailyEnergy */
-    dtuDailyEnergy?: (number|Long|null);
+    dtuDailyEnergy?: (number|null);
 }
 
 /** Represents a RealDataNewReqDTO. */
@@ -2461,10 +842,10 @@ export class RealDataNewReqDTO implements IRealDataNewReqDTO {
     public pvData: IPvMO[];
 
     /** RealDataNewReqDTO dtuPower. */
-    public dtuPower: (number|Long);
+    public dtuPower: number;
 
     /** RealDataNewReqDTO dtuDailyEnergy. */
-    public dtuDailyEnergy: (number|Long);
+    public dtuDailyEnergy: number;
 
     /**
      * Creates a new RealDataNewReqDTO instance using the specified properties.
@@ -2482,14 +863,6 @@ export class RealDataNewReqDTO implements IRealDataNewReqDTO {
     public static encode(message: IRealDataNewReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified RealDataNewReqDTO message, length delimited. Does not implicitly {@link RealDataNewReqDTO.verify|verify} messages.
-     * @param message RealDataNewReqDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IRealDataNewReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a RealDataNewReqDTO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -2498,43 +871,6 @@ export class RealDataNewReqDTO implements IRealDataNewReqDTO {
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): RealDataNewReqDTO;
-
-    /**
-     * Decodes a RealDataNewReqDTO message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns RealDataNewReqDTO
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): RealDataNewReqDTO;
-
-    /**
-     * Verifies a RealDataNewReqDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a RealDataNewReqDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns RealDataNewReqDTO
-     */
-    public static fromObject(object: { [k: string]: any }): RealDataNewReqDTO;
-
-    /**
-     * Creates a plain object from a RealDataNewReqDTO message. Also converts values to other types if specified.
-     * @param message RealDataNewReqDTO
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: RealDataNewReqDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this RealDataNewReqDTO to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
 
     /**
      * Gets the default type url for RealDataNewReqDTO
@@ -2603,14 +939,6 @@ export class RealDataNewResDTO implements IRealDataNewResDTO {
     public static encode(message: IRealDataNewResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified RealDataNewResDTO message, length delimited. Does not implicitly {@link RealDataNewResDTO.verify|verify} messages.
-     * @param message RealDataNewResDTO message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: IRealDataNewResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
      * Decodes a RealDataNewResDTO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
@@ -2621,44 +949,1231 @@ export class RealDataNewResDTO implements IRealDataNewResDTO {
     public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): RealDataNewResDTO;
 
     /**
-     * Decodes a RealDataNewResDTO message from the specified reader or buffer, length delimited.
+     * Gets the default type url for RealDataNewResDTO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPDtuInfoMO. */
+export interface IAPPDtuInfoMO {
+
+    /** APPDtuInfoMO deviceKind */
+    deviceKind?: (number|null);
+
+    /** APPDtuInfoMO dtuSwVersion */
+    dtuSwVersion?: (number|null);
+
+    /** APPDtuInfoMO dtuHwVersion */
+    dtuHwVersion?: (number|null);
+
+    /** APPDtuInfoMO dtuStepTime */
+    dtuStepTime?: (number|null);
+
+    /** APPDtuInfoMO dtuRfHwVersion */
+    dtuRfHwVersion?: (number|null);
+
+    /** APPDtuInfoMO dtuRfSwVersion */
+    dtuRfSwVersion?: (number|null);
+
+    /** APPDtuInfoMO accessModel */
+    accessModel?: (number|null);
+
+    /** APPDtuInfoMO communicationTime */
+    communicationTime?: (number|null);
+
+    /** APPDtuInfoMO signalStrength */
+    signalStrength?: (number|null);
+
+    /** APPDtuInfoMO gprsVersion */
+    gprsVersion?: (string|null);
+
+    /** APPDtuInfoMO wifiVersion */
+    wifiVersion?: (string|null);
+
+    /** APPDtuInfoMO kaNumber */
+    kaNumber?: (string|null);
+
+    /** APPDtuInfoMO dtuRuleId */
+    dtuRuleId?: (number|null);
+
+    /** APPDtuInfoMO dtuErrorCode */
+    dtuErrorCode?: (number|null);
+
+    /** APPDtuInfoMO dtu485Mode */
+    dtu485Mode?: (number|null);
+
+    /** APPDtuInfoMO dtu485Address */
+    dtu485Address?: (number|null);
+
+    /** APPDtuInfoMO sub1gFrequencyBand */
+    sub1gFrequencyBand?: (number|null);
+
+    /** APPDtuInfoMO sub1gChannelTotalNumber */
+    sub1gChannelTotalNumber?: (number|null);
+
+    /** APPDtuInfoMO sub1gChannelNumber */
+    sub1gChannelNumber?: (number|null);
+
+    /** APPDtuInfoMO sub1gRp */
+    sub1gRp?: (number|null);
+
+    /** APPDtuInfoMO sub1gChannelTotal */
+    sub1gChannelTotal?: (number|null);
+
+    /** APPDtuInfoMO gprsImei */
+    gprsImei?: (string|null);
+
+    /** APPDtuInfoMO dtuSwbTime */
+    dtuSwbTime?: (number|null);
+
+    /** APPDtuInfoMO dfs */
+    dfs?: (number|null);
+
+    /** APPDtuInfoMO shls */
+    shls?: (number[]|null);
+
+    /** APPDtuInfoMO type */
+    type?: (number|null);
+
+    /** APPDtuInfoMO encRand */
+    encRand?: (Uint8Array|null);
+}
+
+/** Represents a APPDtuInfoMO. */
+export class APPDtuInfoMO implements IAPPDtuInfoMO {
+
+    /**
+     * Constructs a new APPDtuInfoMO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAPPDtuInfoMO);
+
+    /** APPDtuInfoMO deviceKind. */
+    public deviceKind: number;
+
+    /** APPDtuInfoMO dtuSwVersion. */
+    public dtuSwVersion: number;
+
+    /** APPDtuInfoMO dtuHwVersion. */
+    public dtuHwVersion: number;
+
+    /** APPDtuInfoMO dtuStepTime. */
+    public dtuStepTime: number;
+
+    /** APPDtuInfoMO dtuRfHwVersion. */
+    public dtuRfHwVersion: number;
+
+    /** APPDtuInfoMO dtuRfSwVersion. */
+    public dtuRfSwVersion: number;
+
+    /** APPDtuInfoMO accessModel. */
+    public accessModel: number;
+
+    /** APPDtuInfoMO communicationTime. */
+    public communicationTime: number;
+
+    /** APPDtuInfoMO signalStrength. */
+    public signalStrength: number;
+
+    /** APPDtuInfoMO gprsVersion. */
+    public gprsVersion: string;
+
+    /** APPDtuInfoMO wifiVersion. */
+    public wifiVersion: string;
+
+    /** APPDtuInfoMO kaNumber. */
+    public kaNumber: string;
+
+    /** APPDtuInfoMO dtuRuleId. */
+    public dtuRuleId: number;
+
+    /** APPDtuInfoMO dtuErrorCode. */
+    public dtuErrorCode: number;
+
+    /** APPDtuInfoMO dtu485Mode. */
+    public dtu485Mode: number;
+
+    /** APPDtuInfoMO dtu485Address. */
+    public dtu485Address: number;
+
+    /** APPDtuInfoMO sub1gFrequencyBand. */
+    public sub1gFrequencyBand: number;
+
+    /** APPDtuInfoMO sub1gChannelTotalNumber. */
+    public sub1gChannelTotalNumber: number;
+
+    /** APPDtuInfoMO sub1gChannelNumber. */
+    public sub1gChannelNumber: number;
+
+    /** APPDtuInfoMO sub1gRp. */
+    public sub1gRp: number;
+
+    /** APPDtuInfoMO sub1gChannelTotal. */
+    public sub1gChannelTotal: number;
+
+    /** APPDtuInfoMO gprsImei. */
+    public gprsImei: string;
+
+    /** APPDtuInfoMO dtuSwbTime. */
+    public dtuSwbTime: number;
+
+    /** APPDtuInfoMO dfs. */
+    public dfs: number;
+
+    /** APPDtuInfoMO shls. */
+    public shls: number[];
+
+    /** APPDtuInfoMO type. */
+    public type: number;
+
+    /** APPDtuInfoMO encRand. */
+    public encRand: Uint8Array;
+
+    /**
+     * Creates a new APPDtuInfoMO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPDtuInfoMO instance
+     */
+    public static create(properties?: IAPPDtuInfoMO): APPDtuInfoMO;
+
+    /**
+     * Encodes the specified APPDtuInfoMO message. Does not implicitly {@link APPDtuInfoMO.verify|verify} messages.
+     * @param message APPDtuInfoMO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAPPDtuInfoMO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a APPDtuInfoMO message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
-     * @returns RealDataNewResDTO
+     * @param [length] Message length if known beforehand
+     * @returns APPDtuInfoMO
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): RealDataNewResDTO;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPDtuInfoMO;
 
     /**
-     * Verifies a RealDataNewResDTO message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
+     * Gets the default type url for APPDtuInfoMO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
      */
-    public static verify(message: { [k: string]: any }): (string|null);
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPMeterInfoMO. */
+export interface IAPPMeterInfoMO {
+
+    /** APPMeterInfoMO deviceKind */
+    deviceKind?: (number|null);
+
+    /** APPMeterInfoMO meterSerialNumber */
+    meterSerialNumber?: (number|null);
+
+    /** APPMeterInfoMO meterModel */
+    meterModel?: (number|null);
+
+    /** APPMeterInfoMO meterCt */
+    meterCt?: (number|null);
+
+    /** APPMeterInfoMO communicationWay */
+    communicationWay?: (number|null);
+
+    /** APPMeterInfoMO accessMode */
+    accessMode?: (number|null);
+
+    /** APPMeterInfoMO swVersion */
+    swVersion?: (number|null);
+
+    /** APPMeterInfoMO meterValue */
+    meterValue?: (string|null);
+}
+
+/** Represents a APPMeterInfoMO. */
+export class APPMeterInfoMO implements IAPPMeterInfoMO {
 
     /**
-     * Creates a RealDataNewResDTO message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns RealDataNewResDTO
+     * Constructs a new APPMeterInfoMO.
+     * @param [properties] Properties to set
      */
-    public static fromObject(object: { [k: string]: any }): RealDataNewResDTO;
+    constructor(properties?: IAPPMeterInfoMO);
+
+    /** APPMeterInfoMO deviceKind. */
+    public deviceKind: number;
+
+    /** APPMeterInfoMO meterSerialNumber. */
+    public meterSerialNumber: number;
+
+    /** APPMeterInfoMO meterModel. */
+    public meterModel: number;
+
+    /** APPMeterInfoMO meterCt. */
+    public meterCt: number;
+
+    /** APPMeterInfoMO communicationWay. */
+    public communicationWay: number;
+
+    /** APPMeterInfoMO accessMode. */
+    public accessMode: number;
+
+    /** APPMeterInfoMO swVersion. */
+    public swVersion: number;
+
+    /** APPMeterInfoMO meterValue. */
+    public meterValue: string;
 
     /**
-     * Creates a plain object from a RealDataNewResDTO message. Also converts values to other types if specified.
-     * @param message RealDataNewResDTO
-     * @param [options] Conversion options
-     * @returns Plain object
+     * Creates a new APPMeterInfoMO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPMeterInfoMO instance
      */
-    public static toObject(message: RealDataNewResDTO, options?: $protobuf.IConversionOptions): { [k: string]: any };
+    public static create(properties?: IAPPMeterInfoMO): APPMeterInfoMO;
 
     /**
-     * Converts this RealDataNewResDTO to JSON.
-     * @returns JSON object
+     * Encodes the specified APPMeterInfoMO message. Does not implicitly {@link APPMeterInfoMO.verify|verify} messages.
+     * @param message APPMeterInfoMO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
      */
-    public toJSON(): { [k: string]: any };
+    public static encode(message: IAPPMeterInfoMO, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Gets the default type url for RealDataNewResDTO
+     * Decodes a APPMeterInfoMO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns APPMeterInfoMO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPMeterInfoMO;
+
+    /**
+     * Gets the default type url for APPMeterInfoMO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPRpInfoMO. */
+export interface IAPPRpInfoMO {
+
+    /** APPRpInfoMO deviceKind */
+    deviceKind?: (number|null);
+
+    /** APPRpInfoMO rpSerialNumber */
+    rpSerialNumber?: (number|null);
+
+    /** APPRpInfoMO rpSwVersion */
+    rpSwVersion?: (number|null);
+
+    /** APPRpInfoMO rpHwVersion */
+    rpHwVersion?: (number|null);
+
+    /** APPRpInfoMO rpRuleId */
+    rpRuleId?: (number|null);
+}
+
+/** Represents a APPRpInfoMO. */
+export class APPRpInfoMO implements IAPPRpInfoMO {
+
+    /**
+     * Constructs a new APPRpInfoMO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAPPRpInfoMO);
+
+    /** APPRpInfoMO deviceKind. */
+    public deviceKind: number;
+
+    /** APPRpInfoMO rpSerialNumber. */
+    public rpSerialNumber: number;
+
+    /** APPRpInfoMO rpSwVersion. */
+    public rpSwVersion: number;
+
+    /** APPRpInfoMO rpHwVersion. */
+    public rpHwVersion: number;
+
+    /** APPRpInfoMO rpRuleId. */
+    public rpRuleId: number;
+
+    /**
+     * Creates a new APPRpInfoMO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPRpInfoMO instance
+     */
+    public static create(properties?: IAPPRpInfoMO): APPRpInfoMO;
+
+    /**
+     * Encodes the specified APPRpInfoMO message. Does not implicitly {@link APPRpInfoMO.verify|verify} messages.
+     * @param message APPRpInfoMO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAPPRpInfoMO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a APPRpInfoMO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns APPRpInfoMO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPRpInfoMO;
+
+    /**
+     * Gets the default type url for APPRpInfoMO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPPvInfoMO. */
+export interface IAPPPvInfoMO {
+
+    /** APPPvInfoMO deviceKind */
+    deviceKind?: (number|null);
+
+    /** APPPvInfoMO pvSerialNumber */
+    pvSerialNumber?: (number|null);
+
+    /** APPPvInfoMO pvUsfw */
+    pvUsfw?: (number|null);
+
+    /** APPPvInfoMO pvSwVersion */
+    pvSwVersion?: (number|null);
+
+    /** APPPvInfoMO pvHwPartNumber */
+    pvHwPartNumber?: (number|null);
+
+    /** APPPvInfoMO pvHwVersion */
+    pvHwVersion?: (number|null);
+
+    /** APPPvInfoMO pvGridProfileCode */
+    pvGridProfileCode?: (number|null);
+
+    /** APPPvInfoMO pvGridProfile */
+    pvGridProfile?: (number|null);
+
+    /** APPPvInfoMO pvRfHwVersion */
+    pvRfHwVersion?: (number|null);
+
+    /** APPPvInfoMO pvRfSwVersion */
+    pvRfSwVersion?: (number|null);
+
+    /** APPPvInfoMO miRuleId */
+    miRuleId?: (number|null);
+}
+
+/** Represents a APPPvInfoMO. */
+export class APPPvInfoMO implements IAPPPvInfoMO {
+
+    /**
+     * Constructs a new APPPvInfoMO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAPPPvInfoMO);
+
+    /** APPPvInfoMO deviceKind. */
+    public deviceKind: number;
+
+    /** APPPvInfoMO pvSerialNumber. */
+    public pvSerialNumber: number;
+
+    /** APPPvInfoMO pvUsfw. */
+    public pvUsfw: number;
+
+    /** APPPvInfoMO pvSwVersion. */
+    public pvSwVersion: number;
+
+    /** APPPvInfoMO pvHwPartNumber. */
+    public pvHwPartNumber: number;
+
+    /** APPPvInfoMO pvHwVersion. */
+    public pvHwVersion: number;
+
+    /** APPPvInfoMO pvGridProfileCode. */
+    public pvGridProfileCode: number;
+
+    /** APPPvInfoMO pvGridProfile. */
+    public pvGridProfile: number;
+
+    /** APPPvInfoMO pvRfHwVersion. */
+    public pvRfHwVersion: number;
+
+    /** APPPvInfoMO pvRfSwVersion. */
+    public pvRfSwVersion: number;
+
+    /** APPPvInfoMO miRuleId. */
+    public miRuleId: number;
+
+    /**
+     * Creates a new APPPvInfoMO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPPvInfoMO instance
+     */
+    public static create(properties?: IAPPPvInfoMO): APPPvInfoMO;
+
+    /**
+     * Encodes the specified APPPvInfoMO message. Does not implicitly {@link APPPvInfoMO.verify|verify} messages.
+     * @param message APPPvInfoMO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAPPPvInfoMO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a APPPvInfoMO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns APPPvInfoMO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPPvInfoMO;
+
+    /**
+     * Gets the default type url for APPPvInfoMO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPFeatureMO. */
+export interface IAPPFeatureMO {
+
+    /** APPFeatureMO key */
+    key?: (number|null);
+
+    /** APPFeatureMO value */
+    value?: (string|null);
+}
+
+/** Represents a APPFeatureMO. */
+export class APPFeatureMO implements IAPPFeatureMO {
+
+    /**
+     * Constructs a new APPFeatureMO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAPPFeatureMO);
+
+    /** APPFeatureMO key. */
+    public key: number;
+
+    /** APPFeatureMO value. */
+    public value: string;
+
+    /**
+     * Creates a new APPFeatureMO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPFeatureMO instance
+     */
+    public static create(properties?: IAPPFeatureMO): APPFeatureMO;
+
+    /**
+     * Encodes the specified APPFeatureMO message. Does not implicitly {@link APPFeatureMO.verify|verify} messages.
+     * @param message APPFeatureMO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAPPFeatureMO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a APPFeatureMO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns APPFeatureMO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPFeatureMO;
+
+    /**
+     * Gets the default type url for APPFeatureMO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPInfoDataReqDTO. */
+export interface IAPPInfoDataReqDTO {
+
+    /** APPInfoDataReqDTO dtuSerialNumber */
+    dtuSerialNumber?: (string|null);
+
+    /** APPInfoDataReqDTO timestamp */
+    timestamp?: (number|null);
+
+    /** APPInfoDataReqDTO deviceNumber */
+    deviceNumber?: (number|null);
+
+    /** APPInfoDataReqDTO pvNumber */
+    pvNumber?: (number|null);
+
+    /** APPInfoDataReqDTO packageNumber */
+    packageNumber?: (number|null);
+
+    /** APPInfoDataReqDTO currentPackage */
+    currentPackage?: (number|null);
+
+    /** APPInfoDataReqDTO channel */
+    channel?: (number|null);
+
+    /** APPInfoDataReqDTO dtuInfo */
+    dtuInfo?: (IAPPDtuInfoMO|null);
+
+    /** APPInfoDataReqDTO meterInfo */
+    meterInfo?: (IAPPMeterInfoMO[]|null);
+
+    /** APPInfoDataReqDTO rpInfo */
+    rpInfo?: (IAPPRpInfoMO[]|null);
+
+    /** APPInfoDataReqDTO pvInfo */
+    pvInfo?: (IAPPPvInfoMO[]|null);
+
+    /** APPInfoDataReqDTO unknownField */
+    unknownField?: (number|null);
+
+    /** APPInfoDataReqDTO appFeatures */
+    appFeatures?: (IAPPFeatureMO[]|null);
+}
+
+/** Represents a APPInfoDataReqDTO. */
+export class APPInfoDataReqDTO implements IAPPInfoDataReqDTO {
+
+    /**
+     * Constructs a new APPInfoDataReqDTO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAPPInfoDataReqDTO);
+
+    /** APPInfoDataReqDTO dtuSerialNumber. */
+    public dtuSerialNumber: string;
+
+    /** APPInfoDataReqDTO timestamp. */
+    public timestamp: number;
+
+    /** APPInfoDataReqDTO deviceNumber. */
+    public deviceNumber: number;
+
+    /** APPInfoDataReqDTO pvNumber. */
+    public pvNumber: number;
+
+    /** APPInfoDataReqDTO packageNumber. */
+    public packageNumber: number;
+
+    /** APPInfoDataReqDTO currentPackage. */
+    public currentPackage: number;
+
+    /** APPInfoDataReqDTO channel. */
+    public channel: number;
+
+    /** APPInfoDataReqDTO dtuInfo. */
+    public dtuInfo?: (IAPPDtuInfoMO|null);
+
+    /** APPInfoDataReqDTO meterInfo. */
+    public meterInfo: IAPPMeterInfoMO[];
+
+    /** APPInfoDataReqDTO rpInfo. */
+    public rpInfo: IAPPRpInfoMO[];
+
+    /** APPInfoDataReqDTO pvInfo. */
+    public pvInfo: IAPPPvInfoMO[];
+
+    /** APPInfoDataReqDTO unknownField. */
+    public unknownField: number;
+
+    /** APPInfoDataReqDTO appFeatures. */
+    public appFeatures: IAPPFeatureMO[];
+
+    /**
+     * Creates a new APPInfoDataReqDTO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPInfoDataReqDTO instance
+     */
+    public static create(properties?: IAPPInfoDataReqDTO): APPInfoDataReqDTO;
+
+    /**
+     * Encodes the specified APPInfoDataReqDTO message. Does not implicitly {@link APPInfoDataReqDTO.verify|verify} messages.
+     * @param message APPInfoDataReqDTO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAPPInfoDataReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a APPInfoDataReqDTO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns APPInfoDataReqDTO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPInfoDataReqDTO;
+
+    /**
+     * Gets the default type url for APPInfoDataReqDTO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a APPInfoDataResDTO. */
+export interface IAPPInfoDataResDTO {
+
+    /** APPInfoDataResDTO timeYmdHms */
+    timeYmdHms?: (Uint8Array|null);
+
+    /** APPInfoDataResDTO offset */
+    offset?: (number|null);
+
+    /** APPInfoDataResDTO currentPackage */
+    currentPackage?: (number|null);
+
+    /** APPInfoDataResDTO errorCode */
+    errorCode?: (number|null);
+
+    /** APPInfoDataResDTO time */
+    time?: (number|null);
+}
+
+/** Represents a APPInfoDataResDTO. */
+export class APPInfoDataResDTO implements IAPPInfoDataResDTO {
+
+    /**
+     * Constructs a new APPInfoDataResDTO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAPPInfoDataResDTO);
+
+    /** APPInfoDataResDTO timeYmdHms. */
+    public timeYmdHms: Uint8Array;
+
+    /** APPInfoDataResDTO offset. */
+    public offset: number;
+
+    /** APPInfoDataResDTO currentPackage. */
+    public currentPackage: number;
+
+    /** APPInfoDataResDTO errorCode. */
+    public errorCode: number;
+
+    /** APPInfoDataResDTO time. */
+    public time: number;
+
+    /**
+     * Creates a new APPInfoDataResDTO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns APPInfoDataResDTO instance
+     */
+    public static create(properties?: IAPPInfoDataResDTO): APPInfoDataResDTO;
+
+    /**
+     * Encodes the specified APPInfoDataResDTO message. Does not implicitly {@link APPInfoDataResDTO.verify|verify} messages.
+     * @param message APPInfoDataResDTO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAPPInfoDataResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a APPInfoDataResDTO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns APPInfoDataResDTO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): APPInfoDataResDTO;
+
+    /**
+     * Gets the default type url for APPInfoDataResDTO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a GetConfigResDTO. */
+export interface IGetConfigResDTO {
+
+    /** GetConfigResDTO offset */
+    offset?: (number|null);
+
+    /** GetConfigResDTO time */
+    time?: (number|null);
+}
+
+/** Represents a GetConfigResDTO. */
+export class GetConfigResDTO implements IGetConfigResDTO {
+
+    /**
+     * Constructs a new GetConfigResDTO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IGetConfigResDTO);
+
+    /** GetConfigResDTO offset. */
+    public offset: number;
+
+    /** GetConfigResDTO time. */
+    public time: number;
+
+    /**
+     * Creates a new GetConfigResDTO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns GetConfigResDTO instance
+     */
+    public static create(properties?: IGetConfigResDTO): GetConfigResDTO;
+
+    /**
+     * Encodes the specified GetConfigResDTO message. Does not implicitly {@link GetConfigResDTO.verify|verify} messages.
+     * @param message GetConfigResDTO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IGetConfigResDTO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a GetConfigResDTO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns GetConfigResDTO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetConfigResDTO;
+
+    /**
+     * Gets the default type url for GetConfigResDTO
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a GetConfigReqDTO. */
+export interface IGetConfigReqDTO {
+
+    /** GetConfigReqDTO requestOffset */
+    requestOffset?: (number|null);
+
+    /** GetConfigReqDTO requestTime */
+    requestTime?: (number|null);
+
+    /** GetConfigReqDTO lockPassword */
+    lockPassword?: (number|null);
+
+    /** GetConfigReqDTO lockTime */
+    lockTime?: (number|null);
+
+    /** GetConfigReqDTO limitPowerMypower */
+    limitPowerMypower?: (number|null);
+
+    /** GetConfigReqDTO zeroExport_433Addr */
+    zeroExport_433Addr?: (number|null);
+
+    /** GetConfigReqDTO zeroExportEnable */
+    zeroExportEnable?: (number|null);
+
+    /** GetConfigReqDTO netmodeSelect */
+    netmodeSelect?: (number|null);
+
+    /** GetConfigReqDTO channelSelect */
+    channelSelect?: (number|null);
+
+    /** GetConfigReqDTO serverSendTime */
+    serverSendTime?: (number|null);
+
+    /** GetConfigReqDTO wifiRssi */
+    wifiRssi?: (number|null);
+
+    /** GetConfigReqDTO serverport */
+    serverport?: (number|null);
+
+    /** GetConfigReqDTO apnSet */
+    apnSet?: (string|null);
+
+    /** GetConfigReqDTO meterKind */
+    meterKind?: (string|null);
+
+    /** GetConfigReqDTO meterInterface */
+    meterInterface?: (string|null);
+
+    /** GetConfigReqDTO wifiSsid */
+    wifiSsid?: (string|null);
+
+    /** GetConfigReqDTO wifiPassword */
+    wifiPassword?: (string|null);
+
+    /** GetConfigReqDTO serverDomainName */
+    serverDomainName?: (string|null);
+
+    /** GetConfigReqDTO invType */
+    invType?: (number|null);
+
+    /** GetConfigReqDTO dtuSn */
+    dtuSn?: (string|null);
+
+    /** GetConfigReqDTO accessModel */
+    accessModel?: (number|null);
+
+    /** GetConfigReqDTO mac_0 */
+    mac_0?: (number|null);
+
+    /** GetConfigReqDTO mac_1 */
+    mac_1?: (number|null);
+
+    /** GetConfigReqDTO mac_2 */
+    mac_2?: (number|null);
+
+    /** GetConfigReqDTO mac_3 */
+    mac_3?: (number|null);
+
+    /** GetConfigReqDTO dhcpSwitch */
+    dhcpSwitch?: (number|null);
+
+    /** GetConfigReqDTO ipAddr_0 */
+    ipAddr_0?: (number|null);
+
+    /** GetConfigReqDTO ipAddr_1 */
+    ipAddr_1?: (number|null);
+
+    /** GetConfigReqDTO ipAddr_2 */
+    ipAddr_2?: (number|null);
+
+    /** GetConfigReqDTO ipAddr_3 */
+    ipAddr_3?: (number|null);
+
+    /** GetConfigReqDTO subnetMask_0 */
+    subnetMask_0?: (number|null);
+
+    /** GetConfigReqDTO subnetMask_1 */
+    subnetMask_1?: (number|null);
+
+    /** GetConfigReqDTO subnetMask_2 */
+    subnetMask_2?: (number|null);
+
+    /** GetConfigReqDTO subnetMask_3 */
+    subnetMask_3?: (number|null);
+
+    /** GetConfigReqDTO defaultGateway_0 */
+    defaultGateway_0?: (number|null);
+
+    /** GetConfigReqDTO defaultGateway_1 */
+    defaultGateway_1?: (number|null);
+
+    /** GetConfigReqDTO defaultGateway_2 */
+    defaultGateway_2?: (number|null);
+
+    /** GetConfigReqDTO defaultGateway_3 */
+    defaultGateway_3?: (number|null);
+
+    /** GetConfigReqDTO kaNub */
+    kaNub?: (string|null);
+
+    /** GetConfigReqDTO apnName */
+    apnName?: (string|null);
+
+    /** GetConfigReqDTO apnPassword */
+    apnPassword?: (string|null);
+
+    /** GetConfigReqDTO sub1gSweepSwitch */
+    sub1gSweepSwitch?: (number|null);
+
+    /** GetConfigReqDTO sub1gWorkChannel */
+    sub1gWorkChannel?: (number|null);
+
+    /** GetConfigReqDTO cableDns_0 */
+    cableDns_0?: (number|null);
+
+    /** GetConfigReqDTO cableDns_1 */
+    cableDns_1?: (number|null);
+
+    /** GetConfigReqDTO cableDns_2 */
+    cableDns_2?: (number|null);
+
+    /** GetConfigReqDTO cableDns_3 */
+    cableDns_3?: (number|null);
+
+    /** GetConfigReqDTO wifiIpAddr_0 */
+    wifiIpAddr_0?: (number|null);
+
+    /** GetConfigReqDTO wifiIpAddr_1 */
+    wifiIpAddr_1?: (number|null);
+
+    /** GetConfigReqDTO wifiIpAddr_2 */
+    wifiIpAddr_2?: (number|null);
+
+    /** GetConfigReqDTO wifiIpAddr_3 */
+    wifiIpAddr_3?: (number|null);
+
+    /** GetConfigReqDTO mac_4 */
+    mac_4?: (number|null);
+
+    /** GetConfigReqDTO mac_5 */
+    mac_5?: (number|null);
+
+    /** GetConfigReqDTO wifiMac_0 */
+    wifiMac_0?: (number|null);
+
+    /** GetConfigReqDTO wifiMac_1 */
+    wifiMac_1?: (number|null);
+
+    /** GetConfigReqDTO wifiMac_2 */
+    wifiMac_2?: (number|null);
+
+    /** GetConfigReqDTO wifiMac_3 */
+    wifiMac_3?: (number|null);
+
+    /** GetConfigReqDTO wifiMac_4 */
+    wifiMac_4?: (number|null);
+
+    /** GetConfigReqDTO wifiMac_5 */
+    wifiMac_5?: (number|null);
+
+    /** GetConfigReqDTO gprsImei */
+    gprsImei?: (string|null);
+
+    /** GetConfigReqDTO dtuApSsid */
+    dtuApSsid?: (string|null);
+
+    /** GetConfigReqDTO dtuApPass */
+    dtuApPass?: (string|null);
+}
+
+/** Represents a GetConfigReqDTO. */
+export class GetConfigReqDTO implements IGetConfigReqDTO {
+
+    /**
+     * Constructs a new GetConfigReqDTO.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IGetConfigReqDTO);
+
+    /** GetConfigReqDTO requestOffset. */
+    public requestOffset: number;
+
+    /** GetConfigReqDTO requestTime. */
+    public requestTime: number;
+
+    /** GetConfigReqDTO lockPassword. */
+    public lockPassword: number;
+
+    /** GetConfigReqDTO lockTime. */
+    public lockTime: number;
+
+    /** GetConfigReqDTO limitPowerMypower. */
+    public limitPowerMypower: number;
+
+    /** GetConfigReqDTO zeroExport_433Addr. */
+    public zeroExport_433Addr: number;
+
+    /** GetConfigReqDTO zeroExportEnable. */
+    public zeroExportEnable: number;
+
+    /** GetConfigReqDTO netmodeSelect. */
+    public netmodeSelect: number;
+
+    /** GetConfigReqDTO channelSelect. */
+    public channelSelect: number;
+
+    /** GetConfigReqDTO serverSendTime. */
+    public serverSendTime: number;
+
+    /** GetConfigReqDTO wifiRssi. */
+    public wifiRssi: number;
+
+    /** GetConfigReqDTO serverport. */
+    public serverport: number;
+
+    /** GetConfigReqDTO apnSet. */
+    public apnSet: string;
+
+    /** GetConfigReqDTO meterKind. */
+    public meterKind: string;
+
+    /** GetConfigReqDTO meterInterface. */
+    public meterInterface: string;
+
+    /** GetConfigReqDTO wifiSsid. */
+    public wifiSsid: string;
+
+    /** GetConfigReqDTO wifiPassword. */
+    public wifiPassword: string;
+
+    /** GetConfigReqDTO serverDomainName. */
+    public serverDomainName: string;
+
+    /** GetConfigReqDTO invType. */
+    public invType: number;
+
+    /** GetConfigReqDTO dtuSn. */
+    public dtuSn: string;
+
+    /** GetConfigReqDTO accessModel. */
+    public accessModel: number;
+
+    /** GetConfigReqDTO mac_0. */
+    public mac_0: number;
+
+    /** GetConfigReqDTO mac_1. */
+    public mac_1: number;
+
+    /** GetConfigReqDTO mac_2. */
+    public mac_2: number;
+
+    /** GetConfigReqDTO mac_3. */
+    public mac_3: number;
+
+    /** GetConfigReqDTO dhcpSwitch. */
+    public dhcpSwitch: number;
+
+    /** GetConfigReqDTO ipAddr_0. */
+    public ipAddr_0: number;
+
+    /** GetConfigReqDTO ipAddr_1. */
+    public ipAddr_1: number;
+
+    /** GetConfigReqDTO ipAddr_2. */
+    public ipAddr_2: number;
+
+    /** GetConfigReqDTO ipAddr_3. */
+    public ipAddr_3: number;
+
+    /** GetConfigReqDTO subnetMask_0. */
+    public subnetMask_0: number;
+
+    /** GetConfigReqDTO subnetMask_1. */
+    public subnetMask_1: number;
+
+    /** GetConfigReqDTO subnetMask_2. */
+    public subnetMask_2: number;
+
+    /** GetConfigReqDTO subnetMask_3. */
+    public subnetMask_3: number;
+
+    /** GetConfigReqDTO defaultGateway_0. */
+    public defaultGateway_0: number;
+
+    /** GetConfigReqDTO defaultGateway_1. */
+    public defaultGateway_1: number;
+
+    /** GetConfigReqDTO defaultGateway_2. */
+    public defaultGateway_2: number;
+
+    /** GetConfigReqDTO defaultGateway_3. */
+    public defaultGateway_3: number;
+
+    /** GetConfigReqDTO kaNub. */
+    public kaNub: string;
+
+    /** GetConfigReqDTO apnName. */
+    public apnName: string;
+
+    /** GetConfigReqDTO apnPassword. */
+    public apnPassword: string;
+
+    /** GetConfigReqDTO sub1gSweepSwitch. */
+    public sub1gSweepSwitch: number;
+
+    /** GetConfigReqDTO sub1gWorkChannel. */
+    public sub1gWorkChannel: number;
+
+    /** GetConfigReqDTO cableDns_0. */
+    public cableDns_0: number;
+
+    /** GetConfigReqDTO cableDns_1. */
+    public cableDns_1: number;
+
+    /** GetConfigReqDTO cableDns_2. */
+    public cableDns_2: number;
+
+    /** GetConfigReqDTO cableDns_3. */
+    public cableDns_3: number;
+
+    /** GetConfigReqDTO wifiIpAddr_0. */
+    public wifiIpAddr_0: number;
+
+    /** GetConfigReqDTO wifiIpAddr_1. */
+    public wifiIpAddr_1: number;
+
+    /** GetConfigReqDTO wifiIpAddr_2. */
+    public wifiIpAddr_2: number;
+
+    /** GetConfigReqDTO wifiIpAddr_3. */
+    public wifiIpAddr_3: number;
+
+    /** GetConfigReqDTO mac_4. */
+    public mac_4: number;
+
+    /** GetConfigReqDTO mac_5. */
+    public mac_5: number;
+
+    /** GetConfigReqDTO wifiMac_0. */
+    public wifiMac_0: number;
+
+    /** GetConfigReqDTO wifiMac_1. */
+    public wifiMac_1: number;
+
+    /** GetConfigReqDTO wifiMac_2. */
+    public wifiMac_2: number;
+
+    /** GetConfigReqDTO wifiMac_3. */
+    public wifiMac_3: number;
+
+    /** GetConfigReqDTO wifiMac_4. */
+    public wifiMac_4: number;
+
+    /** GetConfigReqDTO wifiMac_5. */
+    public wifiMac_5: number;
+
+    /** GetConfigReqDTO gprsImei. */
+    public gprsImei: string;
+
+    /** GetConfigReqDTO dtuApSsid. */
+    public dtuApSsid: string;
+
+    /** GetConfigReqDTO dtuApPass. */
+    public dtuApPass: string;
+
+    /**
+     * Creates a new GetConfigReqDTO instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns GetConfigReqDTO instance
+     */
+    public static create(properties?: IGetConfigReqDTO): GetConfigReqDTO;
+
+    /**
+     * Encodes the specified GetConfigReqDTO message. Does not implicitly {@link GetConfigReqDTO.verify|verify} messages.
+     * @param message GetConfigReqDTO message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IGetConfigReqDTO, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a GetConfigReqDTO message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns GetConfigReqDTO
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetConfigReqDTO;
+
+    /**
+     * Gets the default type url for GetConfigReqDTO
      * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
      * @returns The default type url
      */
