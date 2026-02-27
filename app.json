@@ -49,24 +49,43 @@
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
-        "measure_voltage",
-        "measure_current",
-        "measure_frequency",
-        "measure_temperature",
-        "alarm_generic",
+        "meter_power.today",
+        "meter_power",
         "measure_power.pv1",
         "measure_power.pv2",
         "measure_voltage.pv1",
         "measure_voltage.pv2",
         "measure_current.pv1",
         "measure_current.pv2",
-        "meter_power",
-        "meter_power.today"
+        "measure_voltage",
+        "measure_current",
+        "measure_frequency",
+        "measure_temperature",
+        "alarm_generic"
       ],
       "capabilitiesOptions": {
         "measure_power": {
           "title": {
-            "en": "Total Power"
+            "en": "Current Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "meter_power.today": {
+          "title": {
+            "en": "Daily Energy"
+          },
+          "units": {
+            "en": "kWh"
+          }
+        },
+        "meter_power": {
+          "title": {
+            "en": "Lifetime Energy"
+          },
+          "units": {
+            "en": "kWh"
           }
         },
         "measure_voltage": {
@@ -79,61 +98,9 @@
             "en": "AC Current"
           }
         },
-        "measure_power.pv1": {
+        "measure_frequency": {
           "title": {
-            "en": "Panel 1 Power"
-          },
-          "units": "W"
-        },
-        "measure_power.pv2": {
-          "title": {
-            "en": "Panel 2 Power"
-          },
-          "units": "W"
-        },
-        "measure_voltage.pv1": {
-          "title": {
-            "en": "Panel 1 Voltage"
-          },
-          "units": "V"
-        },
-        "measure_voltage.pv2": {
-          "title": {
-            "en": "Panel 2 Voltage"
-          },
-          "units": "V"
-        },
-        "measure_current.pv1": {
-          "title": {
-            "en": "Panel 1 Current"
-          },
-          "units": "A"
-        },
-        "measure_current.pv2": {
-          "title": {
-            "en": "Panel 2 Current"
-          },
-          "units": "A"
-        },
-        "meter_power": {
-          "title": {
-            "en": "Lifetime Energy"
-          },
-          "units": {
-            "en": "kWh"
-          }
-        },
-        "meter_power.today": {
-          "title": {
-            "en": "Daily Energy"
-          },
-          "units": {
-            "en": "kWh"
-          }
-        },
-        "alarm_generic": {
-          "title": {
-            "en": "Inverter Alarm"
+            "en": "Grid Frequency"
           }
         },
         "measure_temperature": {
@@ -141,9 +108,57 @@
             "en": "Inverter Temperature"
           }
         },
-        "measure_frequency": {
+        "alarm_generic": {
           "title": {
-            "en": "Grid Frequency"
+            "en": "Inverter Alarm"
+          }
+        },
+        "measure_power.pv1": {
+          "title": {
+            "en": "Panel 1 Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "measure_voltage.pv1": {
+          "title": {
+            "en": "Panel 1 Voltage"
+          },
+          "units": {
+            "en": "V"
+          }
+        },
+        "measure_current.pv1": {
+          "title": {
+            "en": "Panel 1 Current"
+          },
+          "units": {
+            "en": "A"
+          }
+        },
+        "measure_power.pv2": {
+          "title": {
+            "en": "Panel 2 Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "measure_voltage.pv2": {
+          "title": {
+            "en": "Panel 2 Voltage"
+          },
+          "units": {
+            "en": "V"
+          }
+        },
+        "measure_current.pv2": {
+          "title": {
+            "en": "Panel 2 Current"
+          },
+          "units": {
+            "en": "A"
           }
         }
       },
@@ -297,11 +312,8 @@
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
-        "measure_voltage",
-        "measure_current",
-        "measure_frequency",
-        "measure_temperature",
-        "alarm_generic",
+        "meter_power.today",
+        "meter_power",
         "measure_power.pv1",
         "measure_power.pv2",
         "measure_power.pv3",
@@ -314,13 +326,35 @@
         "measure_current.pv2",
         "measure_current.pv3",
         "measure_current.pv4",
-        "meter_power",
-        "meter_power.today"
+        "measure_voltage",
+        "measure_current",
+        "measure_frequency",
+        "measure_temperature",
+        "alarm_generic"
       ],
       "capabilitiesOptions": {
         "measure_power": {
           "title": {
-            "en": "Total Power"
+            "en": "Current Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "meter_power.today": {
+          "title": {
+            "en": "Daily Energy"
+          },
+          "units": {
+            "en": "kWh"
+          }
+        },
+        "meter_power": {
+          "title": {
+            "en": "Lifetime Energy"
+          },
+          "units": {
+            "en": "kWh"
           }
         },
         "measure_voltage": {
@@ -333,97 +367,9 @@
             "en": "AC Current"
           }
         },
-        "measure_power.pv1": {
+        "measure_frequency": {
           "title": {
-            "en": "Panel 1 Power"
-          },
-          "units": "W"
-        },
-        "measure_power.pv2": {
-          "title": {
-            "en": "Panel 2 Power"
-          },
-          "units": "W"
-        },
-        "measure_power.pv3": {
-          "title": {
-            "en": "Panel 3 Power"
-          },
-          "units": "W"
-        },
-        "measure_power.pv4": {
-          "title": {
-            "en": "Panel 4 Power"
-          },
-          "units": "W"
-        },
-        "measure_voltage.pv1": {
-          "title": {
-            "en": "Panel 1 Voltage"
-          },
-          "units": "V"
-        },
-        "measure_voltage.pv2": {
-          "title": {
-            "en": "Panel 2 Voltage"
-          },
-          "units": "V"
-        },
-        "measure_voltage.pv3": {
-          "title": {
-            "en": "Panel 3 Voltage"
-          },
-          "units": "V"
-        },
-        "measure_voltage.pv4": {
-          "title": {
-            "en": "Panel 4 Voltage"
-          },
-          "units": "V"
-        },
-        "measure_current.pv1": {
-          "title": {
-            "en": "Panel 1 Current"
-          },
-          "units": "A"
-        },
-        "measure_current.pv2": {
-          "title": {
-            "en": "Panel 2 Current"
-          },
-          "units": "A"
-        },
-        "measure_current.pv3": {
-          "title": {
-            "en": "Panel 3 Current"
-          },
-          "units": "A"
-        },
-        "measure_current.pv4": {
-          "title": {
-            "en": "Panel 4 Current"
-          },
-          "units": "A"
-        },
-        "meter_power": {
-          "title": {
-            "en": "Lifetime Energy"
-          },
-          "units": {
-            "en": "kWh"
-          }
-        },
-        "meter_power.today": {
-          "title": {
-            "en": "Daily Energy"
-          },
-          "units": {
-            "en": "kWh"
-          }
-        },
-        "alarm_generic": {
-          "title": {
-            "en": "Inverter Alarm"
+            "en": "Grid Frequency"
           }
         },
         "measure_temperature": {
@@ -431,9 +377,105 @@
             "en": "Inverter Temperature"
           }
         },
-        "measure_frequency": {
+        "alarm_generic": {
           "title": {
-            "en": "Grid Frequency"
+            "en": "Inverter Alarm"
+          }
+        },
+        "measure_power.pv1": {
+          "title": {
+            "en": "Panel 1 Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "measure_voltage.pv1": {
+          "title": {
+            "en": "Panel 1 Voltage"
+          },
+          "units": {
+            "en": "V"
+          }
+        },
+        "measure_current.pv1": {
+          "title": {
+            "en": "Panel 1 Current"
+          },
+          "units": {
+            "en": "A"
+          }
+        },
+        "measure_power.pv2": {
+          "title": {
+            "en": "Panel 2 Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "measure_voltage.pv2": {
+          "title": {
+            "en": "Panel 2 Voltage"
+          },
+          "units": {
+            "en": "V"
+          }
+        },
+        "measure_current.pv2": {
+          "title": {
+            "en": "Panel 2 Current"
+          },
+          "units": {
+            "en": "A"
+          }
+        },
+        "measure_power.pv3": {
+          "title": {
+            "en": "Panel 3 Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "measure_voltage.pv3": {
+          "title": {
+            "en": "Panel 3 Voltage"
+          },
+          "units": {
+            "en": "V"
+          }
+        },
+        "measure_current.pv3": {
+          "title": {
+            "en": "Panel 3 Current"
+          },
+          "units": {
+            "en": "A"
+          }
+        },
+        "measure_power.pv4": {
+          "title": {
+            "en": "Panel 4 Power"
+          },
+          "units": {
+            "en": "W"
+          }
+        },
+        "measure_voltage.pv4": {
+          "title": {
+            "en": "Panel 4 Voltage"
+          },
+          "units": {
+            "en": "V"
+          }
+        },
+        "measure_current.pv4": {
+          "title": {
+            "en": "Panel 4 Current"
+          },
+          "units": {
+            "en": "A"
           }
         }
       },
