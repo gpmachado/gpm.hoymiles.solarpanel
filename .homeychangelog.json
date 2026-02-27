@@ -16,5 +16,8 @@
   },
   "1.1.0": {
     "en": "Added two driver variants: Hoymiles HMS (2-panel) for HMS-800W-2T and Hoymiles HMS (4-panel) for HMS-2000DW-4T"
+  },
+  "1.1.1": {
+    "en": "v1.1.1: reorder capabilities, update README, fix icon"
   }
 }
