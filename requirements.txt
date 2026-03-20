@@ -1,0 +1,1 @@
+hoymiles-wifi>=0.5.6

@@ -1,0 +1,11 @@
+{
+  "1.0.0": {
+    "en": "Rewritten in Python using the official hoymiles-wifi library. Improved support for DTU-WLite, DTU-Pro, and DTU-Pro-S. Auto-detection of panel count, three-phase, hybrid, and encrypted inverters. No cloud required."
+  },
+  "1.1.1": {
+    "en": "Rewritten in Python using the official hoymiles-wifi library. Full support for DTU-WLite, DTU-Pro, and DTU-Pro-S (encrypted). Auto-detection of panel count, three-phase, hybrid, and encrypted inverters. Automatic night-time detection — device stays available overnight. No cloud required."
+  },
+  "1.1.2": {
+    "en": "Rewritten in Python using the official hoymiles-wifi library. Full support for DTU-WLite, DTU-Pro, and DTU-Pro-S (encrypted). Auto-detection of panel count, three-phase, hybrid, and encrypted inverters. Automatic night-time detection — device stays available overnight. No cloud required."
+  }
+}

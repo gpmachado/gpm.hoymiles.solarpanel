@@ -1,0 +1,121 @@
+{
+  "name": { "en": "Hoymiles DTU" },
+  "class": "solarpanel",
+  "capabilities": [],
+  "energy": { "meterPowerExportedCapability": "meter_power" },
+  "images": {
+    "small":  "{{driverAssetsPath}}/images/small.png",
+    "large":  "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "settings": [
+    {
+      "id": "ip",
+      "type": "text",
+      "label": { "en": "DTU IP Address" },
+      "hint":  { "en": "Local IP of your Hoymiles DTU (e.g. 192.168.1.201)" },
+      "placeholder": { "en": "192.168.1.201" }
+    },
+    {
+      "id": "polling_interval",
+      "type": "number",
+      "label": { "en": "Polling interval (seconds)" },
+      "hint":  { "en": "Minimum 35 seconds." },
+      "value": 60, "min": 35, "max": 3600
+    },
+    {
+      "id": "panel_count",
+      "type": "number",
+      "label": { "en": "Panel Count" },
+      "hint":  { "en": "Detected automatically. Change only if wrong." },
+      "value": 2, "min": 1, "max": 8
+    },
+    {
+      "id": "three_phase",
+      "type": "checkbox",
+      "label": { "en": "Three-phase inverter" },
+      "hint":  { "en": "Detected automatically. Enable only for three-phase systems." },
+      "value": false
+    },
+    {
+      "id": "is_hybrid",
+      "type": "checkbox",
+      "label": { "en": "Hybrid inverter (battery storage)" },
+      "hint":  { "en": "Detected automatically." },
+      "value": false
+    },
+    {
+      "id": "inverter_sns",
+      "type": "text",
+      "label": { "en": "Inverter serial numbers" },
+      "hint":  { "en": "JSON list, set automatically. Do not edit manually." },
+      "value": "[]"
+    },
+    {
+      "id": "dtu_sn",
+      "type": "text",
+      "label": { "en": "DTU serial number" },
+      "hint":  { "en": "Set automatically." },
+      "value": ""
+    },
+    {
+      "id": "is_encrypted",
+      "type": "checkbox",
+      "label": { "en": "DTU Pro-S (encrypted)" },
+      "hint":  { "en": "Detected automatically. Enable only for DTU Pro-S." },
+      "value": false
+    },
+    {
+      "id": "enc_rand",
+      "type": "text",
+      "label": { "en": "Encryption key (enc_rand)" },
+      "hint":  { "en": "Set automatically. Do not edit manually." },
+      "value": ""
+    },
+    {
+      "id": "signal_strength",
+      "type": "label",
+      "label": { "en": "Wi-Fi Signal Strength" },
+      "value": "—"
+    },
+    {
+      "id": "wifi_ssid",
+      "type": "label",
+      "label": { "en": "Wi-Fi SSID" },
+      "value": "—"
+    },
+    {
+      "id": "dtu_ap_ssid",
+      "type": "label",
+      "label": { "en": "DTU AP SSID" },
+      "value": "—"
+    },
+    {
+      "id": "sw_version",
+      "type": "label",
+      "label": { "en": "SW Version" },
+      "value": "—"
+    },
+    {
+      "id": "hw_version",
+      "type": "label",
+      "label": { "en": "HW Version" },
+      "value": "—"
+    }
+  ],
+  "pair": [
+    {
+      "id": "login",
+      "navigation": { "next": "list_devices" }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ]
+}

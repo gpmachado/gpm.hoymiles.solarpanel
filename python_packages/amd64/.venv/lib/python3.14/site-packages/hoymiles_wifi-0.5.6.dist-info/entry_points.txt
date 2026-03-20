@@ -1,0 +1,2 @@
+[console_scripts]
+hoymiles-wifi = hoymiles_wifi.__main__:run_main

@@ -1,0 +1,48 @@
+{
+  "id": "gpm.hoymiles.solarpanel",
+  "version": "1.1.2",
+  "compatibility": ">=13.0.0",
+  "sdk": 3,
+  "runtime": "python",
+  "pythonVersion": "3.14",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Hoymiles Wi-Fi Solar Panel"
+  },
+  "description": {
+    "en": "Local monitoring for Hoymiles DTU - WLite, Pro and Pro-S. No Cloud required."
+  },
+  "category": [
+    "energy"
+  ],
+  "tags": {
+    "en": [
+      "solar",
+      "hoymiles",
+      "inverter"
+    ]
+  },
+  "brandColor": "#00B140",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Gabriel Pedrosa Machado",
+    "email": "g.machado@me.com"
+  },
+  "source": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
+  "homepage": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
+  "bugs": {
+    "url": "https://github.com/gpmachado/gpm.hoymiles.solarpanel/issues"
+  },
+  "license": "MIT",
+  "pythonPackages": [
+    "hoymiles-wifi",
+    "astral"
+  ]
+}

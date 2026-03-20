@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: astral
+Version: 3.2
+Summary: Calculations for the position of the sun and moon.
+Home-page: https://github.com/sffjunkie/astral
+License: Apache-2.0
+Keywords: sun,moon,sunrise,sunset,dawn,dusk
+Author: Simon Kennedy
+Author-email: sffjunkie+code@gmail.com
+Requires-Python: >=3.7,<4.0
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Dist: backports.zoneinfo; python_version < "3.9"
+Requires-Dist: tzdata; sys_platform == "win32"
+Project-URL: Documentation, https://sffjunkie.github.io/astral
+Project-URL: Repository, https://github.com/sffjunkie/astral
+Description-Content-Type: text/markdown
+
+# Astral
+
+This is 'astral' a Python module which calculates
+
+- Times for various positions of the sun: dawn, sunrise, solar noon,
+sunset, dusk, solar elevation, solar azimuth and rahukaalam.
+- Moon rise, set, azimuth and zenith.
+- The phase of the moon.
+
+For documentation see https://sffjunkie.github.io/astral/
+
+## Package Status
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sffjunkie/astral/astral-test) ![PyPI - Downloads](https://img.shields.io/pypi/dm/astral)
+
