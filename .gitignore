@@ -1,2 +1,4 @@
 /env.json
 /.homeybuild/
+/python_packages/
+*.DS_Store
