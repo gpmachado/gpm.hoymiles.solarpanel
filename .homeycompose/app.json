@@ -65,7 +65,6 @@
   },
   "license": "MIT",
   "pythonPackages": [
-    "hoymiles-wifi",
-    "astral"
+    "hoymiles-wifi"
   ]
 }
