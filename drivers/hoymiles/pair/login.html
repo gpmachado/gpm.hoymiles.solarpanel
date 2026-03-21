@@ -12,25 +12,33 @@
   </style>
 </head>
 <body>
-  <label for="ip">DTU IP Address</label>
-  <input id="ip" type="text" placeholder="Leave empty to auto-detect" autocomplete="off" />
-  <div class="hint">Leave empty to scan the network automatically.</div>
+  <label for="ip" data-i18n="pair.ip_label">DTU IP Address</label>
+  <input id="ip" type="text" autocomplete="off" />
+  <div class="hint" data-i18n="pair.ip_hint">Leave empty to scan the network automatically.</div>
 
-  <label for="serial" style="margin-top:14px;">DTU Serial Number <span style="font-weight:normal;color:#888">(optional)</span></label>
-  <input id="serial" type="text" placeholder="e.g. 4141A0068ED2 — leave empty to auto-detect" autocomplete="off" />
-  <div class="hint">Detected automatically from the DTU. Only fill in as fallback.</div>
+  <label for="serial" style="margin-top:14px;">
+    <span data-i18n="pair.serial_label">DTU Serial Number</span>
+    <span style="font-weight:normal;color:#888" data-i18n="pair.serial_optional"> (optional)</span>
+  </label>
+  <input id="serial" type="text" autocomplete="off" />
+  <div class="hint" data-i18n="pair.serial_hint">Detected automatically from the DTU. Only fill in as fallback.</div>
 
-  <button id="btn" onclick="connect()">Connect</button>
+  <button id="btn" onclick="connect()" data-i18n="pair.connect_button">Connect</button>
   <div class="status" id="status"></div>
 
   <script>
+    document.getElementById('ip').placeholder    = Homey.__('pair.ip_placeholder');
+    document.getElementById('serial').placeholder = Homey.__('pair.serial_placeholder');
+
     function connect() {
-      var ip = document.getElementById('ip').value.trim();
-      var btn = document.getElementById('btn');
+      var ip     = document.getElementById('ip').value.trim();
+      var btn    = document.getElementById('btn');
       var status = document.getElementById('status');
 
       btn.disabled = true;
-      status.textContent = ip ? 'Connecting to ' + ip + '...' : 'Scanning network...';
+      status.textContent = ip
+        ? Homey.__('pair.status_connecting', { ip: ip })
+        : Homey.__('pair.status_scanning');
 
       var serial = document.getElementById('serial').value.trim();
       Homey.emit('login', { username: ip, password: serial }, function(err, result) {

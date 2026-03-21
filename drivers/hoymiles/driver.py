@@ -85,31 +85,106 @@ def _build_capabilities(panel_count: int, three_phase: bool, is_hybrid: bool) ->
 
 def _build_capabilities_options(panel_count: int, three_phase: bool, is_hybrid: bool) -> dict:
     opts = {
-        "measure_power":     {"title": {"en": "Current Power"},   "units": {"en": "W"}},
-        "meter_power.today": {"title": {"en": "Daily Energy"},    "units": {"en": "kWh"}},
-        "meter_power":       {"title": {"en": "Lifetime Energy"}, "units": {"en": "kWh"}},
-        "alarm_generic":     {"title": {"en": "Inverter Alarm"}},
+        "measure_power": {
+            "title": {"en": "Current Power", "nl": "Huidig Vermogen", "de": "Aktuelle Leistung",
+                      "fr": "Puissance Actuelle", "it": "Potenza Attuale", "sv": "Aktuell Effekt",
+                      "no": "Aktuell Effekt", "es": "Potencia Actual", "da": "Aktuel Effekt", "pl": "Aktualna Moc"},
+            "units": {"en": "W"},
+        },
+        "meter_power.today": {
+            "title": {"en": "Daily Energy", "nl": "Dagelijkse Energie", "de": "Tagesenergie",
+                      "fr": "Énergie Journalière", "it": "Energia Giornaliera", "sv": "Daglig Energi",
+                      "no": "Daglig Energi", "es": "Energía Diaria", "da": "Daglig Energi", "pl": "Dzienna Energia"},
+            "units": {"en": "kWh"},
+        },
+        "meter_power": {
+            "title": {"en": "Lifetime Energy", "nl": "Totale Energie", "de": "Gesamtenergie",
+                      "fr": "Énergie Totale", "it": "Energia Totale", "sv": "Total Energi",
+                      "no": "Total Energi", "es": "Energía Total", "da": "Total Energi", "pl": "Łączna Energia"},
+            "units": {"en": "kWh"},
+        },
+        "alarm_generic": {
+            "title": {"en": "Inverter Alarm", "nl": "Omvormer Alarm", "de": "Wechselrichter-Alarm",
+                      "fr": "Alarme Onduleur", "it": "Allarme Inverter", "sv": "Växelriktarlarm",
+                      "no": "Vekselretter-Alarm", "es": "Alarma Inversor", "da": "Vekselretter-Alarm",
+                      "pl": "Alarm Falownika"},
+        },
     }
 
     if is_hybrid:
-        opts["measure_battery"] = {"title": {"en": "Battery State of Charge"}}
+        opts["measure_battery"] = {
+            "title": {"en": "Battery State of Charge", "nl": "Accustand", "de": "Batterieladezustand",
+                      "fr": "État de Charge de la Batterie", "it": "Stato di Carica della Batteria",
+                      "sv": "Batteriladdningsstatus", "no": "Batteriladestatus",
+                      "es": "Estado de Carga de la Batería", "da": "Batteriopladningsstatus",
+                      "pl": "Stan Naładowania Baterii"},
+        }
         return opts
 
-    opts["measure_frequency"]   = {"title": {"en": "Grid Frequency"}}
-    opts["measure_temperature"] = {"title": {"en": "Inverter Temperature"}}
+    opts["measure_frequency"] = {
+        "title": {"en": "Grid Frequency", "nl": "Netfrequentie", "de": "Netzfrequenz",
+                  "fr": "Fréquence du Réseau", "it": "Frequenza di Rete", "sv": "Nätfrekvens",
+                  "no": "Nettfrekvens", "es": "Frecuencia de Red", "da": "Netfrekvens",
+                  "pl": "Częstotliwość Sieci"},
+    }
+    opts["measure_temperature"] = {
+        "title": {"en": "Inverter Temperature", "nl": "Omvormer Temperatuur", "de": "Wechselrichter-Temperatur",
+                  "fr": "Température de l'Onduleur", "it": "Temperatura Inverter",
+                  "sv": "Växelriktartemperatur", "no": "Vekselretter-Temperatur",
+                  "es": "Temperatura del Inversor", "da": "Vekselretter-Temperatur",
+                  "pl": "Temperatura Falownika"},
+    }
 
     if three_phase:
         for ph, label in (("a", "A"), ("b", "B"), ("c", "C")):
-            opts[f"measure_voltage.phase_{ph}"] = {"title": {"en": f"Voltage Phase {label}"}}
-            opts[f"measure_current.phase_{ph}"] = {"title": {"en": f"Current Phase {label}"}}
+            opts[f"measure_voltage.phase_{ph}"] = {
+                "title": {"en": f"Voltage Phase {label}", "nl": f"Spanning Fase {label}",
+                          "de": f"Spannung Phase {label}", "fr": f"Tension Phase {label}",
+                          "it": f"Tensione Fase {label}", "sv": f"Spänning Fas {label}",
+                          "no": f"Spenning Fase {label}", "es": f"Tensión Fase {label}",
+                          "da": f"Spænding Fase {label}", "pl": f"Napięcie Faza {label}"},
+            }
+            opts[f"measure_current.phase_{ph}"] = {
+                "title": {"en": f"Current Phase {label}", "nl": f"Stroom Fase {label}",
+                          "de": f"Strom Phase {label}", "fr": f"Courant Phase {label}",
+                          "it": f"Corrente Fase {label}", "sv": f"Ström Fas {label}",
+                          "no": f"Strøm Fase {label}", "es": f"Corriente Fase {label}",
+                          "da": f"Strøm Fase {label}", "pl": f"Prąd Faza {label}"},
+            }
     else:
-        opts["measure_voltage"] = {"title": {"en": "AC Voltage"}}
-        opts["measure_current"] = {"title": {"en": "AC Current"}}
+        opts["measure_voltage"] = {
+            "title": {"en": "AC Voltage", "nl": "AC-Spanning", "de": "AC-Spannung",
+                      "fr": "Tension AC", "it": "Tensione CA", "sv": "AC-Spänning",
+                      "no": "AC-Spenning", "es": "Tensión CA", "da": "AC-Spænding", "pl": "Napięcie AC"},
+        }
+        opts["measure_current"] = {
+            "title": {"en": "AC Current", "nl": "AC-Stroom", "de": "AC-Strom",
+                      "fr": "Courant AC", "it": "Corrente CA", "sv": "AC-Ström",
+                      "no": "AC-Strøm", "es": "Corriente CA", "da": "AC-Strøm", "pl": "Prąd AC"},
+        }
 
     for i in range(1, panel_count + 1):
-        opts[f"measure_power.pv{i}"]   = {"title": {"en": f"Panel {i} Power"},   "units": {"en": "W"}}
-        opts[f"measure_voltage.pv{i}"] = {"title": {"en": f"Panel {i} Voltage"}, "units": {"en": "V"}}
-        opts[f"measure_current.pv{i}"] = {"title": {"en": f"Panel {i} Current"}, "units": {"en": "A"}}
+        opts[f"measure_power.pv{i}"] = {
+            "title": {"en": f"Panel {i} Power", "nl": f"Paneel {i} Vermogen", "de": f"Panel {i} Leistung",
+                      "fr": f"Panneau {i} Puissance", "it": f"Pannello {i} Potenza",
+                      "sv": f"Panel {i} Effekt", "no": f"Panel {i} Effekt",
+                      "es": f"Panel {i} Potencia", "da": f"Panel {i} Effekt", "pl": f"Panel {i} Moc"},
+            "units": {"en": "W"},
+        }
+        opts[f"measure_voltage.pv{i}"] = {
+            "title": {"en": f"Panel {i} Voltage", "nl": f"Paneel {i} Spanning", "de": f"Panel {i} Spannung",
+                      "fr": f"Panneau {i} Tension", "it": f"Pannello {i} Tensione",
+                      "sv": f"Panel {i} Spänning", "no": f"Panel {i} Spenning",
+                      "es": f"Panel {i} Tensión", "da": f"Panel {i} Spænding", "pl": f"Panel {i} Napięcie"},
+            "units": {"en": "V"},
+        }
+        opts[f"measure_current.pv{i}"] = {
+            "title": {"en": f"Panel {i} Current", "nl": f"Paneel {i} Stroom", "de": f"Panel {i} Strom",
+                      "fr": f"Panneau {i} Courant", "it": f"Pannello {i} Corrente",
+                      "sv": f"Panel {i} Ström", "no": f"Panel {i} Strøm",
+                      "es": f"Panel {i} Corriente", "da": f"Panel {i} Strøm", "pl": f"Panel {i} Prąd"},
+            "units": {"en": "A"},
+        }
 
     return opts
 
@@ -212,20 +287,20 @@ class HoymilesDriver(Driver):
                 ips = await _discover_dtus(timeout=1.5)
                 self.log(f"Network scan found: {ips}")
                 if not ips:
-                    raise Exception("No Hoymiles DTU found on network. Enter the IP address manually.")
+                    raise Exception(self.homey.__("error.no_dtu_found"))
                 results = await asyncio.gather(*[_query_dtu(ip) for ip in ips])
                 found_dtus = [r for r in results if r]
             else:
                 octets = host.split(".")
                 if len(octets) != 4 or not all(o.isdigit() and 0 <= int(o) <= 255 for o in octets):
-                    raise Exception(f"Invalid IP address: {host}")
+                    raise Exception(self.homey.__("error.invalid_ip", {"ip": host}))
                 info = await _query_dtu(host, manual_sn)
                 if not info:
-                    raise Exception(f"Cannot reach DTU at {host}. Check IP and network.")
+                    raise Exception(self.homey.__("error.cannot_reach", {"ip": host}))
                 found_dtus = [info]
 
             if not found_dtus:
-                raise Exception("No Hoymiles DTU responded. Check IP and network.")
+                raise Exception(self.homey.__("error.no_dtu_responded"))
 
             for d in found_dtus:
                 self.log(f"login OK — {d['ip']} SN:{d['dtu_sn']} panels:{d['panel_count']} 3ph:{d['three_phase']} hybrid:{d['is_hybrid']}")
@@ -233,7 +308,7 @@ class HoymilesDriver(Driver):
 
         async def on_list_devices(data: dict = None) -> list:
             if not found_dtus:
-                raise Exception("No devices found — please go back and try again.")
+                raise Exception(self.homey.__("error.no_devices"))
 
             devices = []
             for d in found_dtus:

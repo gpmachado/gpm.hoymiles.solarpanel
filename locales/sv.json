@@ -1,0 +1,21 @@
+{
+  "pair": {
+    "ip_label": "DTU IP-adress",
+    "ip_placeholder": "Lämna tomt för automatisk identifiering",
+    "ip_hint": "Lämna tomt för att skanna nätverket automatiskt.",
+    "serial_label": "DTU-serienummer",
+    "serial_optional": "(valfritt)",
+    "serial_placeholder": "t.ex. 4141A0068ED2 — lämna tomt för automatisk identifiering",
+    "serial_hint": "Identifieras automatiskt från DTU:n. Fyll i endast som reservalternativ.",
+    "connect_button": "Anslut",
+    "status_connecting": "Ansluter till __ip__...",
+    "status_scanning": "Skannar nätverket..."
+  },
+  "error": {
+    "no_dtu_found": "Ingen Hoymiles DTU hittades i nätverket. Ange IP-adressen manuellt.",
+    "invalid_ip": "Ogiltig IP-adress: __ip__",
+    "cannot_reach": "Kan inte nå DTU på __ip__. Kontrollera IP och nätverk.",
+    "no_dtu_responded": "Ingen Hoymiles DTU svarade. Kontrollera IP och nätverk.",
+    "no_devices": "Inga enheter hittades — gå tillbaka och försök igen."
+  }
+}
