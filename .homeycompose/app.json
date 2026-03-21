@@ -1,37 +1,61 @@
 {
   "id": "gpm.hoymiles.solarpanel",
-  "version": "1.1.1",
-  "compatibility": ">=12.6.0",
+  "version": "1.1.2",
+  "compatibility": ">=13.0.0",
   "sdk": 3,
+  "runtime": "python",
+  "pythonVersion": "3.14",
   "platforms": [
     "local"
   ],
   "name": {
-    "en": "Hoymiles Wi-Fi Solar Panel"
+    "en": "Hoymiles Wi-Fi Solar Panel",
+    "nl": "Hoymiles Wi-Fi Zonnepaneel",
+    "de": "Hoymiles Wi-Fi Solaranlage",
+    "fr": "Hoymiles Wi-Fi Panneau Solaire",
+    "it": "Hoymiles Wi-Fi Pannello Solare",
+    "sv": "Hoymiles Wi-Fi Solpanel",
+    "no": "Hoymiles Wi-Fi Solcellepanel",
+    "es": "Hoymiles Wi-Fi Panel Solar",
+    "da": "Hoymiles Wi-Fi Solpanel",
+    "pl": "Hoymiles Wi-Fi Panel Słoneczny"
   },
   "description": {
-    "en": "Local monitoring for Hoymiles HMS microinverter systems — no cloud required."
+    "en": "Local monitoring for Hoymiles DTU - WLite, Pro and Pro-S. No Cloud required.",
+    "nl": "Lokale monitoring voor Hoymiles DTU - WLite, Pro en Pro-S. Geen cloud vereist.",
+    "de": "Lokales Monitoring für Hoymiles DTU - WLite, Pro und Pro-S. Keine Cloud erforderlich.",
+    "fr": "Surveillance locale pour Hoymiles DTU - WLite, Pro et Pro-S. Aucun cloud requis.",
+    "it": "Monitoraggio locale per Hoymiles DTU - WLite, Pro e Pro-S. Nessun cloud necessario.",
+    "sv": "Lokal övervakning för Hoymiles DTU - WLite, Pro och Pro-S. Inget moln krävs.",
+    "no": "Lokal overvåking for Hoymiles DTU - WLite, Pro og Pro-S. Ingen sky nødvendig.",
+    "es": "Monitorización local para Hoymiles DTU - WLite, Pro y Pro-S. No se requiere nube.",
+    "da": "Lokal overvågning til Hoymiles DTU - WLite, Pro og Pro-S. Ingen cloud krævet.",
+    "pl": "Lokalne monitorowanie dla Hoymiles DTU - WLite, Pro i Pro-S. Nie wymaga chmury."
   },
   "category": [
     "energy"
   ],
   "tags": {
-    "en": [
-      "solar",
-      "hoymiles",
-      "inverter",
-      "energy",
-      "dtu"
-    ]
+    "en": ["solar", "hoymiles", "inverter"],
+    "nl": ["solar", "hoymiles", "omvormer"],
+    "de": ["solar", "hoymiles", "wechselrichter"],
+    "fr": ["solaire", "hoymiles", "onduleur"],
+    "it": ["solare", "hoymiles", "inverter"],
+    "sv": ["solenergi", "hoymiles", "växelriktare"],
+    "no": ["sol", "hoymiles", "vekselretter"],
+    "es": ["solar", "hoymiles", "inversor"],
+    "da": ["sol", "hoymiles", "vekselretter"],
+    "pl": ["słoneczny", "hoymiles", "falownik"]
   },
   "brandColor": "#00B140",
+  "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "G Machado",
+    "name": "Gabriel Pedrosa Machado",
     "email": "g.machado@me.com"
   },
   "source": "https://github.com/gpmachado/gpm.hoymiles.solarpanel",
@@ -39,5 +63,9 @@
   "bugs": {
     "url": "https://github.com/gpmachado/gpm.hoymiles.solarpanel/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "pythonPackages": [
+    "hoymiles-wifi",
+    "astral"
+  ]
 }

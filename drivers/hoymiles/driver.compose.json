@@ -1,0 +1,363 @@
+{
+  "name": {
+    "en": "Hoymiles DTU",
+    "nl": "Hoymiles DTU",
+    "de": "Hoymiles DTU",
+    "fr": "Hoymiles DTU",
+    "it": "Hoymiles DTU",
+    "sv": "Hoymiles DTU",
+    "no": "Hoymiles DTU",
+    "es": "Hoymiles DTU",
+    "da": "Hoymiles DTU",
+    "pl": "Hoymiles DTU"
+  },
+  "class": "solarpanel",
+  "capabilities": [],
+  "energy": { "meterPowerExportedCapability": "meter_power" },
+  "images": {
+    "small":  "{{driverAssetsPath}}/images/small.png",
+    "large":  "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "settings": [
+    {
+      "id": "ip",
+      "type": "text",
+      "label": {
+        "en": "DTU IP Address",
+        "nl": "DTU IP-adres",
+        "de": "DTU-IP-Adresse",
+        "fr": "Adresse IP du DTU",
+        "it": "Indirizzo IP del DTU",
+        "sv": "DTU IP-adress",
+        "no": "DTU IP-adresse",
+        "es": "Dirección IP del DTU",
+        "da": "DTU IP-adresse",
+        "pl": "Adres IP DTU"
+      },
+      "hint": {
+        "en": "Local IP of your Hoymiles DTU (e.g. 192.168.1.201)",
+        "nl": "Lokaal IP-adres van uw Hoymiles DTU (bijv. 192.168.1.201)",
+        "de": "Lokale IP-Adresse Ihres Hoymiles DTU (z.B. 192.168.1.201)",
+        "fr": "IP locale de votre DTU Hoymiles (ex. 192.168.1.201)",
+        "it": "IP locale del tuo DTU Hoymiles (es. 192.168.1.201)",
+        "sv": "Lokalt IP för din Hoymiles DTU (t.ex. 192.168.1.201)",
+        "no": "Lokal IP for din Hoymiles DTU (f.eks. 192.168.1.201)",
+        "es": "IP local de tu DTU Hoymiles (p.ej. 192.168.1.201)",
+        "da": "Lokal IP på din Hoymiles DTU (f.eks. 192.168.1.201)",
+        "pl": "Lokalny adres IP twojego Hoymiles DTU (np. 192.168.1.201)"
+      },
+      "placeholder": { "en": "192.168.1.201" }
+    },
+    {
+      "id": "polling_interval",
+      "type": "number",
+      "label": {
+        "en": "Polling interval (seconds)",
+        "nl": "Pollinginterval (seconden)",
+        "de": "Abfrageintervall (Sekunden)",
+        "fr": "Intervalle d'interrogation (secondes)",
+        "it": "Intervallo di polling (secondi)",
+        "sv": "Pollingsintervall (sekunder)",
+        "no": "Pollingsintervall (sekunder)",
+        "es": "Intervalo de sondeo (segundos)",
+        "da": "Pollingsinterval (sekunder)",
+        "pl": "Interwał odpytywania (sekundy)"
+      },
+      "hint": {
+        "en": "Minimum 35 seconds.",
+        "nl": "Minimaal 35 seconden.",
+        "de": "Mindestens 35 Sekunden.",
+        "fr": "Minimum 35 secondes.",
+        "it": "Minimo 35 secondi.",
+        "sv": "Minst 35 sekunder.",
+        "no": "Minst 35 sekunder.",
+        "es": "Mínimo 35 segundos.",
+        "da": "Minimum 35 sekunder.",
+        "pl": "Minimum 35 sekund."
+      },
+      "value": 60, "min": 35, "max": 3600
+    },
+    {
+      "id": "panel_count",
+      "type": "number",
+      "label": {
+        "en": "Panel Count",
+        "nl": "Aantal Panelen",
+        "de": "Anzahl der Panels",
+        "fr": "Nombre de Panneaux",
+        "it": "Numero di Pannelli",
+        "sv": "Antal Paneler",
+        "no": "Antall Paneler",
+        "es": "Número de Paneles",
+        "da": "Antal Paneler",
+        "pl": "Liczba Paneli"
+      },
+      "hint": {
+        "en": "Detected automatically. Change only if wrong.",
+        "nl": "Automatisch gedetecteerd. Alleen wijzigen indien onjuist.",
+        "de": "Automatisch erkannt. Nur ändern, wenn falsch.",
+        "fr": "Détecté automatiquement. Modifiez uniquement si incorrect.",
+        "it": "Rilevato automaticamente. Modificare solo se errato.",
+        "sv": "Identifieras automatiskt. Ändra endast om fel.",
+        "no": "Gjenkjennes automatisk. Endre kun hvis feil.",
+        "es": "Detectado automáticamente. Cambiar solo si es incorrecto.",
+        "da": "Registreres automatisk. Skift kun hvis forkert.",
+        "pl": "Wykrywane automatycznie. Zmień tylko jeśli jest błąd."
+      },
+      "value": 2, "min": 1, "max": 8
+    },
+    {
+      "id": "three_phase",
+      "type": "checkbox",
+      "label": {
+        "en": "Three-phase inverter",
+        "nl": "Driefasige omvormer",
+        "de": "Dreiphasiger Wechselrichter",
+        "fr": "Onduleur triphasé",
+        "it": "Inverter trifase",
+        "sv": "Trefasig växelriktare",
+        "no": "Trefaset vekselretter",
+        "es": "Inversor trifásico",
+        "da": "Trefaset vekselretter",
+        "pl": "Falownik trójfazowy"
+      },
+      "hint": {
+        "en": "Detected automatically. Enable only for three-phase systems.",
+        "nl": "Automatisch gedetecteerd. Alleen inschakelen voor driefasige systemen.",
+        "de": "Automatisch erkannt. Nur für Dreiphasensysteme aktivieren.",
+        "fr": "Détecté automatiquement. Activer uniquement pour les systèmes triphasés.",
+        "it": "Rilevato automaticamente. Abilitare solo per sistemi trifase.",
+        "sv": "Identifieras automatiskt. Aktivera bara för trefasiga system.",
+        "no": "Gjenkjennes automatisk. Aktiver kun for trefasede systemer.",
+        "es": "Detectado automáticamente. Habilitar solo para sistemas trifásicos.",
+        "da": "Registreres automatisk. Aktiver kun for trefasede systemer.",
+        "pl": "Wykrywane automatycznie. Włącz tylko dla systemów trójfazowych."
+      },
+      "value": false
+    },
+    {
+      "id": "is_hybrid",
+      "type": "checkbox",
+      "label": {
+        "en": "Hybrid inverter (battery storage)",
+        "nl": "Hybride omvormer (batterijopslag)",
+        "de": "Hybrid-Wechselrichter (Batteriespeicher)",
+        "fr": "Onduleur hybride (stockage batterie)",
+        "it": "Inverter ibrido (accumulo batteria)",
+        "sv": "Hybrid-växelriktare (batterilagring)",
+        "no": "Hybrid-vekselretter (batterilagring)",
+        "es": "Inversor híbrido (almacenamiento de batería)",
+        "da": "Hybrid-vekselretter (batterilagring)",
+        "pl": "Falownik hybrydowy (magazyn energii)"
+      },
+      "hint": {
+        "en": "Detected automatically.",
+        "nl": "Automatisch gedetecteerd.",
+        "de": "Automatisch erkannt.",
+        "fr": "Détecté automatiquement.",
+        "it": "Rilevato automaticamente.",
+        "sv": "Identifieras automatiskt.",
+        "no": "Gjenkjennes automatisk.",
+        "es": "Detectado automáticamente.",
+        "da": "Registreres automatisk.",
+        "pl": "Wykrywane automatycznie."
+      },
+      "value": false
+    },
+    {
+      "id": "inverter_sns",
+      "type": "text",
+      "label": {
+        "en": "Inverter serial numbers",
+        "nl": "Serienummers omvormers",
+        "de": "Seriennummern der Wechselrichter",
+        "fr": "Numéros de série des onduleurs",
+        "it": "Numeri di serie degli inverter",
+        "sv": "Serienummer för växelriktare",
+        "no": "Serienumre for vekselrettere",
+        "es": "Números de serie de inversores",
+        "da": "Serienumre for vekselrettere",
+        "pl": "Numery seryjne falowników"
+      },
+      "hint": {
+        "en": "JSON list, set automatically. Do not edit manually.",
+        "nl": "JSON-lijst, automatisch ingesteld. Niet handmatig bewerken.",
+        "de": "JSON-Liste, automatisch gesetzt. Nicht manuell bearbeiten.",
+        "fr": "Liste JSON, définie automatiquement. Ne pas modifier manuellement.",
+        "it": "Lista JSON, impostata automaticamente. Non modificare manualmente.",
+        "sv": "JSON-lista, ställs in automatiskt. Redigera inte manuellt.",
+        "no": "JSON-liste, satt automatisk. Ikke rediger manuelt.",
+        "es": "Lista JSON, configurada automáticamente. No editar manualmente.",
+        "da": "JSON-liste, indstilles automatisk. Rediger ikke manuelt.",
+        "pl": "Lista JSON, ustawiana automatycznie. Nie edytować ręcznie."
+      },
+      "value": "[]"
+    },
+    {
+      "id": "dtu_sn",
+      "type": "text",
+      "label": {
+        "en": "DTU serial number",
+        "nl": "DTU-serienummer",
+        "de": "DTU-Seriennummer",
+        "fr": "Numéro de série DTU",
+        "it": "Numero di serie DTU",
+        "sv": "DTU-serienummer",
+        "no": "DTU-serienummer",
+        "es": "Número de serie DTU",
+        "da": "DTU-serienummer",
+        "pl": "Numer seryjny DTU"
+      },
+      "hint": {
+        "en": "Set automatically.",
+        "nl": "Automatisch ingesteld.",
+        "de": "Automatisch gesetzt.",
+        "fr": "Défini automatiquement.",
+        "it": "Impostato automaticamente.",
+        "sv": "Ställs in automatiskt.",
+        "no": "Satt automatisk.",
+        "es": "Configurado automáticamente.",
+        "da": "Indstilles automatisk.",
+        "pl": "Ustawiany automatycznie."
+      },
+      "value": ""
+    },
+    {
+      "id": "is_encrypted",
+      "type": "checkbox",
+      "label": {
+        "en": "DTU Pro-S (encrypted)",
+        "nl": "DTU Pro-S (versleuteld)",
+        "de": "DTU Pro-S (verschlüsselt)",
+        "fr": "DTU Pro-S (chiffré)",
+        "it": "DTU Pro-S (crittografato)",
+        "sv": "DTU Pro-S (krypterad)",
+        "no": "DTU Pro-S (kryptert)",
+        "es": "DTU Pro-S (cifrado)",
+        "da": "DTU Pro-S (krypteret)",
+        "pl": "DTU Pro-S (szyfrowany)"
+      },
+      "hint": {
+        "en": "Detected automatically. Enable only for DTU Pro-S.",
+        "nl": "Automatisch gedetecteerd. Alleen inschakelen voor DTU Pro-S.",
+        "de": "Automatisch erkannt. Nur für DTU Pro-S aktivieren.",
+        "fr": "Détecté automatiquement. Activer uniquement pour DTU Pro-S.",
+        "it": "Rilevato automaticamente. Abilitare solo per DTU Pro-S.",
+        "sv": "Identifieras automatiskt. Aktivera bara för DTU Pro-S.",
+        "no": "Gjenkjennes automatisk. Aktiver kun for DTU Pro-S.",
+        "es": "Detectado automáticamente. Habilitar solo para DTU Pro-S.",
+        "da": "Registreres automatisk. Aktiver kun for DTU Pro-S.",
+        "pl": "Wykrywane automatycznie. Włącz tylko dla DTU Pro-S."
+      },
+      "value": false
+    },
+    {
+      "id": "enc_rand",
+      "type": "text",
+      "label": {
+        "en": "Encryption key (enc_rand)",
+        "nl": "Versleutelingssleutel (enc_rand)",
+        "de": "Verschlüsselungsschlüssel (enc_rand)",
+        "fr": "Clé de chiffrement (enc_rand)",
+        "it": "Chiave di crittografia (enc_rand)",
+        "sv": "Krypteringsnyckel (enc_rand)",
+        "no": "Krypteringsnøkkel (enc_rand)",
+        "es": "Clave de cifrado (enc_rand)",
+        "da": "Krypteringsnøgle (enc_rand)",
+        "pl": "Klucz szyfrowania (enc_rand)"
+      },
+      "hint": {
+        "en": "Set automatically. Do not edit manually.",
+        "nl": "Automatisch ingesteld. Niet handmatig bewerken.",
+        "de": "Automatisch gesetzt. Nicht manuell bearbeiten.",
+        "fr": "Défini automatiquement. Ne pas modifier manuellement.",
+        "it": "Impostato automaticamente. Non modificare manualmente.",
+        "sv": "Ställs in automatiskt. Redigera inte manuellt.",
+        "no": "Satt automatisk. Ikke rediger manuelt.",
+        "es": "Configurado automáticamente. No editar manualmente.",
+        "da": "Indstilles automatisk. Rediger ikke manuelt.",
+        "pl": "Ustawiany automatycznie. Nie edytować ręcznie."
+      },
+      "value": ""
+    },
+    {
+      "id": "signal_strength",
+      "type": "label",
+      "label": {
+        "en": "Wi-Fi Signal Strength",
+        "nl": "Wi-Fi Signaalsterkte",
+        "de": "WLAN-Signalstärke",
+        "fr": "Force du Signal Wi-Fi",
+        "it": "Intensità Segnale Wi-Fi",
+        "sv": "Wi-Fi Signalstyrka",
+        "no": "Wi-Fi Signalstyrke",
+        "es": "Intensidad de Señal Wi-Fi",
+        "da": "Wi-Fi Signalstyrke",
+        "pl": "Siła Sygnału Wi-Fi"
+      },
+      "value": "—"
+    },
+    {
+      "id": "wifi_ssid",
+      "type": "label",
+      "label": { "en": "Wi-Fi SSID" },
+      "value": "—"
+    },
+    {
+      "id": "dtu_ap_ssid",
+      "type": "label",
+      "label": { "en": "DTU AP SSID" },
+      "value": "—"
+    },
+    {
+      "id": "sw_version",
+      "type": "label",
+      "label": {
+        "en": "SW Version",
+        "nl": "SW-versie",
+        "de": "SW-Version",
+        "fr": "Version SW",
+        "it": "Versione SW",
+        "sv": "SW-version",
+        "no": "SW-versjon",
+        "es": "Versión SW",
+        "da": "SW-version",
+        "pl": "Wersja SW"
+      },
+      "value": "—"
+    },
+    {
+      "id": "hw_version",
+      "type": "label",
+      "label": {
+        "en": "HW Version",
+        "nl": "HW-versie",
+        "de": "HW-Version",
+        "fr": "Version HW",
+        "it": "Versione HW",
+        "sv": "HW-version",
+        "no": "HW-versjon",
+        "es": "Versión HW",
+        "da": "HW-version",
+        "pl": "Wersja HW"
+      },
+      "value": "—"
+    }
+  ],
+  "pair": [
+    {
+      "id": "login",
+      "navigation": { "next": "list_devices" }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": { "next": "add_devices" }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ]
+}

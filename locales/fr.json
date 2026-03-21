@@ -1,0 +1,21 @@
+{
+  "pair": {
+    "ip_label": "Adresse IP du DTU",
+    "ip_placeholder": "Laisser vide pour la détection automatique",
+    "ip_hint": "Laisser vide pour scanner le réseau automatiquement.",
+    "serial_label": "Numéro de série du DTU",
+    "serial_optional": "(optionnel)",
+    "serial_placeholder": "ex. 4141A0068ED2 — laisser vide pour la détection automatique",
+    "serial_hint": "Détecté automatiquement par le DTU. Ne remplir qu'en cas de secours.",
+    "connect_button": "Connecter",
+    "status_connecting": "Connexion à __ip__...",
+    "status_scanning": "Scan du réseau..."
+  },
+  "error": {
+    "no_dtu_found": "Aucun DTU Hoymiles trouvé sur le réseau. Entrez l'adresse IP manuellement.",
+    "invalid_ip": "Adresse IP invalide : __ip__",
+    "cannot_reach": "Impossible d'atteindre le DTU à __ip__. Vérifiez l'IP et le réseau.",
+    "no_dtu_responded": "Aucun DTU Hoymiles n'a répondu. Vérifiez l'IP et le réseau.",
+    "no_devices": "Aucun appareil trouvé — veuillez revenir en arrière et réessayer."
+  }
+}

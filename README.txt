@@ -1,11 +1,3 @@
-Hoymiles Wi-Fi integration for Homey (local network only).
-Connects directly to compatible Hoymiles HMS microinverters via DTU-WLite over your local network using TCP (port 10081). No cloud account required.
-• Works without internet
-• Faster local response
-• Data remains inside your network
-Tested with:
-• HMS-2000DW-4T
-• HMS-800W-2T
-Other HMS series models connected via DTU-WLite may work.
-Integrates with Homey Energy — lifetime solar production is automatically tracked in your energy dashboard.
-Not affiliated with Hoymiles.
+Local monitoring for Hoymiles DTU-WLite, DTU-Pro and DTU-Pro-S microinverters. No cloud required. Connects directly to the DTU over your local network using the open-source hoymiles-wifi library. Supports single-phase, three-phase and hybrid (battery storage) systems with automatic detection.
+
+Note: if you are upgrading from a previous version, please remove the existing device and add it again (re-pair).

@@ -1,23 +1,11 @@
 {
   "1.0.0": {
-    "en": "First version!"
-  },
-  "1.0.2": {
-    "en": "Fixed: Device no longer shows as \"Unavailable\" during normal offline periods (night, cloudy startup)"
-  },
-  "1.0.3": {
-    "en": "Added: Device settings now show Wi-Fi Signal Strength, Wi-Fi SSID, DTU AP SSID, Firmware SW Version and HW Version — fetched automatically from the DTU at startup using the AppInfo (cmd 0x01) and GetConfig (cmd 0x09) protocol commands"
-  },
-  "1.0.5": {
-    "en": "Inproved App Store page description. Fixed: Device no longer incorrectly shows as Unavailable at night or during network outages. Added diagnostic info (Wi-Fi signal, SSID, firmware version) to device settings. Smart night mode now uses your Homey's location to calculate sunrise/sunset automatically."
-  },
-  "1.0.6": {
-    "en": "Replacing build 1.0.5. This build (1.0.6) includes all previous fixes plus a correction to the energy configuration — now using meterPowerExportedCapability as specified in the official Homey SDK documentation for the solarpanel device class"
-  },
-  "1.1.0": {
-    "en": "Added two driver variants: Hoymiles HMS (2-panel) for HMS-800W-2T and Hoymiles HMS (4-panel) for HMS-2000DW-4T"
+    "en": "Rewritten in Python using the official hoymiles-wifi library. Improved support for DTU-WLite, DTU-Pro, and DTU-Pro-S. Auto-detection of panel count, three-phase, hybrid, and encrypted inverters. No cloud required."
   },
   "1.1.1": {
-    "en": "v1.1.1: reorder capabilities, update README, fix icon"
+    "en": "Rewritten in Python using the official hoymiles-wifi library. Full support for DTU-WLite, DTU-Pro, and DTU-Pro-S (encrypted). Auto-detection of panel count, three-phase, hybrid, and encrypted inverters. Automatic night-time detection — device stays available overnight. No cloud required."
+  },
+  "1.1.2": {
+    "en": "Rewritten in Python using the official hoymiles-wifi library. Full support for DTU-WLite, DTU-Pro, and DTU-Pro-S (encrypted). Auto-detection of panel count, three-phase, hybrid, and encrypted inverters. Automatic night-time detection — device stays available overnight. No cloud required."
   }
 }
