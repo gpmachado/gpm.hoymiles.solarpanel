@@ -10,5 +10,11 @@
   },
   "1.1.3": {
     "en": "Added support for 10 languages: Dutch, German, French, Italian, Swedish, Norwegian, Spanish, Danish, and Polish."
+  },
+  "1.1.5": {
+    "en": "✓ Pre-processing app..."
+  },
+  "1.1.6": {
+    "en": "Fix pairing crash: replace self.homey.__() with self.homey.translate()"
   }
 }
