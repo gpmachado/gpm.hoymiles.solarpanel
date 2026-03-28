@@ -1,3 +1,28 @@
+v1.1.4
+
+Fixed: pairing error crash ("Homey object has no attribute '__'") — now shows a proper error message when the DTU cannot be reached.
+
+⚠️ Action required: re-add your devices after updating.
+
+This version is a complete rewrite in Python (previously Node.js).
+Existing devices paired with the old version must be removed and re-added.
+
+Steps:
+1. Go to Homey → Devices
+2. Long-press your inverter → Remove
+3. Add Device → Hoymiles → follow the setup wizard
+
+This is a one-time migration. We apologize for the inconvenience.
+
+v1.1.3
+
+Rewritten in Python — no cloud required, same local polling via TCP.
+Added: Auto-detection of panel count, three-phase, hybrid and encryption during pairing.
+Added: Hybrid inverter support (energy storage / battery).
+Added: Three-phase inverter support.
+Added: Automatic network scan for DTU discovery (no IP needed if on same subnet).
+Improved: Single universal driver replaces the two separate HMS variants.
+
 v1.1.0
 
 Added: Two driver variants — Hoymiles HMS (2-panel) for HMS-800/600 and Hoymiles HMS (4-panel) for HMS-2000/1600

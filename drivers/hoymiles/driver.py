@@ -287,20 +287,20 @@ class HoymilesDriver(Driver):
                 ips = await _discover_dtus(timeout=1.5)
                 self.log(f"Network scan found: {ips}")
                 if not ips:
-                    raise Exception(self.homey.__("error.no_dtu_found"))
+                    raise Exception(self.homey.translate("error.no_dtu_found"))
                 results = await asyncio.gather(*[_query_dtu(ip) for ip in ips])
                 found_dtus = [r for r in results if r]
             else:
                 octets = host.split(".")
                 if len(octets) != 4 or not all(o.isdigit() and 0 <= int(o) <= 255 for o in octets):
-                    raise Exception(self.homey.__("error.invalid_ip", {"ip": host}))
+                    raise Exception(self.homey.translate("error.invalid_ip", ip=host))
                 info = await _query_dtu(host, manual_sn)
                 if not info:
-                    raise Exception(self.homey.__("error.cannot_reach", {"ip": host}))
+                    raise Exception(self.homey.translate("error.cannot_reach", ip=host))
                 found_dtus = [info]
 
             if not found_dtus:
-                raise Exception(self.homey.__("error.no_dtu_responded"))
+                raise Exception(self.homey.translate("error.no_dtu_responded"))
 
             for d in found_dtus:
                 self.log(f"login OK — {d['ip']} SN:{d['dtu_sn']} panels:{d['panel_count']} 3ph:{d['three_phase']} hybrid:{d['is_hybrid']}")
@@ -308,7 +308,7 @@ class HoymilesDriver(Driver):
 
         async def on_list_devices(data: dict = None) -> list:
             if not found_dtus:
-                raise Exception(self.homey.__("error.no_devices"))
+                raise Exception(self.homey.translate("error.no_devices"))
 
             devices = []
             for d in found_dtus:
