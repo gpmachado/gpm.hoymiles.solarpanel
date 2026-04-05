@@ -37,11 +37,10 @@ class HoymilesDevice(Device):
         await self._poll()
         self._start_polling()
 
-    async def on_settings(self, event) -> None:
-        changed = event.get("changedKeys", [])
-        if any(k in changed for k in ("ip", "is_encrypted", "enc_rand")):
+    async def on_settings(self, old_settings, new_settings, changed_keys) -> None:
+        if any(k in changed_keys for k in ("ip", "is_encrypted", "enc_rand")):
             await self._build_dtu()
-        if "polling_interval" in changed:
+        if "polling_interval" in changed_keys:
             self._start_polling()
 
     async def on_deleted(self) -> None:
