@@ -16,5 +16,8 @@
   },
   "1.1.6": {
     "en": "Fix pairing crash: replace self.homey.__() with self.homey.translate()"
+  },
+  "1.1.7": {
+    "en": "Fixed: pairing crash — \"Homey object has no attribute '__'\" error when DTU cannot be reached"
   }
 }
