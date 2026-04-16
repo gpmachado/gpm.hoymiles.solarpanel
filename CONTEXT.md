@@ -87,6 +87,11 @@ Homey Python SDK changed `on_settings` to keyword args
 - [ ] Confirm encrypted pairing works for Martin and Sanne (DTU-Pro-S)
 - [ ] Verify `meter_power.today` resets correctly at midnight for all device types
 - [ ] Test three-phase polling path with a real 3-phase inverter
+- [ ] **Flow cards** — no flow cards implemented yet. Port from gpm.python.deye:
+  - Triggers: `solar_production_started`, `solar_production_stopped`, `data_updated`
+  - Conditions: `is_solar_producing`
+  - Grid/battery flows (`grid_lost`, `grid_restored`, `is_grid_feeding`, `is_battery_charging`)
+    only relevant for hybrid — no hybrid users reported yet, lower priority.
 - [ ] README.md — still partially copied from Node.js version, needs review
 
 ## Patterns / conventions
