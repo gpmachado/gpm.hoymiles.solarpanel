@@ -164,10 +164,9 @@ class HoymilesDevice(Device):
         else:
             await self._poll_single_phase(data)
 
-        for pv in (data.pv_data or []):
-            idx = pv.port_number
-            if not idx or idx > panel_count:
-                continue
+        for idx, pv in enumerate((data.pv_data or []), start=1):
+            if idx > panel_count:
+                break
             sfx = f"pv{idx}"
             await self._set(f"measure_power.{sfx}",   (pv.power   or 0) / 10)
             await self._set(f"measure_voltage.{sfx}", (pv.voltage or 0) / 10)
