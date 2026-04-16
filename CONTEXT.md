@@ -80,6 +80,10 @@ Homey Python SDK changed `on_settings` to keyword args
 
 ## Pending
 
+- [ ] **Repair flow** — implement `on_repair(session, device)` so users can change the DTU IP
+  without removing the device. Reference implementation in gpm.python.deye:
+  `drivers/deye/driver.py` (`on_repair`) + `drivers/deye/repair/repair_device.html`.
+  For Hoymiles the repair screen only needs IP and encryption fields (no model selection).
 - [ ] Confirm encrypted pairing works for Martin and Sanne (DTU-Pro-S)
 - [ ] Verify `meter_power.today` resets correctly at midnight for all device types
 - [ ] Test three-phase polling path with a real 3-phase inverter
