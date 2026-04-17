@@ -88,7 +88,9 @@
     ]
   },
   "brandColor": "#00B140",
-  "permissions": [],
+  "permissions": [
+    "homey:manager:geolocation"
+  ],
   "images": {
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
