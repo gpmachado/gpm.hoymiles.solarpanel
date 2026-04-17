@@ -19,5 +19,8 @@
   },
   "1.1.7": {
     "en": "Fixed: pairing crash — \"Homey object has no attribute '__'\" error when DTU cannot be reached"
+  },
+  "1.1.8": {
+    "en": "Added confirmation step during pairing to review and correct auto-detected DTU structure (panel count, three-phase, hybrid, encryption) before creating capabilities. Added repair flow to update DTU IP and encryption settings without re-pairing. Fixed: set_settings API call in device refresh. Multiple DTUs can now be added in a single pairing session."
   }
 }

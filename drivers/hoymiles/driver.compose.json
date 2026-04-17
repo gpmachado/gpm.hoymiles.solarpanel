@@ -364,6 +364,10 @@
   "pair": [
     {
       "id": "login",
+      "navigation": { "next": "confirm_structure" }
+    },
+    {
+      "id": "confirm_structure",
       "navigation": { "next": "list_devices" }
     },
     {
@@ -374,6 +378,11 @@
     {
       "id": "add_devices",
       "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "repair_device"
     }
   ]
 }

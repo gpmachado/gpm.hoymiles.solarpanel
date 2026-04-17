@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h3   { margin: 0 0 14px 0; font-size: 16px; }
+    .section { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; }
+    input[type="number"], input[type="text"] {
+      width: 100%; padding: 8px; box-sizing: border-box;
+      font-size: 14px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    .row-check { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .row-check input[type="checkbox"] { width: 18px; height: 18px; margin: 0; }
+    .row-check label { margin: 0; font-weight: normal; }
+    .info  { font-size: 12px; color: #555; background: #f5f5f5;
+             border: 1px solid #ddd; border-radius: 4px;
+             padding: 8px 10px; margin-bottom: 16px; }
+    .info span { display: block; }
+    .note  { font-size: 12px; color: #b45309; background: #fffbeb;
+             border: 1px solid #fcd34d; border-radius: 4px;
+             padding: 8px 10px; margin-bottom: 16px; }
+    .hint  { font-size: 12px; color: #888; margin-top: 4px; }
+    #enc-rand-row { display: none; }
+    button.primary {
+      width: 100%; padding: 10px; margin-top: 8px;
+      background: #E84D0E; color: white; border: none;
+      border-radius: 4px; font-size: 14px; cursor: pointer;
+    }
+    button.primary:disabled { background: #aaa; cursor: default; }
+    .status { margin-top: 10px; font-size: 13px; color: #555; text-align: center; min-height: 18px; }
+    #err    { color: #c62828; margin-top: 8px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h3>Confirm DTU Structure</h3>
+
+  <div class="note">
+    These settings define which capabilities Homey will create.
+    Changing them later requires re-pairing the device.
+  </div>
+
+  <div class="info" id="dtu-info">
+    <span id="info-ip"></span>
+    <span id="info-sn"></span>
+  </div>
+
+  <div class="section">
+    <label for="panel-count">Panel Count</label>
+    <input type="number" id="panel-count" min="1" max="8" value="2" />
+    <div class="hint">Number of PV strings connected to the inverter.</div>
+  </div>
+
+  <div class="section">
+    <div class="row-check">
+      <input type="checkbox" id="three-phase" />
+      <label for="three-phase">Three-phase inverter</label>
+    </div>
+    <div class="hint">Enable only if your inverter has three AC phases.</div>
+  </div>
+
+  <div class="section">
+    <div class="row-check">
+      <input type="checkbox" id="is-hybrid" />
+      <label for="is-hybrid">Hybrid inverter (battery storage)</label>
+    </div>
+    <div class="hint">Enable only for hybrid inverters with battery storage.</div>
+  </div>
+
+  <div class="section">
+    <div class="row-check">
+      <input type="checkbox" id="is-encrypted" onchange="toggleEncRand()" />
+      <label for="is-encrypted">DTU Pro-S (encrypted)</label>
+    </div>
+    <div class="hint">Detected automatically for DTU Pro-S firmware ≥ V00.02.20.</div>
+  </div>
+
+  <div class="section" id="enc-rand-row">
+    <label for="enc-rand">Encryption key (enc_rand)</label>
+    <input type="text" id="enc-rand" placeholder="hex value, set automatically" />
+    <div class="hint">Retrieved automatically from the DTU. Only fill in manually if auto-detection failed.</div>
+  </div>
+
+  <button class="primary" id="confirm-btn" onclick="doConfirm()">Confirm &amp; Continue</button>
+  <div class="status" id="status"></div>
+  <div id="err"></div>
+
+  <script>
+    function toggleEncRand() {
+      var enc = document.getElementById('is-encrypted').checked;
+      document.getElementById('enc-rand-row').style.display = enc ? 'block' : 'none';
+    }
+
+    Homey.emit('get_detected', null, function(err, data) {
+        if (err || !data) {
+          document.getElementById('err').textContent = err
+            ? (err.message || String(err))
+            : 'Failed to load DTU data.';
+          return;
+        }
+
+        document.getElementById('info-ip').textContent = 'IP: ' + (data.ip || '—');
+        document.getElementById('info-sn').textContent = data.dtu_sn
+          ? 'Serial: ' + data.dtu_sn : '';
+
+        document.getElementById('panel-count').value         = data.panel_count || 2;
+        document.getElementById('three-phase').checked       = !!data.three_phase;
+        document.getElementById('is-hybrid').checked         = !!data.is_hybrid;
+        document.getElementById('is-encrypted').checked      = !!data.is_encrypted;
+        document.getElementById('enc-rand').value            = data.enc_rand || '';
+        toggleEncRand();
+      });
+    });
+
+    function doConfirm() {
+      var btn    = document.getElementById('confirm-btn');
+      var status = document.getElementById('status');
+      var errEl  = document.getElementById('err');
+      var count  = parseInt(document.getElementById('panel-count').value, 10);
+
+      if (!count || count < 1 || count > 8) {
+        errEl.textContent = 'Panel count must be between 1 and 8.';
+        return;
+      }
+
+      btn.disabled       = true;
+      errEl.textContent  = '';
+      status.textContent = 'Saving…';
+
+      var payload = {
+        panel_count:  count,
+        three_phase:  document.getElementById('three-phase').checked,
+        is_hybrid:    document.getElementById('is-hybrid').checked,
+        is_encrypted: document.getElementById('is-encrypted').checked,
+        enc_rand:     document.getElementById('enc-rand').value.trim(),
+      };
+
+      Homey.emit('confirm_structure', payload, function(err) {
+        btn.disabled = false;
+        if (err) {
+          status.textContent = '';
+          errEl.textContent  = err.message || String(err);
+        } else {
+          status.textContent = '';
+          Homey.nextView();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h3   { margin: 0 0 14px 0; font-size: 16px; }
+    .section { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; }
+    input[type="text"] {
+      width: 100%; padding: 8px; box-sizing: border-box;
+      font-size: 14px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    .row-check { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .row-check input[type="checkbox"] { width: 18px; height: 18px; margin: 0; }
+    .row-check label { margin: 0; font-weight: normal; }
+    .hint  { font-size: 12px; color: #888; margin-top: 4px; }
+    .note  { font-size: 12px; color: #1565c0; background: #e3f2fd;
+             border: 1px solid #90caf9; border-radius: 4px;
+             padding: 8px 10px; margin-bottom: 16px; }
+    #enc-rand-row { display: none; }
+    .row-detect { display: flex; gap: 8px; margin-bottom: 6px; }
+    .row-detect input { flex: 1; }
+    .row-detect button {
+      white-space: nowrap; padding: 8px 14px;
+      background: #1565c0; color: white; border: none;
+      border-radius: 4px; font-size: 13px; cursor: pointer; flex-shrink: 0;
+    }
+    .row-detect button:disabled { background: #aaa; cursor: default; }
+    #detect-status { font-size: 12px; color: #555; min-height: 18px; margin-top: 4px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px;
+             font-size: 12px; padding: 4px 10px; border-radius: 12px;
+             margin-top: 6px; font-weight: 600; }
+    .badge-ok   { background: #e8f5e9; color: #2e7d32; }
+    .badge-warn { background: #fff3e0; color: #e65100; }
+    button.primary {
+      width: 100%; padding: 10px; margin-top: 8px;
+      background: #E84D0E; color: white; border: none;
+      border-radius: 4px; font-size: 14px; cursor: pointer;
+    }
+    button.primary:disabled { background: #aaa; cursor: default; }
+    .status { margin-top: 10px; font-size: 13px; color: #555; text-align: center; min-height: 18px; }
+    #err    { color: #c62828; margin-top: 8px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h3>Repair DTU Connection</h3>
+
+  <div class="note">
+    Use this screen to fix the DTU IP address or update encryption settings.
+    To change the number of panels, phases, or hybrid mode, remove and re-add the device.
+  </div>
+
+  <div class="section">
+    <label>DTU IP Address</label>
+    <div class="row-detect">
+      <input type="text" id="ip" placeholder="192.168.1.201" />
+      <button id="detect-btn" onclick="runDetect()">Re-detect</button>
+    </div>
+    <div id="detect-status"></div>
+    <div id="detect-badge"></div>
+    <div class="hint">Local IP address of your Hoymiles DTU (port 10081).</div>
+  </div>
+
+  <div class="section">
+    <div class="row-check">
+      <input type="checkbox" id="is-encrypted" onchange="toggleEncRand()" />
+      <label for="is-encrypted">DTU Pro-S (encrypted)</label>
+    </div>
+    <div class="hint">Enable for DTU Pro-S firmware ≥ V00.02.20.</div>
+  </div>
+
+  <div class="section" id="enc-rand-row">
+    <label for="enc-rand">Encryption key (enc_rand)</label>
+    <input type="text" id="enc-rand" placeholder="hex value, retrieved automatically" />
+    <div class="hint">Retrieved automatically from the DTU. Only fill in manually if needed.</div>
+  </div>
+
+  <button class="primary" id="save-btn" onclick="doSave()">Save</button>
+  <div class="status" id="save-status"></div>
+  <div id="err"></div>
+
+  <script>
+    function toggleEncRand() {
+      var enc = document.getElementById('is-encrypted').checked;
+      document.getElementById('enc-rand-row').style.display = enc ? 'block' : 'none';
+    }
+
+    Homey.ready(function() {
+      Homey.emit('get_current', null, function(err, data) {
+        if (err || !data) {
+          document.getElementById('err').textContent = err
+            ? (err.message || String(err))
+            : 'Failed to load device settings.';
+          return;
+        }
+        document.getElementById('ip').value                 = data.ip || '';
+        document.getElementById('is-encrypted').checked     = !!data.is_encrypted;
+        document.getElementById('enc-rand').value           = data.enc_rand || '';
+        toggleEncRand();
+      });
+    });
+
+    function runDetect() {
+      var btn      = document.getElementById('detect-btn');
+      var statusEl = document.getElementById('detect-status');
+      var badgeEl  = document.getElementById('detect-badge');
+      var ip       = document.getElementById('ip').value.trim();
+
+      btn.disabled         = true;
+      badgeEl.innerHTML    = '';
+      statusEl.textContent = 'Connecting to DTU…';
+
+      Homey.emit('run_detection', { ip: ip }, function(err, data) {
+        btn.disabled = false;
+        if (err) {
+          statusEl.textContent = err.message || String(err);
+          return;
+        }
+        statusEl.textContent = '';
+        if (data.enc_rand) {
+          document.getElementById('enc-rand').value = data.enc_rand;
+        }
+        document.getElementById('is-encrypted').checked = !!data.is_encrypted;
+        toggleEncRand();
+
+        var badge       = document.createElement('div');
+        badge.className = data.is_encrypted ? 'badge badge-warn' : 'badge badge-ok';
+        badge.textContent = data.is_encrypted
+          ? '⚠ DTU Pro-S — encrypted'
+          : '✓ DTU reachable';
+        badgeEl.appendChild(badge);
+      });
+    }
+
+    function doSave() {
+      var btn    = document.getElementById('save-btn');
+      var status = document.getElementById('save-status');
+      var errEl  = document.getElementById('err');
+      var ip     = document.getElementById('ip').value.trim();
+
+      btn.disabled       = true;
+      errEl.textContent  = '';
+      status.textContent = 'Saving…';
+
+      Homey.emit('save_repair', {
+        ip:           ip,
+        is_encrypted: document.getElementById('is-encrypted').checked,
+        enc_rand:     document.getElementById('enc-rand').value.trim(),
+      }, function(err) {
+        btn.disabled = false;
+        if (err) {
+          status.textContent = '';
+          errEl.textContent  = err.message || String(err);
+        } else {
+          status.textContent = '';
+          Homey.done();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

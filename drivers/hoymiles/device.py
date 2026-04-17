@@ -72,13 +72,13 @@ class HoymilesDevice(Device):
             if app_info:
                 pv_num = int(app_info.pv_number or 0)
                 if pv_num > 0 and int(self.get_setting("panel_count") or 0) != pv_num:
-                    await self.set_setting("panel_count", pv_num)
+                    await self.set_settings({"panel_count": pv_num})
                 if app_info.dtu_info:
                     di = app_info.dtu_info
                     if di.enc_rand:
                         new_hex = di.enc_rand.hex()
                         if new_hex != (self.get_setting("enc_rand") or ""):
-                            await self.set_setting("enc_rand", new_hex)
+                            await self.set_settings({"enc_rand": new_hex})
                             self._dtu.enc_rand = di.enc_rand
                     await self.set_settings({
                         "signal_strength": str(di.signal_strength or ""),
