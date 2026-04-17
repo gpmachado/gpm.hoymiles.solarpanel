@@ -5,7 +5,6 @@ import json
 import logging
 import time
 from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
 
 from astral import LocationInfo
 from astral.sun import sun
@@ -16,9 +15,8 @@ from hoymiles_wifi.dtu import DTU
 _LOGGER = logging.getLogger(__name__)
 
 _INFORMATIONAL_WARN_MAX = 255
-_BACKOFF_NIGHT   = 30 * 60   # seconds
-_BACKOFF_DAY     =  5 * 60   # seconds
-_UTC_TIMEZONES   = {"UTC", "Etc/UTC"}
+_BACKOFF_NIGHT = 30 * 60   # seconds
+_BACKOFF_DAY   =  5 * 60   # seconds
 
 
 class HoymilesDevice(Device):
@@ -33,18 +31,6 @@ class HoymilesDevice(Device):
 
     async def on_init(self) -> None:
         self.log(f"Device init — {self.get_setting('ip')}")
-        try:
-            tz_name = self.homey.clock.get_timezone()
-            now_utc = datetime.now(timezone.utc)
-            local   = now_utc.astimezone(ZoneInfo(tz_name)) if tz_name else now_utc
-            self.log(
-                f"Timezone check — tz={tz_name!r} "
-                f"utc={now_utc.strftime('%H:%M')} "
-                f"local={local.strftime('%H:%M')} "
-                f"is_night={self._is_night_time()}"
-            )
-        except Exception as e:
-            self.log(f"Timezone check failed: {e}")
         await self._build_dtu()
         await self._refresh_info()
         await self._poll()
@@ -54,7 +40,7 @@ class HoymilesDevice(Device):
         if any(k in changed_keys for k in ("ip", "is_encrypted", "enc_rand")):
             await self._build_dtu()
         if any(k in changed_keys for k in (
-            "polling_interval", "solar_latitude", "solar_longitude", "solar_timezone"
+            "polling_interval", "solar_latitude", "solar_longitude"
         )):
             self._start_polling()
 
@@ -276,72 +262,51 @@ class HoymilesDevice(Device):
 
     # ── Night-time / solar window ─────────────────────────────────────────────
 
-    def _get_sunrise_sunset(self) -> tuple[float, float, str] | None:
-        """Returns (sunrise, sunset, tz_name) as decimal local hours using astral.
+    def _get_sunrise_sunset(self) -> tuple[float, float] | None:
+        """Returns (sunrise_utc, sunset_utc) as decimal UTC hours using astral.
 
-        Priority: manual device settings → Homey geolocation/clock.
-        Returns None if coordinates or timezone cannot be resolved — callers
-        should disable night backoff rather than using a hardcoded fallback."""
+        Everything is in UTC — no timezone conversion needed.
+        Priority: manual solar_latitude/longitude → Homey geolocation."""
         try:
-            manual_lat = self._get_float_setting("solar_latitude")
-            manual_lng = self._get_float_setting("solar_longitude")
-            manual_tz  = (self.get_setting("solar_timezone") or "").strip()
+            lat = self._get_float_setting("solar_latitude")
+            lng = self._get_float_setting("solar_longitude")
 
-            lat     = manual_lat
-            lng     = manual_lng
-            tz_name = manual_tz
-
-            if manual_lat is None:
+            if lat is None:
                 lat = self.homey.geolocation.get_latitude()
-            if manual_lng is None:
+            if lng is None:
                 lng = self.homey.geolocation.get_longitude()
-            if not manual_tz:
-                tz_name = self.homey.clock.get_timezone()
 
-            if lat is None or lng is None or not tz_name:
-                self.log("Night backoff disabled — solar location or timezone not set")
+            if lat is None or lng is None:
+                self.log("Night backoff disabled — location not available")
                 return None
 
-            # Warn when manual coords are set but timezone was not — using UTC
-            # would silently produce wrong night/day decisions.
-            if not manual_tz and (manual_lat is not None or manual_lng is not None) \
-                    and tz_name in _UTC_TIMEZONES:
-                self.log(
-                    "Night backoff disabled — set Solar timezone when using manual coordinates"
-                )
-                return None
-
-            loc = LocationInfo(latitude=lat, longitude=lng, timezone=tz_name)
-            s   = sun(loc.observer, tzinfo=ZoneInfo(tz_name))
-            sr  = s["sunrise"].hour + s["sunrise"].minute / 60
-            ss  = s["sunset"].hour  + s["sunset"].minute  / 60
-            self.log(
-                f"Sun times: sunrise={sr:.2f}h sunset={ss:.2f}h "
-                f"tz={tz_name} lat={lat} lng={lng}"
-            )
-            return (sr, ss, tz_name)
+            today = datetime.now(timezone.utc).date()
+            loc   = LocationInfo(latitude=lat, longitude=lng)
+            s     = sun(loc.observer, date=today, tzinfo=timezone.utc)
+            sr    = s["sunrise"].hour + s["sunrise"].minute / 60
+            ss    = s["sunset"].hour  + s["sunset"].minute  / 60
+            self.log(f"Sun times (UTC): sunrise={sr:.2f}h sunset={ss:.2f}h lat={lat:.4f} lng={lng:.4f}")
+            return (sr, ss)
         except Exception as e:
             self.log(f"Night backoff disabled — sun calculation failed: {e}")
             return None
 
     def _is_night_time(self) -> bool:
-        """True when outside solar window. Convenience wrapper for _is_night_time_from."""
+        """True when outside solar window. Convenience wrapper."""
         return self._is_night_time_from(self._get_sunrise_sunset())
 
-    def _is_night_time_from(self, sun_times: tuple[float, float, str] | None) -> bool:
+    def _is_night_time_from(self, sun_times: tuple[float, float] | None) -> bool:
         """True when outside solar window with a 30-minute buffer on each side.
-        Uses the timezone already embedded in sun_times to avoid a second SDK read."""
+        Compares UTC current time against UTC sunrise/sunset."""
         if sun_times is None:
             return False
-        sunrise, sunset, tz_name = sun_times
+        sunrise, sunset = sun_times
         try:
-            now        = datetime.now(timezone.utc)
-            local      = now.astimezone(ZoneInfo(tz_name))
-            local_hour = local.hour + local.minute / 60
-            is_night   = local_hour < (sunrise - 0.5) or local_hour >= (sunset + 0.5)
+            now      = datetime.now(timezone.utc)
+            utc_hour = now.hour + now.minute / 60
+            is_night = utc_hour < (sunrise - 0.5) or utc_hour >= (sunset + 0.5)
             self.log(
-                f"[TZ] tz={tz_name!r} utc={now.strftime('%H:%M')} "
-                f"local={local.strftime('%H:%M')} ({local_hour:.2f}h) "
+                f"Sun check: utc={now.strftime('%H:%M')} ({utc_hour:.2f}h) "
                 f"window={sunrise - 0.5:.2f}h–{sunset + 0.5:.2f}h "
                 f"→ {'NIGHT' if is_night else 'DAY'}"
             )
@@ -352,7 +317,7 @@ class HoymilesDevice(Device):
 
     async def _apply_night_backoff(
         self,
-        sun_times: tuple[float, float, str],
+        sun_times: tuple[float, float],
         reason: Exception | None = None,
     ) -> None:
         """Zero instantaneous values, mark device available, and sleep 30 min."""
@@ -360,11 +325,11 @@ class HoymilesDevice(Device):
         await self._apply_zeros()
         await self.set_available()
         self._backoff_until = time.monotonic() + _BACKOFF_NIGHT
-        sunrise, sunset, _tz = sun_times
+        sunrise, sunset = sun_times
         suffix = f" | {reason}" if reason else ""
         self.log(
             f"poll: night — backing off 30 min | "
-            f"sunrise≈{sunrise:.2f}h sunset≈{sunset:.2f}h{suffix}"
+            f"sunrise≈{sunrise:.2f}h sunset≈{sunset:.2f}h (UTC){suffix}"
         )
 
     # ── Apply zeros ───────────────────────────────────────────────────────────

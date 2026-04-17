@@ -95,14 +95,6 @@
       "max": 180
     },
     {
-      "id": "solar_timezone",
-      "type": "text",
-      "label": { "en": "Solar timezone" },
-      "hint": { "en": "IANA timezone. Required when using manual coordinates. Example: America/Sao_Paulo" },
-      "placeholder": { "en": "America/Sao_Paulo" },
-      "value": ""
-    },
-    {
       "id": "panel_count",
       "type": "number",
       "label": {
