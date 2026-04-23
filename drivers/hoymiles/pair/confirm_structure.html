@@ -91,7 +91,8 @@
       document.getElementById('enc-rand-row').style.display = enc ? 'block' : 'none';
     }
 
-    Homey.emit('get_detected', null, function(err, data) {
+    Homey.ready(function() {
+      Homey.emit('get_detected', null, function(err, data) {
         if (err || !data) {
           document.getElementById('err').textContent = err
             ? (err.message || String(err))
@@ -103,11 +104,11 @@
         document.getElementById('info-sn').textContent = data.dtu_sn
           ? 'Serial: ' + data.dtu_sn : '';
 
-        document.getElementById('panel-count').value         = data.panel_count || 2;
-        document.getElementById('three-phase').checked       = !!data.three_phase;
-        document.getElementById('is-hybrid').checked         = !!data.is_hybrid;
-        document.getElementById('is-encrypted').checked      = !!data.is_encrypted;
-        document.getElementById('enc-rand').value            = data.enc_rand || '';
+        document.getElementById('panel-count').value    = data.panel_count || 2;
+        document.getElementById('three-phase').checked  = !!data.three_phase;
+        document.getElementById('is-hybrid').checked    = !!data.is_hybrid;
+        document.getElementById('is-encrypted').checked = !!data.is_encrypted;
+        document.getElementById('enc-rand').value       = data.enc_rand || '';
         toggleEncRand();
       });
     });
