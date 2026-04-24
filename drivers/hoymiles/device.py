@@ -26,6 +26,7 @@ class HoymilesDevice(Device):
     _consecutive_errors: int = 0
     _ERROR_THRESHOLD: int = 5
     _backoff_until: float = 0.0
+    _sun_cache: tuple | None = None   # (cache_date, sunrise_utc, sunset_utc)
 
     # ── Lifecycle ─────────────────────────────────────────────────────────────
 
@@ -265,9 +266,14 @@ class HoymilesDevice(Device):
     def _get_sunrise_sunset(self) -> tuple[float, float] | None:
         """Returns (sunrise_utc, sunset_utc) as decimal UTC hours using astral.
 
+        Result is cached per calendar day — computed and logged only once per day.
         Everything is in UTC — no timezone conversion needed.
         Priority: manual solar_latitude/longitude → Homey geolocation."""
         try:
+            today = datetime.now(timezone.utc).date()
+            if self._sun_cache and self._sun_cache[0] == today:
+                return (self._sun_cache[1], self._sun_cache[2])
+
             lat = self._get_float_setting("solar_latitude")
             lng = self._get_float_setting("solar_longitude")
 
@@ -280,11 +286,11 @@ class HoymilesDevice(Device):
                 self.log("Night backoff disabled — location not available")
                 return None
 
-            today = datetime.now(timezone.utc).date()
-            loc   = LocationInfo(latitude=lat, longitude=lng)
-            s     = sun(loc.observer, date=today, tzinfo=timezone.utc)
-            sr    = s["sunrise"].hour + s["sunrise"].minute / 60
-            ss    = s["sunset"].hour  + s["sunset"].minute  / 60
+            loc = LocationInfo(latitude=lat, longitude=lng)
+            s   = sun(loc.observer, date=today, tzinfo=timezone.utc)
+            sr  = s["sunrise"].hour + s["sunrise"].minute / 60
+            ss  = s["sunset"].hour  + s["sunset"].minute  / 60
+            self._sun_cache = (today, sr, ss)
             self.log(f"Sun times (UTC): sunrise={sr:.2f}h sunset={ss:.2f}h lat={lat:.4f} lng={lng:.4f}")
             return (sr, ss)
         except Exception as e:
@@ -304,13 +310,7 @@ class HoymilesDevice(Device):
         try:
             now      = datetime.now(timezone.utc)
             utc_hour = now.hour + now.minute / 60
-            is_night = utc_hour < (sunrise - 0.5) or utc_hour >= (sunset + 0.5)
-            self.log(
-                f"Sun check: utc={now.strftime('%H:%M')} ({utc_hour:.2f}h) "
-                f"window={sunrise - 0.5:.2f}h–{sunset + 0.5:.2f}h "
-                f"→ {'NIGHT' if is_night else 'DAY'}"
-            )
-            return is_night
+            return utc_hour < (sunrise - 0.5) or utc_hour >= (sunset + 0.5)
         except Exception as e:
             self.log(f"Night time check failed ({e}) — assuming daytime")
             return False
