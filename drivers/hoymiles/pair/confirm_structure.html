@@ -2,159 +2,488 @@
 <html>
 <head>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    h3   { margin: 0 0 14px 0; font-size: 16px; }
-    .section { margin-bottom: 16px; }
-    label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; }
+    :root {
+      --accent: #e84d0e;
+      --accent-soft: #fff2eb;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --bg-soft: #f8fafc;
+      --warning-bg: #fffbeb;
+      --warning-border: #fcd34d;
+      --warning-text: #92400e;
+      --error: #c62828;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      color: var(--text);
+      background: #fff;
+    }
+    h3 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+    }
+    p.lead {
+      margin: 0 0 14px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .note {
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-radius: 8px;
+      color: var(--warning-text);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .card-head {
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-bottom: 1px solid #ffd8c7;
+    }
+    .card-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .card-subtitle {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #9a3412;
+    }
+    .card-body {
+      padding: 14px 16px 16px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .summary-item {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .summary-label {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .summary-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    details.editor {
+      margin-top: 8px;
+      border: 1px dashed #f59e0b;
+      border-radius: 10px;
+      background: #fffdf7;
+      padding: 10px 12px;
+    }
+    details.editor summary {
+      cursor: pointer;
+      color: #92400e;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+    }
+    .editor-help {
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .edit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 13px;
+    }
     input[type="number"], input[type="text"] {
-      width: 100%; padding: 8px; box-sizing: border-box;
-      font-size: 14px; border: 1px solid #ccc; border-radius: 4px;
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
     }
-    .row-check { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-    .row-check input[type="checkbox"] { width: 18px; height: 18px; margin: 0; }
-    .row-check label { margin: 0; font-weight: normal; }
-    .info  { font-size: 12px; color: #555; background: #f5f5f5;
-             border: 1px solid #ddd; border-radius: 4px;
-             padding: 8px 10px; margin-bottom: 16px; }
-    .info span { display: block; }
-    .note  { font-size: 12px; color: #b45309; background: #fffbeb;
-             border: 1px solid #fcd34d; border-radius: 4px;
-             padding: 8px 10px; margin-bottom: 16px; }
-    .hint  { font-size: 12px; color: #888; margin-top: 4px; }
-    #enc-rand-row { display: none; }
+    .check-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 40px;
+      padding-top: 22px;
+    }
+    .check-field input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      flex: 0 0 auto;
+    }
+    .check-field label {
+      margin: 0;
+      font-weight: normal;
+    }
+    .hint {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
     button.primary {
-      width: 100%; padding: 10px; margin-top: 8px;
-      background: #E84D0E; color: white; border: none;
-      border-radius: 4px; font-size: 14px; cursor: pointer;
+      width: 100%;
+      margin-top: 18px;
+      padding: 11px 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
     }
-    button.primary:disabled { background: #aaa; cursor: default; }
-    .status { margin-top: 10px; font-size: 13px; color: #555; text-align: center; min-height: 18px; }
-    #err    { color: #c62828; margin-top: 8px; font-size: 13px; }
+    button.primary:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+    .status {
+      min-height: 18px;
+      margin-top: 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    #err {
+      margin-top: 8px;
+      color: var(--error);
+      font-size: 13px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h3>Confirm DTU Structure</h3>
+  <h3>Review Detected Devices</h3>
+  <p class="lead">
+    We found your Hoymiles DTUs automatically. Review the detected information below
+    and continue when it looks correct.
+  </p>
 
   <div class="note">
-    These settings define which capabilities Homey will create.
-    Changing them later requires re-pairing the device.
+    Advanced options are available per device, but most users do not need to change
+    anything here. Use manual correction only if the detected setup looks wrong.
   </div>
 
-  <div class="info" id="dtu-info">
-    <span id="info-ip"></span>
-    <span id="info-sn"></span>
-  </div>
+  <div id="cards" class="cards"></div>
 
-  <div class="section">
-    <label for="panel-count">Panel Count</label>
-    <input type="number" id="panel-count" min="1" max="8" value="2" />
-    <div class="hint">Number of PV strings connected to the inverter.</div>
-  </div>
-
-  <div class="section">
-    <div class="row-check">
-      <input type="checkbox" id="three-phase" />
-      <label for="three-phase">Three-phase inverter</label>
-    </div>
-    <div class="hint">Enable only if your inverter has three AC phases.</div>
-  </div>
-
-  <div class="section">
-    <div class="row-check">
-      <input type="checkbox" id="is-hybrid" />
-      <label for="is-hybrid">Hybrid inverter (battery storage)</label>
-    </div>
-    <div class="hint">Enable only for hybrid inverters with battery storage.</div>
-  </div>
-
-  <div class="section">
-    <div class="row-check">
-      <input type="checkbox" id="is-encrypted" onchange="toggleEncRand()" />
-      <label for="is-encrypted">DTU Pro-S (encrypted)</label>
-    </div>
-    <div class="hint">Detected automatically for DTU Pro-S firmware ≥ V00.02.20.</div>
-  </div>
-
-  <div class="section" id="enc-rand-row">
-    <label for="enc-rand">Encryption key (enc_rand)</label>
-    <input type="text" id="enc-rand" placeholder="hex value, set automatically" />
-    <div class="hint">Retrieved automatically from the DTU. Only fill in manually if auto-detection failed.</div>
-  </div>
-
-  <button class="primary" id="confirm-btn" onclick="doConfirm()">Confirm &amp; Continue</button>
+  <button class="primary" id="confirm-btn" onclick="doConfirm()">Add devices</button>
   <div class="status" id="status"></div>
   <div id="err"></div>
 
   <script>
-    function toggleEncRand() {
-      var enc = document.getElementById('is-encrypted').checked;
-      document.getElementById('enc-rand-row').style.display = enc ? 'block' : 'none';
+    var detectedDevices = [];
+    var i18n = {};
+
+    function t(key, tokens) {
+      var value = i18n[key] || key;
+      if (!tokens) {
+        return value;
+      }
+      Object.keys(tokens).forEach(function(token) {
+        value = value.replace('__' + token + '__', tokens[token]);
+      });
+      return value;
+    }
+
+    function yesNo(value) {
+      return value ? t('yes') : t('no');
+    }
+
+    function phaseLabel(value) {
+      return value ? t('three_phase') : t('single_phase');
+    }
+
+    function createSummaryItem(label, value) {
+      var item = document.createElement('div');
+      item.className = 'summary-item';
+
+      var labelEl = document.createElement('span');
+      labelEl.className = 'summary-label';
+      labelEl.textContent = label;
+
+      var valueEl = document.createElement('span');
+      valueEl.className = 'summary-value';
+      valueEl.textContent = value;
+
+      item.appendChild(labelEl);
+      item.appendChild(valueEl);
+      return item;
+    }
+
+    function buildDeviceCard(device, index) {
+      var card = document.createElement('div');
+      card.className = 'card';
+
+      var head = document.createElement('div');
+      head.className = 'card-head';
+
+      var title = document.createElement('div');
+      title.className = 'card-title';
+      title.textContent = device.dtu_sn
+        ? t('device_title', { serial: device.dtu_sn })
+        : t('device_title_index', { index: String(index + 1) });
+
+      var subtitle = document.createElement('div');
+      subtitle.className = 'card-subtitle';
+      subtitle.textContent = t('device_subtitle', { ip: device.ip || '—' });
+
+      head.appendChild(title);
+      head.appendChild(subtitle);
+
+      var body = document.createElement('div');
+      body.className = 'card-body';
+
+      var summary = document.createElement('div');
+      summary.className = 'summary';
+      summary.appendChild(createSummaryItem(t('summary_ip'), device.ip || '—'));
+      summary.appendChild(createSummaryItem(t('summary_serial'), device.dtu_sn || '—'));
+      summary.appendChild(createSummaryItem(t('summary_panels'), String(device.panel_count || 0)));
+      summary.appendChild(createSummaryItem(t('summary_ac_type'), phaseLabel(!!device.three_phase)));
+      summary.appendChild(createSummaryItem(t('summary_hybrid'), yesNo(!!device.is_hybrid)));
+      summary.appendChild(createSummaryItem(t('summary_encrypted'), yesNo(!!device.is_encrypted)));
+
+      var details = document.createElement('details');
+      details.className = 'editor';
+
+      var summaryToggle = document.createElement('summary');
+      summaryToggle.textContent = t('manual_toggle');
+      details.appendChild(summaryToggle);
+
+      var help = document.createElement('div');
+      help.className = 'editor-help';
+      help.textContent = t('manual_help');
+      details.appendChild(help);
+
+      var editGrid = document.createElement('div');
+      editGrid.className = 'edit-grid';
+
+      var panelWrap = document.createElement('div');
+      var panelLabel = document.createElement('label');
+      panelLabel.setAttribute('for', 'panel-count-' + index);
+      panelLabel.textContent = t('panel_count_label');
+      var panelInput = document.createElement('input');
+      panelInput.type = 'number';
+      panelInput.min = '1';
+      panelInput.max = '8';
+      panelInput.id = 'panel-count-' + index;
+      panelInput.value = device.panel_count || 2;
+      var panelHint = document.createElement('div');
+      panelHint.className = 'hint';
+      panelHint.textContent = t('panel_count_hint');
+      panelWrap.appendChild(panelLabel);
+      panelWrap.appendChild(panelInput);
+      panelWrap.appendChild(panelHint);
+
+      var threeWrap = document.createElement('div');
+      threeWrap.className = 'check-field';
+      var threeInput = document.createElement('input');
+      threeInput.type = 'checkbox';
+      threeInput.id = 'three-phase-' + index;
+      threeInput.checked = !!device.three_phase;
+      var threeLabel = document.createElement('label');
+      threeLabel.setAttribute('for', 'three-phase-' + index);
+      threeLabel.textContent = t('three_phase_label');
+      threeWrap.appendChild(threeInput);
+      threeWrap.appendChild(threeLabel);
+
+      var hybridWrap = document.createElement('div');
+      hybridWrap.className = 'check-field';
+      var hybridInput = document.createElement('input');
+      hybridInput.type = 'checkbox';
+      hybridInput.id = 'is-hybrid-' + index;
+      hybridInput.checked = !!device.is_hybrid;
+      var hybridLabel = document.createElement('label');
+      hybridLabel.setAttribute('for', 'is-hybrid-' + index);
+      hybridLabel.textContent = t('hybrid_label');
+      hybridWrap.appendChild(hybridInput);
+      hybridWrap.appendChild(hybridLabel);
+
+      var encWrap = document.createElement('div');
+      encWrap.className = 'check-field';
+      var encInput = document.createElement('input');
+      encInput.type = 'checkbox';
+      encInput.id = 'is-encrypted-' + index;
+      encInput.checked = !!device.is_encrypted;
+      var encLabel = document.createElement('label');
+      encLabel.setAttribute('for', 'is-encrypted-' + index);
+      encLabel.textContent = t('encrypted_label');
+      encWrap.appendChild(encInput);
+      encWrap.appendChild(encLabel);
+
+      var randWrap = document.createElement('div');
+      var randLabel = document.createElement('label');
+      randLabel.setAttribute('for', 'enc-rand-' + index);
+      randLabel.textContent = t('enc_rand_label');
+      var randInput = document.createElement('input');
+      randInput.type = 'text';
+      randInput.id = 'enc-rand-' + index;
+      randInput.value = device.enc_rand || '';
+      randInput.placeholder = t('enc_rand_placeholder');
+      var randHint = document.createElement('div');
+      randHint.className = 'hint';
+      randHint.textContent = t('enc_rand_hint');
+      randWrap.appendChild(randLabel);
+      randWrap.appendChild(randInput);
+      randWrap.appendChild(randHint);
+
+      editGrid.appendChild(panelWrap);
+      editGrid.appendChild(threeWrap);
+      editGrid.appendChild(hybridWrap);
+      editGrid.appendChild(encWrap);
+      editGrid.appendChild(randWrap);
+      details.appendChild(editGrid);
+
+      body.appendChild(summary);
+      body.appendChild(details);
+
+      card.appendChild(head);
+      card.appendChild(body);
+      return card;
+    }
+
+    function renderDevices(devices) {
+      var cards = document.getElementById('cards');
+      cards.innerHTML = '';
+      devices.forEach(function(device, index) {
+        cards.appendChild(buildDeviceCard(device, index));
+      });
+
+      var buttonLabel = devices.length > 1
+        ? t('add_devices_count', { count: String(devices.length) })
+        : t('add_devices');
+      document.getElementById('confirm-btn').textContent = buttonLabel;
+    }
+
+    function readPayload() {
+      return detectedDevices.map(function(device, index) {
+        return {
+          ip: device.ip,
+          dtu_sn: device.dtu_sn,
+          panel_count: parseInt(document.getElementById('panel-count-' + index).value, 10),
+          three_phase: document.getElementById('three-phase-' + index).checked,
+          is_hybrid: document.getElementById('is-hybrid-' + index).checked,
+          is_encrypted: document.getElementById('is-encrypted-' + index).checked,
+          enc_rand: document.getElementById('enc-rand-' + index).value.trim(),
+        };
+      });
     }
 
     Homey.ready(function() {
+      i18n = {
+        title: Homey.__('pair.review_title'),
+        lead: Homey.__('pair.review_lead'),
+        note: Homey.__('pair.review_note'),
+        add_devices: Homey.__('pair.add_devices'),
+        add_devices_count: Homey.__('pair.add_devices_count'),
+        yes: Homey.__('pair.yes'),
+        no: Homey.__('pair.no'),
+        single_phase: Homey.__('pair.single_phase'),
+        three_phase: Homey.__('pair.three_phase'),
+        device_title: Homey.__('pair.device_title'),
+        device_title_index: Homey.__('pair.device_title_index'),
+        device_subtitle: Homey.__('pair.device_subtitle'),
+        summary_ip: Homey.__('pair.summary_ip'),
+        summary_serial: Homey.__('pair.summary_serial'),
+        summary_panels: Homey.__('pair.summary_panels'),
+        summary_ac_type: Homey.__('pair.summary_ac_type'),
+        summary_hybrid: Homey.__('pair.summary_hybrid'),
+        summary_encrypted: Homey.__('pair.summary_encrypted'),
+        manual_toggle: Homey.__('pair.manual_toggle'),
+        manual_help: Homey.__('pair.manual_help'),
+        panel_count_label: Homey.__('pair.panel_count_label'),
+        panel_count_hint: Homey.__('pair.panel_count_hint'),
+        three_phase_label: Homey.__('pair.three_phase_label'),
+        hybrid_label: Homey.__('pair.hybrid_label'),
+        encrypted_label: Homey.__('pair.encrypted_label'),
+        enc_rand_label: Homey.__('pair.enc_rand_label'),
+        enc_rand_placeholder: Homey.__('pair.enc_rand_placeholder'),
+        enc_rand_hint: Homey.__('pair.enc_rand_hint'),
+        load_error: Homey.__('pair.load_error'),
+        panel_count_error: Homey.__('pair.panel_count_error'),
+        saving_status: Homey.__('pair.saving_status')
+      };
+
+      document.querySelector('h3').textContent = t('title');
+      document.querySelector('p.lead').textContent = t('lead');
+      document.querySelector('.note').textContent = t('note');
+      document.getElementById('confirm-btn').textContent = t('add_devices');
+
       Homey.emit('get_detected', null, function(err, data) {
-        if (err || !data) {
+        if (err || !data || !Array.isArray(data.dtus) || data.dtus.length === 0) {
           document.getElementById('err').textContent = err
             ? (err.message || String(err))
-            : 'Failed to load DTU data.';
+            : t('load_error');
           return;
         }
 
-        // Always pre-fill form with detected values so doConfirm() reads them correctly.
-        document.getElementById('info-ip').textContent = 'IP: ' + (data.ip || '—');
-        document.getElementById('info-sn').textContent = data.dtu_sn
-          ? 'Serial: ' + data.dtu_sn : '';
-        document.getElementById('panel-count').value    = data.panel_count || 2;
-        document.getElementById('three-phase').checked  = !!data.three_phase;
-        document.getElementById('is-hybrid').checked    = !!data.is_hybrid;
-        document.getElementById('is-encrypted').checked = !!data.is_encrypted;
-        document.getElementById('enc-rand').value       = data.enc_rand || '';
-        toggleEncRand();
-
-        // If detection came from live inverter data, skip the form — nothing to correct.
-        // doConfirm() is called programmatically so the user never sees this screen.
-        if (data.source === 'real_data') {
-          document.getElementById('status').textContent = 'Auto-detected — continuing…';
-          setTimeout(doConfirm, 300);
-          return;
-        }
-
-        // Detection was uncertain (app_info / fallback) — show form for manual review.
+        detectedDevices = data.dtus;
+        renderDevices(detectedDevices);
       });
     });
 
     function doConfirm() {
-      var btn    = document.getElementById('confirm-btn');
+      var btn = document.getElementById('confirm-btn');
       var status = document.getElementById('status');
-      var errEl  = document.getElementById('err');
-      var count  = parseInt(document.getElementById('panel-count').value, 10);
+      var errEl = document.getElementById('err');
+      var devices = readPayload();
 
-      if (!count || count < 1 || count > 8) {
-        errEl.textContent = 'Panel count must be between 1 and 8.';
-        return;
+      for (var i = 0; i < devices.length; i += 1) {
+        if (!devices[i].panel_count || devices[i].panel_count < 1 || devices[i].panel_count > 8) {
+          errEl.textContent = t('panel_count_error');
+          return;
+        }
       }
 
-      btn.disabled       = true;
-      errEl.textContent  = '';
-      status.textContent = 'Saving…';
+      btn.disabled = true;
+      errEl.textContent = '';
+      status.textContent = t('saving_status');
 
-      var payload = {
-        panel_count:  count,
-        three_phase:  document.getElementById('three-phase').checked,
-        is_hybrid:    document.getElementById('is-hybrid').checked,
-        is_encrypted: document.getElementById('is-encrypted').checked,
-        enc_rand:     document.getElementById('enc-rand').value.trim(),
-      };
-
-      Homey.emit('confirm_structure', payload, function(err) {
+      Homey.emit('confirm_structure', { devices: devices }, function(err) {
         btn.disabled = false;
         if (err) {
           status.textContent = '';
-          errEl.textContent  = err.message || String(err);
-        } else {
-          status.textContent = '';
-          Homey.nextView();
+          errEl.textContent = err.message || String(err);
+          return;
         }
+
+        status.textContent = '';
+        Homey.nextView();
       });
     }
   </script>

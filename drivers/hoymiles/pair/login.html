@@ -2,57 +2,239 @@
 <html>
 <head>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    label { display: block; margin-bottom: 6px; font-weight: bold; }
-    input { width: 100%; padding: 8px; box-sizing: border-box; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
-    .hint { font-size: 12px; color: #888; margin-top: 4px; }
-    button { margin-top: 16px; width: 100%; padding: 10px; background: #007aff; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; }
-    button:disabled { background: #aaa; }
-    .status { margin-top: 12px; font-size: 13px; color: #555; text-align: center; }
+    :root {
+      --accent: #e84d0e;
+      --accent-soft: #fff2eb;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --bg-soft: #f8fafc;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --error: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      padding: 28px 20px 20px;
+      color: var(--text);
+      background: #fff;
+      text-align: center;
+    }
+    .hero {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 18px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #ff7a1a, #e84d0e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 28px rgba(232, 77, 14, 0.18);
+      font-size: 38px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    p.subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .status {
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .status.error {
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      color: var(--error);
+    }
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(232, 77, 14, 0.18);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: -3px;
+      margin-right: 8px;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    button.primary,
+    button.secondary {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+    }
+    button.primary:disabled,
+    button.secondary:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+    button.secondary {
+      margin-top: 12px;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .manual {
+      margin-top: 18px;
+      text-align: left;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-soft);
+      padding: 14px;
+      display: none;
+    }
+    .manual.show {
+      display: block;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    input {
+      width: 100%;
+      padding: 9px 10px;
+      font-size: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
-  <label for="ip" data-i18n="pair.ip_label">DTU IP Address</label>
-  <input id="ip" type="text" autocomplete="off" />
-  <div class="hint" data-i18n="pair.ip_hint">Leave empty to scan the network automatically.</div>
+  <div class="hero" aria-hidden="true">☀</div>
+  <h2 id="title">Hoymiles DTU</h2>
+  <p class="subtitle" id="subtitle">We are looking for Hoymiles DTUs on your local network.</p>
 
-  <label for="serial" style="margin-top:14px;">
-    <span data-i18n="pair.serial_label">DTU Serial Number</span>
-    <span style="font-weight:normal;color:#888" data-i18n="pair.serial_optional"> (optional)</span>
-  </label>
-  <input id="serial" type="text" autocomplete="off" />
-  <div class="hint" data-i18n="pair.serial_hint">Detected automatically from the DTU. Only fill in as fallback.</div>
+  <div id="status" class="status"></div>
 
-  <button id="btn" onclick="connect()" data-i18n="pair.connect_button">Connect</button>
-  <div class="status" id="status"></div>
+  <button id="retry-btn" class="primary" type="button" onclick="runScan()">
+    Scan Network
+  </button>
+
+  <div id="manual" class="manual">
+    <label for="ip" data-i18n="pair.ip_label">DTU IP Address</label>
+    <input id="ip" type="text" autocomplete="off" />
+    <div class="hint" data-i18n="pair.ip_hint">Leave empty to scan the network automatically.</div>
+
+    <label for="serial" style="margin-top:14px;">
+      <span data-i18n="pair.serial_label">DTU Serial Number</span>
+      <span style="font-weight:normal;color:#888" data-i18n="pair.serial_optional"> (optional)</span>
+    </label>
+    <input id="serial" type="text" autocomplete="off" />
+    <div class="hint" data-i18n="pair.serial_hint">Detected automatically from the DTU. Only fill in as fallback.</div>
+
+    <button id="manual-btn" class="secondary" type="button" onclick="connectManual()" data-i18n="pair.connect_button">
+      Connect
+    </button>
+  </div>
 
   <script>
-    document.getElementById('ip').placeholder    = Homey.__('pair.ip_placeholder');
-    document.getElementById('serial').placeholder = Homey.__('pair.serial_placeholder');
-
-    function connect() {
-      var ip     = document.getElementById('ip').value.trim();
-      var btn    = document.getElementById('btn');
+    function setStatus(text, isError, loading) {
       var status = document.getElementById('status');
+      status.className = isError ? 'status error' : 'status';
+      status.innerHTML = loading
+        ? '<span class="spinner"></span>' + text
+        : text;
+    }
 
-      btn.disabled = true;
-      status.textContent = ip
-        ? Homey.__('pair.status_connecting', { ip: ip })
-        : Homey.__('pair.status_scanning');
+    function showManualFallback() {
+      document.getElementById('retry-btn').style.display = 'block';
+      document.getElementById('manual').classList.add('show');
+    }
 
-      var serial = document.getElementById('serial').value.trim();
-      Homey.emit('login', { username: ip, password: serial }, function(err, result) {
+    function runScan() {
+      var retryBtn = document.getElementById('retry-btn');
+      var manualBtn = document.getElementById('manual-btn');
+      retryBtn.disabled = true;
+      manualBtn.disabled = true;
+      setStatus(Homey.__('pair.status_scanning'), false, true);
+
+      Homey.emit('login', { username: '', password: '' }, function(err) {
+        retryBtn.disabled = false;
+        manualBtn.disabled = false;
         if (err) {
-          status.textContent = err.message || err;
-          btn.disabled = false;
-        } else {
-          Homey.nextView();
+          setStatus(err.message || String(err), true, false);
+          showManualFallback();
+          return;
         }
+        Homey.nextView();
       });
     }
 
+    function connectManual() {
+      var ip = document.getElementById('ip').value.trim();
+      var serial = document.getElementById('serial').value.trim();
+      var retryBtn = document.getElementById('retry-btn');
+      var manualBtn = document.getElementById('manual-btn');
+
+      retryBtn.disabled = true;
+      manualBtn.disabled = true;
+      setStatus(
+        ip
+          ? Homey.__('pair.status_connecting', { ip: ip })
+          : Homey.__('pair.status_scanning'),
+        false,
+        true
+      );
+
+      Homey.emit('login', { username: ip, password: serial }, function(err) {
+        retryBtn.disabled = false;
+        manualBtn.disabled = false;
+        if (err) {
+          setStatus(err.message || String(err), true, false);
+          showManualFallback();
+          return;
+        }
+        Homey.nextView();
+      });
+    }
+
+    Homey.ready(function() {
+      document.getElementById('title').textContent = Homey.__('pair.login_title');
+      document.getElementById('subtitle').textContent = Homey.__('pair.login_subtitle');
+      document.getElementById('retry-btn').textContent = Homey.__('pair.scan_button');
+      document.getElementById('ip').placeholder = Homey.__('pair.ip_placeholder');
+      document.getElementById('serial').placeholder = Homey.__('pair.serial_placeholder');
+      setStatus(Homey.__('pair.login_ready'), false, false);
+    });
+
     document.getElementById('ip').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') connect();
+      if (e.key === 'Enter') connectManual();
+    });
+
+    document.getElementById('serial').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') connectManual();
     });
   </script>
 </body>

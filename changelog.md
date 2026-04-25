@@ -1,3 +1,10 @@
+v1.1.10
+
+Improved: Pairing now starts with automatic network scanning and only offers manual IP entry when discovery fails
+Improved: Multiple DTUs can be discovered and added in one pairing flow
+Improved: Sunrise and sunset times are now cached once per day instead of recalculated on every poll
+Removed: Repair flow
+
 v1.1.4
 
 Fixed: pairing error crash ("Homey object has no attribute '__'") — now shows a proper error message when the DTU cannot be reached.

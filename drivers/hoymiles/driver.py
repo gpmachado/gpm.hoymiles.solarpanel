@@ -199,6 +199,9 @@ class HoymilesDriver(Driver):
         found_dtus: list[dict] = []
         confirmed:  dict        = {}
 
+        def _device_key(info: dict) -> str:
+            return str(info.get("dtu_sn") or info.get("ip") or "")
+
         async def _query_dtu(ip: str, manual_sn: str = "") -> dict | None:
             """Query a single DTU — same detection logic as the HA integration."""
             dtu = DTU(ip, timeout=10)
@@ -326,33 +329,44 @@ class HoymilesDriver(Driver):
         async def on_get_detected(data=None) -> dict:
             if not found_dtus:
                 raise Exception("No DTU detected — go back and scan again.")
-            result = dict(found_dtus[0])
-            result["dtu_count"] = len(found_dtus)
-            return result
+            return {
+                "dtu_count": len(found_dtus),
+                "dtus": [dict(d) for d in found_dtus],
+            }
 
         async def on_confirm_structure(data: dict) -> bool:
             nonlocal confirmed
             if not found_dtus:
                 raise Exception("No DTU detected — go back and scan again.")
-            base = found_dtus[0]
-            count = int(data.get("panel_count", base["panel_count"]))
-            if count < 1 or count > 8:
-                raise Exception("Panel count must be between 1 and 8.")
-            confirmed = {
-                "ip":           base["ip"],
-                "dtu_sn":       base["dtu_sn"],
-                "panel_count":  count,
-                "three_phase":  bool(data.get("three_phase", base["three_phase"])),
-                "is_hybrid":    bool(data.get("is_hybrid",   base["is_hybrid"])),
-                "is_encrypted": bool(data.get("is_encrypted", base["is_encrypted"])),
-                "enc_rand":     str(data.get("enc_rand",     base["enc_rand"]) or ""),
-                "inverter_sns": base["inverter_sns"],
-            }
-            self.log(
-                f"confirm_structure — panels:{confirmed['panel_count']} "
-                f"3ph:{confirmed['three_phase']} hybrid:{confirmed['is_hybrid']} "
-                f"enc:{confirmed['is_encrypted']}"
-            )
+
+            overrides = data.get("devices")
+            if not isinstance(overrides, list) or not overrides:
+                # Backward-compatible single-device payload.
+                overrides = [data]
+
+            confirmed = {}
+            for index, base in enumerate(found_dtus):
+                incoming = overrides[index] if index < len(overrides) else {}
+                count = int(incoming.get("panel_count", base["panel_count"]))
+                if count < 1 or count > 8:
+                    raise Exception("Panel count must be between 1 and 8.")
+
+                merged = {
+                    "ip":           base["ip"],
+                    "dtu_sn":       base["dtu_sn"],
+                    "panel_count":  count,
+                    "three_phase":  bool(incoming.get("three_phase", base["three_phase"])),
+                    "is_hybrid":    bool(incoming.get("is_hybrid",   base["is_hybrid"])),
+                    "is_encrypted": bool(incoming.get("is_encrypted", base["is_encrypted"])),
+                    "enc_rand":     str(incoming.get("enc_rand", base["enc_rand"]) or ""),
+                    "inverter_sns": base["inverter_sns"],
+                }
+                confirmed[_device_key(base)] = merged
+                self.log(
+                    f"confirm_structure — {merged['ip']} SN:{merged['dtu_sn']} "
+                    f"panels:{merged['panel_count']} 3ph:{merged['three_phase']} "
+                    f"hybrid:{merged['is_hybrid']} enc:{merged['is_encrypted']}"
+                )
             return True
 
         async def on_list_devices(data: dict = None) -> list:
@@ -363,21 +377,12 @@ class HoymilesDriver(Driver):
             for d in found_dtus:
                 ip     = d["ip"]
                 sn     = d["dtu_sn"]
-                # Apply confirmed overrides (panel_count, three_phase, is_hybrid,
-                # is_encrypted, enc_rand) — but only when a single DTU was found,
-                # since the confirm screen shows and edits only the first DTU.
-                if confirmed and len(found_dtus) == 1:
-                    count        = confirmed["panel_count"]
-                    three        = confirmed["three_phase"]
-                    hybrid       = confirmed["is_hybrid"]
-                    is_encrypted = confirmed["is_encrypted"]
-                    enc_rand     = confirmed["enc_rand"]
-                else:
-                    count        = d["panel_count"]
-                    three        = d["three_phase"]
-                    hybrid       = d["is_hybrid"]
-                    is_encrypted = d["is_encrypted"]
-                    enc_rand     = d["enc_rand"]
+                selected = confirmed.get(_device_key(d), d)
+                count        = selected["panel_count"]
+                three        = selected["three_phase"]
+                hybrid       = selected["is_hybrid"]
+                is_encrypted = selected["is_encrypted"]
+                enc_rand     = selected["enc_rand"]
 
                 dev_id = f"hoymiles_{sn or ip.replace('.', '_')}"
                 name   = f"Hoymiles DTU {sn}" if sn else f"Hoymiles DTU ({ip})"
@@ -405,62 +410,6 @@ class HoymilesDriver(Driver):
         session.set_handler("get_detected",     on_get_detected)
         session.set_handler("confirm_structure", on_confirm_structure)
         session.set_handler("list_devices",     on_list_devices)
-
-    async def on_repair(self, session, device) -> None:
-        self.log(f"onRepair started for device {device.get_id()}")
-
-        async def on_get_current(data=None) -> dict:
-            return {
-                "ip":           device.get_setting("ip") or "",
-                "is_encrypted": bool(device.get_setting("is_encrypted")),
-                "enc_rand":     device.get_setting("enc_rand") or "",
-            }
-
-        async def on_run_detection(data: dict) -> dict:
-            ip = str(data.get("ip", "") or device.get_setting("ip") or "").strip()
-            if not ip:
-                raise Exception("Enter an IP address first.")
-            self.log(f"Repair: probing DTU at {ip}")
-            dtu      = DTU(ip, timeout=10)
-            try:
-                app_info = await asyncio.wait_for(dtu.async_app_information_data(), timeout=10)
-            except Exception as e:
-                raise Exception(f"Cannot reach DTU at {ip}: {e}") from e
-            if not app_info:
-                raise Exception(f"No response from DTU at {ip}.")
-            is_encrypted = False
-            enc_rand     = ""
-            if app_info.dtu_info:
-                di = app_info.dtu_info
-                if di.dfs and _is_encrypted(di.dfs):
-                    is_encrypted = True
-                    enc_rand = di.enc_rand.hex() if di.enc_rand else ""
-            self.log(f"Repair detection: enc={is_encrypted}")
-            return {"is_encrypted": is_encrypted, "enc_rand": enc_rand}
-
-        async def on_save_repair(data: dict) -> bool:
-            ip           = str(data.get("ip", "")).strip()
-            is_encrypted = bool(data.get("is_encrypted", False))
-            enc_rand     = str(data.get("enc_rand", "") or "").strip()
-
-            if ip:
-                parts = ip.split(".")
-                if len(parts) != 4 or not all(p.isdigit() and 0 <= int(p) <= 255 for p in parts):
-                    raise Exception(f"Invalid IP address: {ip}")
-
-            new_settings: dict = {}
-            if ip:
-                new_settings["ip"] = ip
-            new_settings["is_encrypted"] = is_encrypted
-            new_settings["enc_rand"]     = enc_rand
-
-            self.log(f"Repair: saving {new_settings}")
-            await device.set_settings(new_settings)
-            return True
-
-        session.set_handler("get_current",   on_get_current)
-        session.set_handler("run_detection", on_run_detection)
-        session.set_handler("save_repair",   on_save_repair)
 
 
 homey_export = HoymilesDriver
