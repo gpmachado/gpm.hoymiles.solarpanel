@@ -9,20 +9,22 @@
 
 - [ ] **Publicar no Homey App Store** — versão v1.1.9 pronta.
 
-- [ ] **Panel count por DTU quando múltiplos DTUs são encontrados** —
-  Hoje o `confirm_structure` permite ajustar o `panel_count` mas esse override
-  só é aplicado quando há **exatamente 1 DTU** detectado. Com 2+ DTUs, cada um
-  usa a contagem auto-detectada (comportamento correto para o caso Gabriel: 2×4=8).
-  
-  **Problema**: quem tiver DTUs com contagens diferentes (ex: um com 4 painéis e
-  outro com 2) não consegue corrigir individualmente pelo pairing wizard — o
-  `confirm_structure` mostra apenas 1 campo que não é aplicado quando há múltiplos.
-  
-  **Solução possível**: após o `list_devices` criar os devices, permitir ajustar
-  o `panel_count` por device individualmente nas Settings de cada device
-  (o campo já existe em `driver.compose.json`). O usuário faz o pairing,
-  os dois DTUs entram com a contagem auto-detectada, e depois ajusta cada um
-  nas settings se necessário.
+- [ ] **UX: confirm_structure enganoso com 2+ DTUs** —
+  Quando 2+ DTUs são encontrados, a tela `confirm_structure` mostra os dados do
+  primeiro DTU e pede ao utilizador para confirmar o `panel_count` — mas esse valor
+  é **silenciosamente ignorado** pelo driver (o override só se aplica quando há
+  exactamente 1 DTU). Ambos os DTUs usam a contagem auto-detectada.
+
+  Exemplo real (log de Gabriel):
+  - `confirm_structure — panels:2` (utilizador digitou 2)
+  - `list_devices — DTU1 panels:4` / `list_devices — DTU2 panels:4` (auto-detect ignorou o 2)
+
+  **Solução**: quando `len(found_dtus) > 1`, saltar a tela de confirmação ou
+  mostrar uma nota "Multiple DTUs detected — panel count auto-set per DTU.
+  Adjust individually in device Settings if needed."
+
+  **Workaround actual**: as Settings de cada device já têm o campo `panel_count`
+  editável — o utilizador pode corrigir por device após o pairing sem re-pair.
 
 - [ ] **Capabilities PV fantasma — microinversor com slots não ocupados** —
   O número de entradas PV por microinversor varia com o modelo:
