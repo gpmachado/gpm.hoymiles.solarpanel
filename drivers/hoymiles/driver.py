@@ -325,7 +325,9 @@ class HoymilesDriver(Driver):
         async def on_get_detected(data=None) -> dict:
             if not found_dtus:
                 raise Exception("No DTU detected — go back and scan again.")
-            return found_dtus[0]
+            result = dict(found_dtus[0])
+            result["dtu_count"] = len(found_dtus)
+            return result
 
         async def on_confirm_structure(data: dict) -> bool:
             nonlocal confirmed
