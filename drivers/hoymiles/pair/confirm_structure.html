@@ -100,21 +100,6 @@
           return;
         }
 
-        // Multiple DTUs — auto-detect already determined each DTU's structure.
-        // Skip the confirmation form and advance immediately.
-        if (data.dtu_count && data.dtu_count > 1) {
-          document.getElementById('status').textContent =
-            data.dtu_count + ' DTUs detected — continuing automatically…';
-          Homey.emit('confirm_structure', {}, function(e) {
-            if (e) {
-              document.getElementById('err').textContent = e.message || String(e);
-            } else {
-              Homey.nextView();
-            }
-          });
-          return;
-        }
-
         document.getElementById('info-ip').textContent = 'IP: ' + (data.ip || '—');
         document.getElementById('info-sn').textContent = data.dtu_sn
           ? 'Serial: ' + data.dtu_sn : '';
@@ -125,6 +110,18 @@
         document.getElementById('is-encrypted').checked = !!data.is_encrypted;
         document.getElementById('enc-rand').value       = data.enc_rand || '';
         toggleEncRand();
+
+        // Multiple DTUs — settings are auto-detected per DTU; lock the form.
+        if (data.dtu_count && data.dtu_count > 1) {
+          document.querySelector('h3').textContent = 'DTUs Detected';
+          document.querySelector('.note').textContent =
+            data.dtu_count + ' DTUs found. Panel count and settings are '
+            + 'auto-detected per DTU — no changes needed. Press Confirm to continue.';
+          document.getElementById('panel-count').disabled    = true;
+          document.getElementById('three-phase').disabled    = true;
+          document.getElementById('is-hybrid').disabled      = true;
+          document.getElementById('is-encrypted').disabled   = true;
+        }
       });
     });
 
