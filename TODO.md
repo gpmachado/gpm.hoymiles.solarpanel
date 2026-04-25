@@ -24,6 +24,23 @@
   os dois DTUs entram com a contagem auto-detectada, e depois ajusta cada um
   nas settings se necessário.
 
+- [ ] **Capabilities PV fantasma quando DTU tem slots não ocupados** —
+  Se o DTU reporta `pv_number=4` mas o usuário só tem 2 microinversores conectados,
+  o app cria `pv3`/`pv4` que ficam permanentemente a zero. O usuário vê dois
+  "painéis" sem geração e não sabe se é falha ou slot vazio — confunde e polui o dashboard.
+
+  **Solução** (mesmo padrão do Deye): após o primeiro poll com dados reais (sol presente),
+  verificar `data.pv_data` — cada entrada representa um microinversor que efetivamente
+  respondeu ao DTU. Contar quantos têm `power > 0` ou `voltage > 0` e ajustar
+  `panel_count` em settings + remover/não criar capabilities dos slots sem resposta.
+  
+  PV1/PV2 ficam sempre (estruturais, mesmo a zero). PV3/PV4+ só ficam se detectados
+  com geração real. Mesma lógica já implementada no Deye em `_refresh_info`.
+
+  **Atenção**: o DTU pode reportar `pv_number` correto (contagem real de microinversores
+  registados), então o problema só ocorre se o DTU conta por slots de hardware e não
+  por microinversores ativos. Confirmar com dados reais antes de implementar.
+
 - [ ] **Script de scan para Hoymiles** — equivalente ao `deye_scan_mac.sh`,
   para diagnóstico de DTUs Hoymiles em terminal (IP, SN, painéis, dados em tempo real).
 
