@@ -290,6 +290,7 @@ class HoymilesDriver(Driver):
                 "inverter_sns":  inverter_sns,
                 "is_encrypted":  is_encrypted,
                 "enc_rand":      enc_rand,
+                "source":        source,
             }
 
         async def on_login(data: dict) -> bool:
