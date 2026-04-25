@@ -9,7 +9,7 @@
 
 - [ ] **Publicar no Homey App Store** — versão v1.1.9 pronta.
 
-- [ ] **UX: confirm_structure enganoso com 2+ DTUs** —
+- [x] **UX: confirm_structure enganoso com 2+ DTUs** — resolvido em `b192df8`
   Quando 2+ DTUs são encontrados, a tela `confirm_structure` mostra os dados do
   primeiro DTU e pede ao utilizador para confirmar o `panel_count` — mas esse valor
   é **silenciosamente ignorado** pelo driver (o override só se aplica quando há
