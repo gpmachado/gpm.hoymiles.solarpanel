@@ -100,10 +100,10 @@
           return;
         }
 
+        // Always pre-fill form with detected values so doConfirm() reads them correctly.
         document.getElementById('info-ip').textContent = 'IP: ' + (data.ip || '—');
         document.getElementById('info-sn').textContent = data.dtu_sn
           ? 'Serial: ' + data.dtu_sn : '';
-
         document.getElementById('panel-count').value    = data.panel_count || 2;
         document.getElementById('three-phase').checked  = !!data.three_phase;
         document.getElementById('is-hybrid').checked    = !!data.is_hybrid;
@@ -111,17 +111,15 @@
         document.getElementById('enc-rand').value       = data.enc_rand || '';
         toggleEncRand();
 
-        // Multiple DTUs — settings are auto-detected per DTU; lock the form.
-        if (data.dtu_count && data.dtu_count > 1) {
-          document.querySelector('h3').textContent = 'DTUs Detected';
-          document.querySelector('.note').textContent =
-            data.dtu_count + ' DTUs found. Panel count and settings are '
-            + 'auto-detected per DTU — no changes needed. Press Confirm to continue.';
-          document.getElementById('panel-count').disabled    = true;
-          document.getElementById('three-phase').disabled    = true;
-          document.getElementById('is-hybrid').disabled      = true;
-          document.getElementById('is-encrypted').disabled   = true;
+        // If detection came from live inverter data, skip the form — nothing to correct.
+        // doConfirm() is called programmatically so the user never sees this screen.
+        if (data.source === 'real_data') {
+          document.getElementById('status').textContent = 'Auto-detected — continuing…';
+          setTimeout(doConfirm, 300);
+          return;
         }
+
+        // Detection was uncertain (app_info / fallback) — show form for manual review.
       });
     });
 
