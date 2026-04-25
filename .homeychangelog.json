@@ -25,5 +25,8 @@
   },
   "1.1.10": {
     "en": "Improved pairing flow: automatic network scan first, with manual IP fallback only when discovery fails. Multiple DTUs can be found and added in a single flow. Removed the repair flow. Optimized sun time calculation by caching sunrise and sunset once per day."
+  },
+  "1.1.11": {
+    "en": "Improved pairing flow: automatic network scan first, with manual IP fallback only when discovery fails. Multiple DTUs can be found and added in a single flow. Removed the repair flow. Optimized sun time calculation by caching sunrise and sunset once per day."
   }
 }
