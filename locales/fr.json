@@ -47,7 +47,7 @@
     "saving_status": "Enregistrement des appareils détectés..."
   },
   "error": {
-    "no_dtu_found": "Aucun DTU Hoymiles n'a été trouvé automatiquement. Saisissez l'adresse IP manuellement.",
+    "no_dtu_found": "Aucun DTU Hoymiles trouvé sur le réseau. Entrez l'adresse IP manuellement.",
     "invalid_ip": "Adresse IP invalide : __ip__",
     "cannot_reach": "Impossible d'atteindre le DTU à __ip__. Vérifiez l'IP et le réseau.",
     "no_dtu_responded": "Aucun DTU Hoymiles n'a répondu. Vérifiez l'IP et le réseau.",

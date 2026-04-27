@@ -47,7 +47,7 @@
     "saving_status": "Guardando dispositivos detectados..."
   },
   "error": {
-    "no_dtu_found": "No se encontró automáticamente ningún DTU Hoymiles. Introduce la dirección IP manualmente.",
+    "no_dtu_found": "No se encontró ningún DTU Hoymiles en la red. Introduce la dirección IP manualmente.",
     "invalid_ip": "Dirección IP no válida: __ip__",
     "cannot_reach": "No se puede alcanzar el DTU en __ip__. Comprueba la IP y la red.",
     "no_dtu_responded": "Ningún DTU Hoymiles respondió. Comprueba la IP y la red.",

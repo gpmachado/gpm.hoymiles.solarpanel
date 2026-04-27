@@ -47,7 +47,7 @@
     "saving_status": "Lagrer oppdagede enheter..."
   },
   "error": {
-    "no_dtu_found": "Ingen Hoymiles-DTU ble funnet automatisk. Skriv inn IP-adressen manuelt.",
+    "no_dtu_found": "Ingen Hoymiles DTU funnet på nettverket. Skriv inn IP-adressen manuelt.",
     "invalid_ip": "Ugyldig IP-adresse: __ip__",
     "cannot_reach": "Kan ikke nå DTU på __ip__. Kontroller IP og nettverk.",
     "no_dtu_responded": "Ingen Hoymiles DTU svarte. Kontroller IP og nettverk.",

@@ -47,7 +47,7 @@
     "saving_status": "Gedetecteerde apparaten opslaan..."
   },
   "error": {
-    "no_dtu_found": "Er is niet automatisch een Hoymiles-DTU gevonden. Voer het IP-adres handmatig in.",
+    "no_dtu_found": "Geen Hoymiles DTU gevonden op het netwerk. Voer het IP-adres handmatig in.",
     "invalid_ip": "Ongeldig IP-adres: __ip__",
     "cannot_reach": "Kan DTU op __ip__ niet bereiken. Controleer IP en netwerk.",
     "no_dtu_responded": "Geen Hoymiles DTU heeft gereageerd. Controleer IP en netwerk.",
