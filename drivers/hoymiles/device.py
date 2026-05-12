@@ -156,10 +156,18 @@ class HoymilesDevice(Device):
         panel_count = int(self.get_setting("panel_count") or 0)
         three_phase = bool(self.get_setting("three_phase"))
 
-        await self._set("measure_power",     (data.dtu_power or 0) / 10)
-        await self._set("meter_power.today", (data.dtu_daily_energy or 0) / 1000)
+        pv_list = data.pv_data or []
+        # Some DTUs (e.g. DTU-WLite-S with HMS-1600-4T) report dtu_power and
+        # dtu_daily_energy as 0 even when individual PV data is correct.
+        # Fall back to summing per-PV values so the main card always shows data.
+        dtu_w     = (data.dtu_power       or 0) / 10
+        dtu_today = (data.dtu_daily_energy or 0) / 1000
+        pv_w      = sum((pv.power         or 0) for pv in pv_list) / 10
+        pv_today  = sum((pv.energy_daily  or 0) for pv in pv_list) / 1000
+        await self._set("measure_power",     dtu_w     if dtu_w     > 0 else pv_w)
+        await self._set("meter_power.today", dtu_today if dtu_today > 0 else pv_today)
 
-        total_wh = sum(pv.energy_total or 0 for pv in (data.pv_data or []))
+        total_wh = sum(pv.energy_total or 0 for pv in pv_list)
         await self._set("meter_power", total_wh / 1000)
 
         if three_phase:
