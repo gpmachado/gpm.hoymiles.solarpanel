@@ -28,5 +28,8 @@
   },
   "1.1.11": {
     "en": "Improved pairing flow: automatic network scan first, with manual IP fallback only when discovery fails. Multiple DTUs can be found and added in a single flow. Removed the repair flow. Optimized sun time calculation by caching sunrise and sunset once per day."
+  },
+  "1.1.12": {
+    "en": "Fixed: pairing no longer asks for panel count when auto-detection is confident (live inverter data). Fixed: total power (W) and daily energy (kWh) on the main device card now show correct values on DTUs that report zero at the DTU level (e.g. DTU-WLite-S with HMS-1600-4T) — per-panel values are summed automatically as a fallback."
   }
 }
