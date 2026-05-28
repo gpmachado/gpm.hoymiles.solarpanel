@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "gpm.hoymiles.solarpanel",
-  "version": "1.1.12",
+  "version": "1.1.14",
   "compatibility": ">=13.0.0",
   "sdk": 3,
   "runtime": "python",
@@ -111,6 +111,168 @@
     "hoymiles-wifi",
     "astral"
   ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "daily_data_updated",
+        "title": {
+          "en": "Daily data updated",
+          "nl": "Dagelijkse gegevens bijgewerkt",
+          "de": "Tägliche Daten aktualisiert",
+          "fr": "Données journalières mises à jour",
+          "it": "Dati giornalieri aggiornati",
+          "sv": "Daglig data uppdaterad",
+          "no": "Daglige data oppdatert",
+          "es": "Datos diarios actualizados",
+          "da": "Daglige data opdateret",
+          "pl": "Dzienne dane zaktualizowane"
+        },
+        "hint": {
+          "en": "Triggered once per day when the inverter stops producing (at sunset). Use the token to read today's total energy production."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "daily_production",
+            "type": "number",
+            "title": {
+              "en": "Daily Production (kWh)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "data_updated",
+        "title": {
+          "en": "Inverter data updated",
+          "nl": "Omvormergegevens bijgewerkt",
+          "de": "Wechselrichterdaten aktualisiert",
+          "fr": "Données de l'onduleur mises à jour",
+          "it": "Dati inverter aggiornati",
+          "sv": "Växelriktardata uppdaterad",
+          "no": "Vekselretter-data oppdatert",
+          "es": "Datos del inversor actualizados",
+          "da": "Inverterdata opdateret",
+          "pl": "Dane falownika zaktualizowane"
+        },
+        "hint": {
+          "en": "Triggered on every successful poll (every 60 s by default). Use tokens to read current power and today's accumulated energy."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "power",
+            "type": "number",
+            "title": {
+              "en": "Power (W)"
+            }
+          },
+          {
+            "name": "daily_production",
+            "type": "number",
+            "title": {
+              "en": "Daily Production (kWh)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "solar_production_started",
+        "title": {
+          "en": "Solar production started",
+          "nl": "Zonneproductie gestart",
+          "de": "Solarproduktion gestartet",
+          "fr": "Production solaire démarrée",
+          "it": "Produzione solare avviata",
+          "sv": "Solproduktion startad",
+          "no": "Solproduksjon startet",
+          "es": "Producción solar iniciada",
+          "da": "Solproduktion startet",
+          "pl": "Produkcja solarna rozpoczęta"
+        },
+        "hint": {
+          "en": "Triggered when the inverter starts producing power (e.g. at sunrise)."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "power",
+            "type": "number",
+            "title": {
+              "en": "Power (W)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "solar_production_stopped",
+        "title": {
+          "en": "Solar production stopped",
+          "nl": "Zonneproductie gestopt",
+          "de": "Solarproduktion gestoppt",
+          "fr": "Production solaire arrêtée",
+          "it": "Produzione solare fermata",
+          "sv": "Solproduktion stoppad",
+          "no": "Solproduksjon stoppet",
+          "es": "Producción solar detenida",
+          "da": "Solproduktion stoppet",
+          "pl": "Produkcja solarna zatrzymana"
+        },
+        "hint": {
+          "en": "Triggered when the inverter stops producing power (e.g. at sunset or on a fault)."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_solar_producing",
+        "title": {
+          "en": "Solar production !{{is|is not}} active",
+          "nl": "Zonneproductie !{{is|is niet}} actief",
+          "de": "Solarproduktion !{{ist|ist nicht}} aktiv",
+          "fr": "La production solaire !{{est|n'est pas}} active",
+          "it": "La produzione solare !{{è|non è}} attiva",
+          "sv": "Solproduktion !{{är|är inte}} aktiv",
+          "no": "Solproduksjon !{{er|er ikke}} aktiv",
+          "es": "La producción solar !{{está|no está}} activa",
+          "da": "Solproduktion !{{er|er ikke}} aktiv",
+          "pl": "Produkcja solarna !{{jest|nie jest}} aktywna"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {

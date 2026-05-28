@@ -31,5 +31,11 @@
   },
   "1.1.12": {
     "en": "Fixed: pairing no longer asks for panel count when auto-detection is confident (live inverter data). Fixed: total power (W) and daily energy (kWh) on the main device card now show correct values on DTUs that report zero at the DTU level (e.g. DTU-WLite-S with HMS-1600-4T) — per-panel values are summed automatically as a fallback."
+  },
+  "1.1.13": {
+    "en": "Added: Flow card triggers and conditions for automations (solar production started/stopped, daily summary, data updated, is solar producing). Fixed: Solar production started trigger no longer fires on every app restart. Fixed: night backoff activating at wrong hours when Homey location is not configured."
+  },
+  "1.1.14": {
+    "en": "Fixed: app crash on startup when Homey location is configured — error saving coordinates to device settings was not handled correctly."
   }
 }

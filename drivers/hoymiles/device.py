@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from astral import LocationInfo
 from astral.sun import sun
 
+from app.app import DEBUG_LOG as _DEBUG_LOG
 from homey.device import Device
 from hoymiles_wifi.dtu import DTU
 
@@ -27,7 +28,7 @@ class HoymilesDevice(Device):
     _ERROR_THRESHOLD: int = 5
     _backoff_until: float = 0.0
     _sun_cache: tuple | None = None   # (cache_date, sunrise_utc, sunset_utc)
-
+    _was_producing: bool | None = None  # None = first poll, state not yet known
     # ── Lifecycle ─────────────────────────────────────────────────────────────
 
     async def on_init(self) -> None:
@@ -164,8 +165,10 @@ class HoymilesDevice(Device):
         dtu_today = (data.dtu_daily_energy or 0) / 1000
         pv_w      = sum((pv.power         or 0) for pv in pv_list) / 10
         pv_today  = sum((pv.energy_daily  or 0) for pv in pv_list) / 1000
-        await self._set("measure_power",     dtu_w     if dtu_w     > 0 else pv_w)
-        await self._set("meter_power.today", dtu_today if dtu_today > 0 else pv_today)
+        power_w   = dtu_w     if dtu_w     > 0 else pv_w
+        today_kwh = dtu_today if dtu_today > 0 else pv_today
+        await self._set("measure_power",     power_w)
+        await self._set("meter_power.today", today_kwh)
 
         total_wh = sum(pv.energy_total or 0 for pv in pv_list)
         await self._set("meter_power", total_wh / 1000)
@@ -182,6 +185,11 @@ class HoymilesDevice(Device):
             await self._set(f"measure_power.{sfx}",   (pv.power   or 0) / 10)
             await self._set(f"measure_voltage.{sfx}", (pv.voltage or 0) / 10)
             await self._set(f"measure_current.{sfx}", (pv.current or 0) / 100)
+
+        # ── Flow triggers ──────────────────────────────────────────────────────
+        await self._fire_flow_triggers(power_w, today_kwh)
+
+        self.log(f"poll ok | solar={power_w:.0f}W daily={today_kwh:.2f}kWh")
 
     async def _poll_single_phase(self, data) -> None:
         sgs = (data.sgs_data or [None])[0]
@@ -285,14 +293,34 @@ class HoymilesDevice(Device):
             lat = self._get_float_setting("solar_latitude")
             lng = self._get_float_setting("solar_longitude")
 
-            if lat is None:
+            from_geolocation = False
+            if lat is None or lat == 0.0:
                 lat = self.homey.geolocation.get_latitude()
-            if lng is None:
+                from_geolocation = True
+            if lng is None or lng == 0.0:
                 lng = self.homey.geolocation.get_longitude()
+                from_geolocation = True
 
-            if lat is None or lng is None:
-                self.log("Night backoff disabled — location not available")
+            if lat is None or lng is None or (lat == 0.0 and lng == 0.0):
+                self.log("Night backoff disabled — location not available (Homey location not configured?)")
                 return None
+
+            # Back-fill settings so the user can see which coordinates are in use.
+            # Only written once per day (sun_cache miss), only when fields are still
+            # at default 0 values, and only when geolocation returned a real fix.
+            if from_geolocation and (lat != 0.0 or lng != 0.0):
+                cur_lat = self._get_float_setting("solar_latitude")
+                cur_lng = self._get_float_setting("solar_longitude")
+                if (cur_lat is None or cur_lat == 0.0) and (cur_lng is None or cur_lng == 0.0):
+                    async def _save_location(la: float, lo: float) -> None:
+                        try:
+                            await self.set_settings({
+                                "solar_latitude":  round(la, 6),
+                                "solar_longitude": round(lo, 6),
+                            })
+                        except Exception as exc:
+                            _LOGGER.debug(f"Back-fill location settings failed: {exc}")
+                    asyncio.create_task(_save_location(lat, lng))
 
             loc = LocationInfo(latitude=lat, longitude=lng)
             s   = sun(loc.observer, date=today, tzinfo=timezone.utc)
@@ -365,6 +393,35 @@ class HoymilesDevice(Device):
             await self._set(f"measure_power.{sfx}",   0)
             await self._set(f"measure_voltage.{sfx}", 0)
             await self._set(f"measure_current.{sfx}", 0)
+
+    # ── Flow triggers ─────────────────────────────────────────────────────────
+
+    async def _fire_flow_triggers(self, power_w: float, today_kwh: float) -> None:
+        """Fire flow triggers based on state transitions detected in poll values."""
+        is_producing = power_w > 5.0
+
+        if self._was_producing is None:
+            # First poll after startup — record state silently, no transition to fire.
+            self._was_producing = is_producing
+        elif is_producing and not self._was_producing:
+            self._was_producing = True
+            self.log(f"production started — {power_w:.0f}W")
+            await self._trigger("solar_production_started", {"power": power_w})
+        elif not is_producing and self._was_producing:
+            self._was_producing = False
+            self.log(f"production stopped — daily {today_kwh:.2f}kWh")
+            await self._trigger("solar_production_stopped", {})
+            await self._trigger("daily_data_updated", {"daily_production": today_kwh})
+
+        await self._trigger("data_updated", {"power": power_w, "daily_production": today_kwh})
+
+    async def _trigger(self, card_id: str, tokens: dict) -> None:
+        """Fire a flow trigger card."""
+        try:
+            card = self.homey.flow.get_trigger_card(card_id)
+            await card.trigger(self, tokens, {})
+        except Exception as e:
+            _LOGGER.debug(f"Flow trigger '{card_id}' failed: {e}")
 
     # ── Helpers ───────────────────────────────────────────────────────────────
 

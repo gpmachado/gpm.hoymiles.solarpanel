@@ -1,0 +1,32 @@
+{
+  "id": "daily_data_updated",
+  "title": {
+    "en": "Daily data updated",
+    "nl": "Dagelijkse gegevens bijgewerkt",
+    "de": "Tägliche Daten aktualisiert",
+    "fr": "Données journalières mises à jour",
+    "it": "Dati giornalieri aggiornati",
+    "sv": "Daglig data uppdaterad",
+    "no": "Daglige data oppdatert",
+    "es": "Datos diarios actualizados",
+    "da": "Daglige data opdateret",
+    "pl": "Dzienne dane zaktualizowane"
+  },
+  "hint": {
+    "en": "Triggered once per day when the inverter stops producing (at sunset). Use the token to read today's total energy production."
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "daily_production",
+      "type": "number",
+      "title": { "en": "Daily Production (kWh)" }
+    }
+  ]
+}

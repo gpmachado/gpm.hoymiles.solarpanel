@@ -85,7 +85,7 @@ Homey Python SDK changed `on_settings` to keyword args
   `drivers/deye/driver.py` (`on_repair`) + `drivers/deye/repair/repair_device.html`.
   For Hoymiles the repair screen only needs IP and encryption fields (no model selection).
 - [ ] Confirm encrypted pairing works for Martin and Sanne (DTU-Pro-S)
-- [ ] Verify `meter_power.today` resets correctly at midnight for all device types
+- [x] `meter_power.today` reset — handled by DTU firmware at sunrise. App preserves the last known value intentionally (user wants to consult today's production at any time). `_apply_zeros()` does NOT touch it.
 - [ ] Test three-phase polling path with a real 3-phase inverter
 - [ ] **Flow cards** — no flow cards implemented yet. Port from gpm.python.deye:
   - Triggers: `solar_production_started`, `solar_production_stopped`, `data_updated`

@@ -1,0 +1,37 @@
+{
+  "id": "data_updated",
+  "title": {
+    "en": "Inverter data updated",
+    "nl": "Omvormergegevens bijgewerkt",
+    "de": "Wechselrichterdaten aktualisiert",
+    "fr": "Données de l'onduleur mises à jour",
+    "it": "Dati inverter aggiornati",
+    "sv": "Växelriktardata uppdaterad",
+    "no": "Vekselretter-data oppdatert",
+    "es": "Datos del inversor actualizados",
+    "da": "Inverterdata opdateret",
+    "pl": "Dane falownika zaktualizowane"
+  },
+  "hint": {
+    "en": "Triggered on every successful poll (every 60 s by default). Use tokens to read current power and today's accumulated energy."
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=hoymiles&capabilities=meter_power.today"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "power",
+      "type": "number",
+      "title": { "en": "Power (W)" }
+    },
+    {
+      "name": "daily_production",
+      "type": "number",
+      "title": { "en": "Daily Production (kWh)" }
+    }
+  ]
+}
