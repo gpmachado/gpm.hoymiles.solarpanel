@@ -1,3 +1,13 @@
+v1.1.14
+
+Fixed: app crash on startup when Homey location is configured — error saving coordinates to device settings was not handled correctly.
+
+v1.1.13
+
+Added: Flow card triggers and conditions for automations (solar production started/stopped, daily summary, data updated, is solar producing).
+Fixed: Solar production started trigger no longer fires on every app restart.
+Fixed: Night backoff activating at wrong hours when Homey location is not configured.
+
 v1.1.10
 
 Improved: Pairing now starts with automatic network scanning and only offers manual IP entry when discovery fails
