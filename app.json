@@ -412,6 +412,33 @@
             "da": "Tilføjer manglende værdier igen (f.eks. panelfliser efter ændret antal paneler) med de rigtige navne. Tilføjer kun — fjerner aldrig noget; Flows og Insights bevares.",
             "pl": "Ponownie dodaje brakujące wartości (np. kafelki paneli po zmianie liczby paneli) z poprawnymi nazwami. Tylko dodaje — nigdy nic nie usuwa; Flows i Insights są zachowane."
           }
+        },
+        "button.reset_lifetime_baseline": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset lifetime energy",
+            "nl": "Totale energie resetten",
+            "de": "Gesamtenergie zurücksetzen",
+            "fr": "Réinitialiser l'énergie totale",
+            "it": "Reimposta energia totale",
+            "sv": "Återställ total energi",
+            "no": "Nullstill total energi",
+            "es": "Restablecer energía total",
+            "da": "Nulstil total energi",
+            "pl": "Resetuj łączną energię"
+          },
+          "desc": {
+            "en": "Use after replacing an inverter. The next reading becomes the new total.",
+            "nl": "Gebruik na het vervangen van een omvormer. De volgende meting wordt het nieuwe totaal.",
+            "de": "Nach dem Austausch eines Wechselrichters verwenden. Der nächste Wert wird zum neuen Gesamtwert.",
+            "fr": "À utiliser après le remplacement d'un onduleur. La prochaine mesure devient le nouveau total.",
+            "it": "Da usare dopo la sostituzione di un inverter. La prossima lettura diventa il nuovo totale.",
+            "sv": "Använd efter byte av växelriktare. Nästa avläsning blir det nya totalvärdet.",
+            "no": "Bruk etter bytte av vekselretter. Neste avlesning blir den nye totalen.",
+            "es": "Usar tras sustituir un inversor. La siguiente lectura pasa a ser el nuevo total.",
+            "da": "Brug efter udskiftning af en vekselretter. Næste måling bliver den nye total.",
+            "pl": "Użyj po wymianie falownika. Kolejny odczyt staje się nową sumą."
+          }
         }
       },
       "energy": {

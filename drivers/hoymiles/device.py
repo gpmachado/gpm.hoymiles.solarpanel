@@ -49,6 +49,7 @@ _PRODUCTION_STOP_POLLS = 3
 _DEBUG_SETTING_MAX_S = 60 * 60   # "Debug logging" setting switches itself off after this
 
 RESTORE_BUTTON_CAP = "button.restore_capabilities"
+RESET_LIFETIME_BUTTON_CAP = "button.reset_lifetime_baseline"
 POWER_RATIO_CAP = "measure_power_ratio"
 
 
@@ -68,7 +69,6 @@ class HoymilesDevice(Device):
     _last_poll_ok_date = None
     _last_poll_ok_warning: int | None = None
     _last_lifetime_wh: float | None = None  # last meter_power (Wh) actually written
-    _pending_lower_wh: float | None = None  # unconfirmed lower reading, awaiting a second poll to agree
     _dtu_rebuilds: int = 0
     _sun_cache: tuple | None = None   # (cache_date, sunrise_utc, sunset_utc)
     _was_producing: bool | None = None  # None = first poll, state not yet known
@@ -99,6 +99,7 @@ class HoymilesDevice(Device):
         await self._refresh_info()
         await self._ensure_structural_caps()
         await self._ensure_restore_button()
+        await self._ensure_reset_lifetime_button()
         if self.get_setting("debugLog"):
             await self._set_debug_logging(True)
         token = debug.scope.set(self.get_id())
@@ -297,6 +298,28 @@ class HoymilesDevice(Device):
 
     async def _on_restore_button(self, value, **kwargs) -> None:
         await self.restore_capabilities()
+
+    async def _ensure_reset_lifetime_button(self) -> None:
+        """Maintenance action that clears the held Lifetime Energy floor after a
+        microinverter swap. Options come from driver.compose.json."""
+        try:
+            if not self.has_capability(RESET_LIFETIME_BUTTON_CAP):
+                await self.add_capability(RESET_LIFETIME_BUTTON_CAP)
+            self.register_capability_listener(
+                RESET_LIFETIME_BUTTON_CAP, self._on_reset_lifetime_button
+            )
+        except Exception as e:
+            _LOGGER.warning(f"Reset energy baseline button setup failed: {e}")
+
+    async def _on_reset_lifetime_button(self, value, **kwargs) -> None:
+        """Clear the monotone floor only — next good poll becomes the baseline."""
+        prev = self._last_lifetime_wh
+        self._last_lifetime_wh = None
+        self.log(
+            f"meter_power: energy baseline reset"
+            f"{f' (was {prev}Wh)' if prev is not None else ''} — "
+            f"next poll becomes the new total"
+        )
 
     async def restore_capabilities(self, settings: dict | None = None) -> list[str]:
         """Re-add every capability pairing would create for this device's
@@ -820,29 +843,16 @@ class HoymilesDevice(Device):
         else:
             total_wh = sum(pv.energy_total or 0 for pv in pv_list)
             if self._last_lifetime_wh is not None and total_wh < self._last_lifetime_wh - 10:
-                # Looks like a drop with a full panel count. Could be a
-                # one-off bad reading, or a genuine reset (device swapped/
-                # reconfigured). Require the same lower value to repeat on
-                # the next poll before accepting it — a single-poll glitch
-                # gets ignored, but a real reset is accepted quickly instead
-                # of silently hiding whatever this device produces from here
-                # on (comparing forever against a stale held-over value
-                # would swallow real production increments until the true
-                # total organically climbed back past it).
-                if self._pending_lower_wh is not None and abs(total_wh - self._pending_lower_wh) < 10:
-                    self.log(f"meter_power: drop to {total_wh}Wh confirmed on second poll — accepting as new baseline")
-                    self._last_lifetime_wh = total_wh
-                    self._pending_lower_wh = None
-                    await self._set("meter_power", total_wh / 1000)
-                else:
-                    self.log(
-                        f"meter_power: implausible drop ({self._last_lifetime_wh}Wh -> {total_wh}Wh) — "
-                        f"skipping, keeping last known value pending confirmation"
-                    )
-                    self._pending_lower_wh = total_wh
+                # Near sunset the DTU can return a full panel count with
+                # stale lower totals. Reject the drop and keep the last
+                # written value; a maintenance action clears the baseline
+                # after a real inverter swap.
+                self.log(
+                    f"meter_power: implausible drop ({self._last_lifetime_wh}Wh -> {total_wh}Wh) — "
+                    f"skipping, keeping last known value"
+                )
             else:
                 self._last_lifetime_wh = total_wh
-                self._pending_lower_wh = None
                 await self._set("meter_power", total_wh / 1000)
 
         # Each block below is independently guarded: an unexpected field on one
