@@ -224,6 +224,43 @@ assert (
 ), out
 
 
+# W100: a311 first, a303 fallback, then stick to whichever returned panels.
+class FakeW100Dtu:
+    def __init__(self, new, old):
+        self.new, self.old, self.calls = new, old, []
+
+    async def async_get_real_data_new(self):
+        self.calls.append("a311")
+        return self.new
+
+    async def async_get_real_data(self):
+        self.calls.append("a303")
+        return self.old
+
+
+def w100(new, old):
+    w = dev.HoymilesDevice()
+    w.log = lambda *a: None
+    w._dtu = FakeW100Dtu(new, old)
+    return w
+
+
+new_ok = types.SimpleNamespace(pv_data=[object()])
+w = w100(new_ok, legacy)
+assert asyncio.run(w._read_w100()) is new_ok and w._w100_proto == "a311"
+w._dtu.new = types.SimpleNamespace(pv_data=[])  # asleep: no a303 retry once a311 worked
+asyncio.run(w._read_w100())
+assert w._dtu.calls == ["a311", "a311"], w._dtu.calls
+
+w = w100(None, legacy)
+assert asyncio.run(w._read_w100()).dtu_power == 900 and w._w100_proto == "a303"
+asyncio.run(w._read_w100())
+assert w._dtu.calls == ["a311", "a303", "a303"], w._dtu.calls
+
+w = w100(None, None)
+assert asyncio.run(w._read_w100()) is None and w._w100_proto is None
+
+
 # A night must end the "same day" for the daily-zero guard.
 class Night(D):
     def __init__(self):

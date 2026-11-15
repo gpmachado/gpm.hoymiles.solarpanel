@@ -1,3 +1,7 @@
+v1.1.27
+
+Fixed DTUs with a 10D3 serial showing no data even though pairing read all panels: the app now tries the standard realtime-data command first and only falls back to the legacy W100 command if that returns no panels, then keeps using whichever one worked.
+
 v1.1.26
 
 Fixed hybrid (energy storage) systems showing no values at all — every poll failed on fields that don't exist in the storage data.

@@ -77,6 +77,7 @@ class HoymilesDevice(Device):
     _had_fault: bool | None = None      # None = first poll, state not yet known
     _was_night: bool = False          # last poll's night/day state, for transition logging
     _w100_morning_warmup_done: bool = False
+    _w100_proto: str | None = None    # 10D3 realtime command that returned panels: "a311" / "a303"
     _last_heartbeat_at: float = 0.0   # monotonic time of the last routine log line
     _first_error_reason: str | None = None  # captured at the start of the current outage
     _last_pv_count: int = 0           # panels in the last good poll — used by restore_capabilities
@@ -627,10 +628,31 @@ class HoymilesDevice(Device):
             tgs_data=[],
         )
 
+    async def _read_w100(self):
+        """10D3 DTUs: some reject a311 and only answer the legacy a303, others
+        (seen on an encrypted one) answer a311 like any other DTU. Try a311
+        first, fall back to a303, and stick to whichever one returned panels."""
+        if self._w100_proto != "a303":
+            data = await self._dtu.async_get_real_data_new()
+            if data and data.pv_data:
+                if self._w100_proto != "a311":
+                    self._w100_proto = "a311"
+                    self.log("W100: a311 returned panel data — using a311")
+                return data
+            if self._w100_proto == "a311":
+                # a311 already worked: no panels now means sleeping, not the wrong command.
+                return data
+        legacy_data = await self._dtu.async_get_real_data()
+        data = self._normalize_legacy_real_data(legacy_data) if legacy_data else None
+        if data and self._w100_proto != "a303":
+            self._w100_proto = "a303"
+            self.log("W100: legacy a303 returned panel data — using a303")
+        return data
+
     async def _poll_standard(self) -> None:
         sun_times = self._get_sunrise_sunset()
-        # DTU-W100 serials in the 10D3 family reject a311 but provide full
-        # realtime data through the legacy a303 command.
+        # DTU-W100 serials in the 10D3 family: see _read_w100 for which
+        # realtime command is used.
         legacy_w100 = (
             str(self.get_setting("dtu_sn") or "")
             .upper()
@@ -658,12 +680,7 @@ class HoymilesDevice(Device):
 
         try:
             if legacy_w100:
-                legacy_data = await self._dtu.async_get_real_data()
-                data = (
-                    self._normalize_legacy_real_data(legacy_data)
-                    if legacy_data
-                    else None
-                )
+                data = await self._read_w100()
             else:
                 data = await self._dtu.async_get_real_data_new()
         except Exception as e:
