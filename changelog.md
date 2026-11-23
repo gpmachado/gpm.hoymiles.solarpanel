@@ -1,3 +1,7 @@
+v1.1.29
+
+Fixed the Daily Energy midnight reset being skipped when the app or Homey restarted after midnight (e.g. after a Homey update or reboot): Daily Energy now resets correctly after a restart too.
+
 v1.1.28
 
 New device setting "Reset Daily Energy at midnight" (on by default): the DTU only resets its daily counter when production starts, so Daily Energy used to show yesterday's total all night and early in the morning. It now goes to 0 at midnight (Homey's time zone) and stays 0 until the panels produce. Uncheck it to keep the DTU's own value. Lifetime Energy and Homey Energy are not affected.
