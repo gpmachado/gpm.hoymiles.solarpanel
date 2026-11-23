@@ -203,6 +203,13 @@
       "value": 0, "min": 0, "max": 100000, "units": { "en": "W" }
     },
     {
+      "id": "reset_daily_midnight",
+      "type": "checkbox",
+      "label": { "en": "Reset Daily Energy at midnight" },
+      "hint": { "en": "The DTU only resets its daily counter when production starts in the morning, so until then Daily Energy keeps showing yesterday's total. When checked, Daily Energy goes to 0 at midnight (Homey's time zone) and stays 0 until the panels produce. Uncheck to always show the DTU's own value. Lifetime Energy and Homey Energy are not affected." },
+      "value": true
+    },
+    {
       "id": "debugLog",
       "type": "checkbox",
       "label": { "en": "Debug logging (for diagnostic reports)" },

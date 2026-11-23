@@ -448,3 +448,26 @@ tn._backoff_until = 0
 asyncio.run(tn._apply_night_backoff((8.2, 20.9)))
 assert tn.fired == ["solar_production_stopped", "daily_data_updated"], tn.fired
 print("production trigger checks OK")
+
+
+# Daily Energy midnight reset: zero once per new local date, default on, can be turned off.
+from datetime import date  # noqa: E402
+
+mr = R({}, ["meter_power.today"])
+mr._local_date = lambda: date(2026, 11, 22)
+asyncio.run(mr._maybe_reset_daily())                    # first run: only remembers the date
+assert "meter_power.today" not in mr.vals and not mr._daily_stale
+mr._last_poll_ok_daily = 2.1
+mr._local_date = lambda: date(2026, 11, 23)
+asyncio.run(mr._maybe_reset_daily())
+assert mr.vals["meter_power.today"] == 0 and mr._daily_stale and mr._last_poll_ok_daily == 0
+mr.vals.clear()
+asyncio.run(mr._maybe_reset_daily())                    # same day: no second reset
+assert mr.vals == {}, mr.vals
+
+off = R({"reset_daily_midnight": False}, ["meter_power.today"])
+off._daily_local_date = date(2026, 11, 22)
+off._local_date = lambda: date(2026, 11, 23)
+asyncio.run(off._maybe_reset_daily())
+assert off.vals == {} and not off._daily_stale, off.vals
+print("daily reset checks OK")

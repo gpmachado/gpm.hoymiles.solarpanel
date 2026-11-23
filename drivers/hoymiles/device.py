@@ -6,6 +6,7 @@ import logging
 import time
 from datetime import datetime, timezone
 from types import SimpleNamespace
+from zoneinfo import ZoneInfo
 
 from astral import LocationInfo
 from astral.sun import sun
@@ -78,6 +79,8 @@ class HoymilesDevice(Device):
     _was_night: bool = False          # last poll's night/day state, for transition logging
     _w100_morning_warmup_done: bool = False
     _w100_proto: str | None = None    # 10D3 realtime command that returned panels: "a311" / "a303"
+    _daily_local_date = None          # Homey-local date Daily Energy belongs to (midnight reset)
+    _daily_stale: bool = False        # after a midnight reset: DTU still reports yesterday's daily
     _last_heartbeat_at: float = 0.0   # monotonic time of the last routine log line
     _first_error_reason: str | None = None  # captured at the start of the current outage
     _last_pv_count: int = 0           # panels in the last good poll — used by restore_capabilities
@@ -546,6 +549,11 @@ class HoymilesDevice(Device):
         debug.scope.set(self.get_id())
         self.log(f"Polling started — every {interval}s")
         while True:
+            # Before the backoff check: night backoff would delay it by up to 30 min.
+            try:
+                await self._maybe_reset_daily()
+            except Exception as e:
+                self.log(f"Daily reset check error: {type(e).__name__}: {e}")
             remaining = self._backoff_until - time.monotonic()
             if remaining > 0:
                 await asyncio.sleep(min(remaining, interval))
@@ -555,6 +563,38 @@ class HoymilesDevice(Device):
             except Exception as e:
                 self.log(f"Poll loop error: {type(e).__name__}: {e}")
             await asyncio.sleep(interval)
+
+    def _local_date(self):
+        """Homey's local calendar date, or None when its time zone is unavailable."""
+        try:
+            tz_name = self.homey.clock.get_timezone()
+            return datetime.now(ZoneInfo(tz_name)).date() if tz_name else None
+        except Exception:
+            return None
+
+    async def _maybe_reset_daily(self) -> None:
+        """Reset Daily Energy at midnight setting: the DTU only resets its daily counter
+        when production starts, so zero it at local midnight and ignore the DTU's
+        (yesterday's) value until the panels produce again."""
+        raw = self.get_setting("reset_daily_midnight")
+        # Devices paired before this setting existed return None: default on.
+        if raw is not None and not raw:
+            self._daily_stale = False
+            return
+        today = self._local_date()
+        if today is None:
+            return
+        if self._daily_local_date is None:
+            self._daily_local_date = today
+            return
+        if today == self._daily_local_date:
+            return
+        self._daily_local_date = today
+        self._daily_stale = True
+        self._last_poll_ok_daily = 0.0
+        if self.has_capability("meter_power.today"):
+            await self._set("meter_power.today", 0)
+            self.log("Daily Energy reset at local midnight — waiting for production")
 
     async def _poll(self) -> None:
         if not self._dtu:
@@ -801,6 +841,11 @@ class HoymilesDevice(Device):
         today_raw = dtu_today if dtu_today > 0 else pv_today
         today_date = datetime.now(timezone.utc).date()
         today_kwh = today_raw
+        if self._daily_stale:
+            if power_w > _PRODUCTION_STOP_W:
+                self._daily_stale = False
+            else:
+                today_kwh = 0.0
         if (
             today_raw == 0
             and power_w <= 5
