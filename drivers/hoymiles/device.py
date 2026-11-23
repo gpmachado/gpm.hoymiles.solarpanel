@@ -79,8 +79,9 @@ class HoymilesDevice(Device):
     _was_night: bool = False          # last poll's night/day state, for transition logging
     _w100_morning_warmup_done: bool = False
     _w100_proto: str | None = None    # 10D3 realtime command that returned panels: "a311" / "a303"
-    _daily_local_date = None          # Homey-local date Daily Energy belongs to (midnight reset)
+    _daily_local_date: str | None = None  # Homey-local ISO date Daily Energy belongs to (midnight reset)
     _daily_stale: bool = False        # after a midnight reset: DTU still reports yesterday's daily
+    _tz_missing_logged: bool = False
     _last_heartbeat_at: float = 0.0   # monotonic time of the last routine log line
     _first_error_reason: str | None = None  # captured at the start of the current outage
     _last_pv_count: int = 0           # panels in the last good poll — used by restore_capabilities
@@ -110,6 +111,9 @@ class HoymilesDevice(Device):
             # Best-effort — a bad first poll must not block on_init() from
             # completing, or the device would never start its recurring
             # poll loop below.
+            # Reset check first: after a restart past midnight, this first
+            # poll must not write yesterday's daily value back.
+            await self._maybe_reset_daily()
             await self._poll()
         except Exception as e:
             self.log(f"Initial poll failed (will retry via poll loop): {type(e).__name__}: {e}")
@@ -564,13 +568,18 @@ class HoymilesDevice(Device):
                 self.log(f"Poll loop error: {type(e).__name__}: {e}")
             await asyncio.sleep(interval)
 
-    def _local_date(self):
-        """Homey's local calendar date, or None when its time zone is unavailable."""
+    def _local_date(self) -> str | None:
+        """Homey's local calendar date (ISO), or None when its time zone is unavailable."""
         try:
             tz_name = self.homey.clock.get_timezone()
-            return datetime.now(ZoneInfo(tz_name)).date() if tz_name else None
+            if tz_name:
+                return datetime.now(ZoneInfo(tz_name)).date().isoformat()
         except Exception:
-            return None
+            pass
+        if not self._tz_missing_logged:
+            self._tz_missing_logged = True
+            self.log("Daily Energy midnight reset disabled — Homey time zone unavailable")
+        return None
 
     async def _maybe_reset_daily(self) -> None:
         """Reset Daily Energy at midnight setting: the DTU only resets its daily counter
@@ -579,22 +588,40 @@ class HoymilesDevice(Device):
         raw = self.get_setting("reset_daily_midnight")
         # Devices paired before this setting existed return None: default on.
         if raw is not None and not raw:
-            self._daily_stale = False
+            if self._daily_stale:
+                await self._set_daily_stale(False)
             return
         today = self._local_date()
         if today is None:
             return
         if self._daily_local_date is None:
-            self._daily_local_date = today
-            return
+            # App start: resume from the store, so a restart after midnight still resets.
+            store = self.get_store() or {}
+            self._daily_local_date = store.get("dailyLocalDate")
+            self._daily_stale = bool(store.get("dailyStale"))
+            if self._daily_local_date is None:  # first run: today's value is the DTU's
+                self._daily_local_date = today
+                await self._store_daily()
+                return
         if today == self._daily_local_date:
             return
         self._daily_local_date = today
-        self._daily_stale = True
         self._last_poll_ok_daily = 0.0
+        await self._set_daily_stale(True)
         if self.has_capability("meter_power.today"):
             await self._set("meter_power.today", 0)
             self.log("Daily Energy reset at local midnight — waiting for production")
+
+    async def _set_daily_stale(self, stale: bool) -> None:
+        self._daily_stale = stale
+        await self._store_daily()
+
+    async def _store_daily(self) -> None:
+        try:
+            await self.set_store_value("dailyLocalDate", self._daily_local_date)
+            await self.set_store_value("dailyStale", self._daily_stale)
+        except Exception as e:
+            _LOGGER.warning(f"Store daily reset state failed: {e}")
 
     async def _poll(self) -> None:
         if not self._dtu:
@@ -843,7 +870,7 @@ class HoymilesDevice(Device):
         today_kwh = today_raw
         if self._daily_stale:
             if power_w > _PRODUCTION_STOP_W:
-                self._daily_stale = False
+                await self._set_daily_stale(False)
             else:
                 today_kwh = 0.0
         if (
