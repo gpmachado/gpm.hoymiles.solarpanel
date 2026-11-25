@@ -85,5 +85,8 @@
   },
   "1.1.30": {
     "en": "Fixed Homey Energy counting extra solar generation in the morning: Lifetime Energy no longer drops while the panels aren't producing (dusk, night, dark weather, shade), so the real total returning the next morning is no longer counted as new production."
+  },
+  "1.1.31": {
+    "en": "Daily Energy now resets at local midnight. Homey reports UTC to apps, so the app works out the time zone from your location."
   }
 }
