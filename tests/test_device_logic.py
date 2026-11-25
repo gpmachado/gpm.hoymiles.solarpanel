@@ -521,6 +521,8 @@ try:
     for homey_tz, store, expect_log in (
         ("UTC", {}, "UTC-3 from longitude -42.7 (Homey reports UTC)"),
         ("America/Sao_Paulo", {}, "Homey time zone America/Sao_Paulo"),
+        # stored before the Homey moved (Tokyo is 12 h from -42.7°): ignored
+        ("UTC", {"homeyTimezone": "Asia/Tokyo"}, "UTC-3 from longitude -42.7 (Homey reports UTC)"),
         ("UTC", {"homeyTimezone": "America/Sao_Paulo"},
          "stored time zone America/Sao_Paulo (Homey reports UTC)"),
     ):
