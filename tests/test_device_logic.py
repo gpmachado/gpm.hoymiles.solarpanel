@@ -51,6 +51,7 @@ for pkg in ("app", "app.drivers", "app.drivers.hoymiles", "app.lib"):
     sys.modules[pkg] = types.ModuleType(pkg)
 load("app.lib.fault_codes", "lib/fault_codes.py")
 load("app.lib.debug", "lib/debug.py")
+load("app.lib.local_time", "lib/local_time.py")
 load("app.app", "app.py")
 drv = load("app.drivers.hoymiles.driver", "drivers/hoymiles/driver.py")
 dev = load("app.drivers.hoymiles.device", "drivers/hoymiles/device.py")
@@ -464,13 +465,19 @@ class MR(R):
         self.store[k] = v
 
 
+def _on(day):
+    async def _local_date():
+        return day
+    return _local_date
+
+
 mr = MR({})
-mr._local_date = lambda: "2026-11-22"
+mr._local_date = _on("2026-11-22")
 asyncio.run(mr._maybe_reset_daily())                    # first run: only remembers the date
 assert "meter_power.today" not in mr.vals and not mr._daily_stale
 assert mr.store["dailyLocalDate"] == "2026-11-22", mr.store
 mr._last_poll_ok_daily = 2.1
-mr._local_date = lambda: "2026-11-23"
+mr._local_date = _on("2026-11-23")
 asyncio.run(mr._maybe_reset_daily())
 assert mr.vals["meter_power.today"] == 0 and mr._daily_stale and mr._last_poll_ok_daily == 0
 assert mr.store == {"dailyLocalDate": "2026-11-23", "dailyStale": True}, mr.store
@@ -480,21 +487,52 @@ assert mr.vals == {}, mr.vals
 
 # Restart at 02:00: the store still says yesterday, so the new process resets.
 rs = MR({}, {"dailyLocalDate": "2026-11-22", "dailyStale": False})
-rs._local_date = lambda: "2026-11-23"
+rs._local_date = _on("2026-11-23")
 asyncio.run(rs._maybe_reset_daily())
 assert rs.vals["meter_power.today"] == 0 and rs._daily_stale, rs.vals
 # Restart in the afternoon after the reset: hold resumes, no new reset.
 ra = MR({}, {"dailyLocalDate": "2026-11-23", "dailyStale": True})
-ra._local_date = lambda: "2026-11-23"
+ra._local_date = _on("2026-11-23")
 asyncio.run(ra._maybe_reset_daily())
 assert ra.vals == {} and ra._daily_stale, ra.vals
 
 off = MR({"reset_daily_midnight": False}, {"dailyLocalDate": "2026-11-22", "dailyStale": True})
 off._daily_local_date = "2026-11-22"
 off._daily_stale = True
-off._local_date = lambda: "2026-11-23"
+off._local_date = _on("2026-11-23")
 asyncio.run(off._maybe_reset_daily())
 assert off.vals == {} and not off._daily_stale and off.store["dailyStale"] is False, off.vals
+
+# The local date itself (11-24 BR log: reset at 00:00 UTC = 21:00 local). homey 0.0.11
+# reports "UTC" whatever the Homey is set to; -42.7° longitude gives UTC-3.
+lt_mod = sys.modules["app.lib.local_time"]
+_real_dt = lt_mod.datetime
+
+
+class _Frozen(datetime):
+    @classmethod
+    def now(cls, tz=None):
+        instant = datetime(2026, 11, 24, 0, 1, tzinfo=timezone.utc)
+        return instant.astimezone(tz) if tz else instant
+
+
+lt_mod.datetime = _Frozen
+try:
+    for homey_tz, store, expect_log in (
+        ("UTC", {}, "UTC-3 from longitude -42.7 (Homey reports UTC)"),
+        ("America/Sao_Paulo", {}, "Homey time zone America/Sao_Paulo"),
+        ("UTC", {"homeyTimezone": "America/Sao_Paulo"},
+         "stored time zone America/Sao_Paulo (Homey reports UTC)"),
+    ):
+        ld = MR({"solar_longitude": -42.6984}, store)
+        ld.homey = types.SimpleNamespace(clock=types.SimpleNamespace(get_timezone=lambda tz=homey_tz: tz))
+        ld.logs = []
+        ld.log = ld.logs.append
+        assert asyncio.run(ld._local_date()) == "2026-11-23", (homey_tz, store)
+        assert ld.logs == [f"Daily Energy reset uses {expect_log}"], ld.logs
+    assert ld.store["homeyTimezone"] == "America/Sao_Paulo"
+finally:
+    lt_mod.datetime = _real_dt
 print("daily reset checks OK")
 
 
