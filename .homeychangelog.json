@@ -82,5 +82,8 @@
   },
   "1.1.29": {
     "en": "Fixed the Daily Energy midnight reset being skipped when the app or Homey restarted after midnight (e.g. after a Homey update or reboot): Daily Energy now resets correctly after a restart too."
+  },
+  "1.1.30": {
+    "en": "Fixed Homey Energy counting extra solar generation in the morning: Lifetime Energy no longer drops while the panels aren't producing (dusk, night, dark weather, shade), so the real total returning the next morning is no longer counted as new production."
   }
 }
