@@ -1,3 +1,7 @@
+v1.1.30
+
+Fixed Homey Energy counting extra solar generation in the morning (sometimes several kWh before sunrise): some DTUs report a lower Lifetime Energy for a while at dusk, which the app accepted, so the real total coming back the next morning was counted as new production. Lifetime Energy now never drops while the panels aren't producing (dusk, night, dark weather, shade); a genuine reset, e.g. a replaced DTU, is still accepted once they produce again. It also keeps its last value across app restarts.
+
 v1.1.29
 
 Fixed the Daily Energy midnight reset being skipped when the app or Homey restarted after midnight (e.g. after a Homey update or reboot): Daily Energy now resets correctly after a restart too.

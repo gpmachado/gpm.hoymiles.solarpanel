@@ -70,6 +70,7 @@ class HoymilesDevice(Device):
     _last_poll_ok_warning: int | None = None
     _last_lifetime_wh: float | None = None  # last meter_power (Wh) actually written
     _pending_lower_wh: float | None = None  # unconfirmed lower reading, awaiting a second poll to agree
+    _ignored_drop_wh: float | None = None   # last lower reading ignored while not producing (log once)
     _dtu_rebuilds: int = 0
     _sun_cache: tuple | None = None   # (cache_date, sunrise_utc, sunset_utc)
     _was_producing: bool | None = None  # None = first poll, state not yet known
@@ -100,6 +101,14 @@ class HoymilesDevice(Device):
 
     async def on_init(self) -> None:
         self.log(f"Device init — {self.get_setting('ip')}")
+        # Start the lifetime guard from the last written value: otherwise the
+        # first reading after a restart is accepted unchecked, even a bad one.
+        try:
+            lifetime_kwh = self.get_capability_value("meter_power")
+            if isinstance(lifetime_kwh, (int, float)) and lifetime_kwh > 0:
+                self._last_lifetime_wh = lifetime_kwh * 1000
+        except Exception:
+            pass
         await self._build_dtu()
         await self._refresh_info()
         await self._ensure_structural_caps()
@@ -623,6 +632,46 @@ class HoymilesDevice(Device):
         except Exception as e:
             _LOGGER.warning(f"Store daily reset state failed: {e}")
 
+    async def _update_lifetime(self, total_wh: float, power_w: float) -> None:
+        """Write meter_power (lifetime, Homey Energy's generation meter). Any
+        drop that gets written comes back later as phantom generation when the
+        real total returns, so drops are only ever accepted while producing."""
+        if self._last_lifetime_wh is None or total_wh >= self._last_lifetime_wh - 10:
+            self._last_lifetime_wh = total_wh
+            self._pending_lower_wh = None
+            self._ignored_drop_wh = None
+            await self._set("meter_power", total_wh / 1000)
+            return
+        if power_w <= _PRODUCTION_START_W:
+            # Not producing (dusk, night, dark weather, shade): some DTUs then
+            # report a lower total for several polls in a row and the real one
+            # again once the panels produce (seen: -14 kWh at dusk on a 10D3).
+            # Never accept a drop here, however often it repeats.
+            if self._ignored_drop_wh is None or abs(total_wh - self._ignored_drop_wh) >= 10:
+                self._ignored_drop_wh = total_wh
+                self.log(
+                    f"meter_power: drop while not producing ({self._last_lifetime_wh}Wh -> "
+                    f"{total_wh}Wh) — ignored, keeping last known value"
+                )
+            self._pending_lower_wh = None
+            return
+        # Drop while producing: a one-off bad reading, or a genuine reset
+        # (device swapped/reconfigured). Require the same lower value on two
+        # producing polls in a row — a real reset is still accepted the next
+        # time the panels produce, instead of hiding all production until the
+        # true total climbs back past a stale held-over value.
+        if self._pending_lower_wh is not None and abs(total_wh - self._pending_lower_wh) < 10:
+            self.log(f"meter_power: drop to {total_wh}Wh confirmed on second poll — accepting as new baseline")
+            self._last_lifetime_wh = total_wh
+            self._pending_lower_wh = None
+            await self._set("meter_power", total_wh / 1000)
+        else:
+            self.log(
+                f"meter_power: implausible drop ({self._last_lifetime_wh}Wh -> {total_wh}Wh) — "
+                f"skipping, keeping last known value pending confirmation"
+            )
+            self._pending_lower_wh = total_wh
+
     async def _poll(self) -> None:
         if not self._dtu:
             return
@@ -907,32 +956,7 @@ class HoymilesDevice(Device):
                 f"skipping update, keeping last known value"
             )
         else:
-            total_wh = sum(pv.energy_total or 0 for pv in pv_list)
-            if self._last_lifetime_wh is not None and total_wh < self._last_lifetime_wh - 10:
-                # Looks like a drop with a full panel count. Could be a
-                # one-off bad reading, or a genuine reset (device swapped/
-                # reconfigured). Require the same lower value to repeat on
-                # the next poll before accepting it — a single-poll glitch
-                # gets ignored, but a real reset is accepted quickly instead
-                # of silently hiding whatever this device produces from here
-                # on (comparing forever against a stale held-over value
-                # would swallow real production increments until the true
-                # total organically climbed back past it).
-                if self._pending_lower_wh is not None and abs(total_wh - self._pending_lower_wh) < 10:
-                    self.log(f"meter_power: drop to {total_wh}Wh confirmed on second poll — accepting as new baseline")
-                    self._last_lifetime_wh = total_wh
-                    self._pending_lower_wh = None
-                    await self._set("meter_power", total_wh / 1000)
-                else:
-                    self.log(
-                        f"meter_power: implausible drop ({self._last_lifetime_wh}Wh -> {total_wh}Wh) — "
-                        f"skipping, keeping last known value pending confirmation"
-                    )
-                    self._pending_lower_wh = total_wh
-            else:
-                self._last_lifetime_wh = total_wh
-                self._pending_lower_wh = None
-                await self._set("meter_power", total_wh / 1000)
+            await self._update_lifetime(sum(pv.energy_total or 0 for pv in pv_list), power_w)
 
         # Each block below is independently guarded: an unexpected field on one
         # DTU response (e.g. an attribute missing after a library update) must

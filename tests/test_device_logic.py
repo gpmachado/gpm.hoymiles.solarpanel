@@ -496,3 +496,20 @@ off._local_date = lambda: "2026-11-23"
 asyncio.run(off._maybe_reset_daily())
 assert off.vals == {} and not off._daily_stale and off.store["dailyStale"] is False, off.vals
 print("daily reset checks OK")
+
+
+# Lifetime guard (11-24 NL log, 10D3): at dusk the DTU reported -14 kWh on two
+# polls in a row; accepting it made Homey Energy count +14 kWh the next morning.
+lt = R({}, ["meter_power"])
+asyncio.run(lt._update_lifetime(8904737, 120.0))
+for w in (8890382, 8890382, 8890382):                   # dusk / night / storm: 0 W
+    asyncio.run(lt._update_lifetime(w, 0.0))
+assert lt.vals["meter_power"] == 8904.737, lt.vals
+asyncio.run(lt._update_lifetime(8904800, 27.0))         # morning: real total back
+assert lt.vals["meter_power"] == 8904.8, lt.vals
+# Genuine reset (DTU swapped): accepted after two producing polls.
+asyncio.run(lt._update_lifetime(1200, 300.0))
+assert lt.vals["meter_power"] == 8904.8
+asyncio.run(lt._update_lifetime(1201, 310.0))
+assert lt.vals["meter_power"] == 1.201, lt.vals
+print("lifetime guard checks OK")
